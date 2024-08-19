@@ -1,0 +1,35 @@
+  {/* MOBILE MENU */}
+        <div className="flex  lg:hidden">
+          <FiMenu
+            className="text-3xl cursor-pointer sm:ml-48 mx-5 sm:mx-10 text-white"
+            onClick={toggleMenu}
+          />
+          {showMenu && (
+            <div
+              className="fixed top-20 left-0 right-0 text-black
+                               bg-white dark:bg-gray-900 dark:text-white shadow-md
+                              rounded-b-xl z-10 py-10"
+            >
+              <ul
+                className="flex flex-col
+                        items-center gap-4"
+              >
+                {NavbarMenu.map((menu) => (
+                  <li key={menu.name}>
+                    <a
+                      href={menu.url}
+                      className="text-xl font-semibold px-2 py-4 md:py-6 inline-block cursor-pointer"
+                    >
+                      {menu.name}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+              <div className="flexCenter">
+                <a href="" className=" button grad ">
+                  GET STARTED
+                </a>
+              </div>
+            </div>
+          )}
+        </div>

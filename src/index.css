@@ -1,0 +1,222 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Poppins", sans-serif;
+    scroll-behavior: smooth;
+}
+
+@layer components {
+    .primary-btn {
+        @apply inline-block bg-primary text-white font-semibold rounded-lg duration-200 shadow-[0px_10px_8px_-7px_#ffd978] py-2 px-6;
+        &:hover {
+            @apply bg-secondary shadow-[0px_10px_8px_-7px_#69a79c]
+        }
+    }
+    .button {
+        @apply font-medium py-2 px-6 bg-gradient-to-l text-white border-none rounded-md transition duration-300 ease-in overflow-hidden;
+        &:hover {
+            @apply cursor-pointer scale-110
+        }
+    }
+}
+
+@layer base {
+     :root {
+        --secondary: rgba(255, 255, 255, 0.78);
+        --bluegradient: linear-gradient(97.05deg, #4066ff 3.76%, #2949c6 100%);
+        --orange-gradient: 270deg, #ffb978 0%, #ff922d 100%;
+        --shadow: 0px 23px 21px -8px 136, 160, 255, 0.25;
+        /**
+* colors  */
+        --dark-jungle-green: hsl(188, 63%, 7%);
+        --prussian-blue: hsl(200, 69%, 14%);
+        --raisin-black-1: hsl(227, 29%, 13%);
+        --raisin-black-2: hsl(229, 17%, 19%);
+        --yellow-green: hsl(89, 72%, 45%);
+        --orange-soda: hsl(9, 100%, 62%);
+        --cultured-1: hsl(0, 0%, 93%);
+        --cultured-2: hsl(192, 24%, 96%);
+        --misty-rose: hsl(7, 56%, 91%);
+        --alice-blue: hsl(210, 100%, 97%);
+        --seashell: hsl(8, 100%, 97%);
+        --cadet: hsl(200, 15%, 43%);
+        --white: hsl(0, 0%, 100%);
+        --black: hsl(0, 0%, 0%);
+        --opal: hsl(180, 20%, 62%);
+        /**
+* typography
+*/
+        --ff-nunito-sans: "Nunito Sans", sans-serif;
+        --ff-poppins: "Poppins", sans-serif;
+        --fs-1: 1.875rem;
+        --fs-2: 1.5rem;
+        --fs-3: 1.375rem;
+        --fs-4: 1.125rem;
+        --fs-5: 0.875rem;
+        --fs-6: 0.813rem;
+        --fs-7: 0.75rem;
+        --fw-500: 500;
+        --fw-600: 600;
+        --fw-700: 700;
+        /**
+* transition
+*/
+        --transition: 0.25s ease;
+        /**
+* spacing
+*/
+        --section-padding: 100px;
+        /**
+* shadow
+*/
+        --shadow-1: 0 5px 20px 0 hsla(219, 56%, 21%, 0.1);
+        --shadow-2: 0 16px 32px hsla(188, 63%, 7%, 0.1);
+    }
+}
+
+.grad {
+    background: var(--bluegradient);
+}
+
+.flexCenter {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+/* About */
+
+.about-item {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 15px;
+}
+
+.about-item-icon {
+    background: palegoldenrod;
+    height: 45px;
+    min-width: 45px;
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+    color: black;
+}
+
+
+/* ------------------------------ *\
+SERVICES
+/* ------------------------------ */
+
+.service-list {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    gap: 30px;
+}
+
+.service-card {
+    text-align: center;
+    padding: 60px 20px;
+    min-width: 35vh;
+    border-radius: 3ch;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+    .so {
+        @media (prefers-color-scheme: dark) {
+            background-color: rgb(255 255 255);
+        }
+    }
+}
+
+.service-card .card-icon {
+    width: max-content;
+    margin-inline: auto;
+    margin-bottom: 20px;
+}
+
+.service-card .card-title {
+    margin-bottom: 15px;
+    font: bold 1.5rem sans-serif;
+}
+
+.service-card .card-text {
+    font-weight: normal;
+    font-size: var(--fs-4);
+    line-height: 1.8;
+    margin-bottom: 25px;
+}
+
+.service-hov:hover {
+    color: #4066ff;
+}
+
+
+/* ------------------------------ *\
+SERVICES
+/* ------------------------------ */
+
+#accordion-button {
+    display: flex;
+    justify-content: center;
+}
+
+
+/* --------------------- *\ 
+
+/* ------------------------------ *\
+Value
+/* ------------------------------ */
+
+
+/* ------------------------------ */
+
+.section-align {
+    display: grid;
+    gap: 2.75rem;
+}
+
+
+/* --------------------- *\ 
+
+/* typing animation */
+
+@keyframes cursor {
+    50% {
+        border-color: transparent;
+    }
+}
+
+
+/* Typing effect */
+
+@keyframes typing {
+    from {
+        width: 0
+    }
+    to {
+        width: 100%
+    }
+}
+
+@media(min-width: 992px) {
+    .flexCenter {
+        display: flex;
+        row-gap: 2;
+        align-items: center;
+    }
+    .container .typewrite {
+        width: 100%;
+        overflow: hidden;
+        animation: typing 2s steps(94), cursor .4s step-end infinite alternate;
+    }
+    .section-align {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        ;
+    }
+}
