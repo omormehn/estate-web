@@ -1,34 +1,10 @@
-import React from "react";
 import { MdOutlineAddHomeWork } from "react-icons/md";
-import { motion, useInView } from "framer-motion";
+import { motion } from "framer-motion";
 import { FadeInFromTop, FadeInFromLeft, FadeInFromRight } from "../../utils/motion";
-
-
-export const FadeUp = (delay) => {
-  return {
-    initial: {
-      opacity: 0,
-      y: 50,
-    },
-    animate: {
-      opacity: 1,
-      y: 0,
-      transition: {
-        type: "spring",
-        stiffness: 100,
-        duration: 0.5,
-        delay: delay,
-        ease: "easeInOut",
-      },
-    },
-  };
-};
-
-
+import useInViewHook from "../../utils/inView";
 
 const Hero = () => {
-  const ref = React.createRef();
-  const inView = useInView(ref, {threshold: 0 });
+  const { ref, inView } = useInViewHook({ threshold: 0 });
 
   return (
     <section className=" ">

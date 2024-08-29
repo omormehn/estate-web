@@ -57,3 +57,23 @@ export const FadeInFromTop = (delay) => {
     },
   };
 };
+
+export const FadeInFromBottom = (delay) => {
+  return {
+    initial: {
+      opacity: 0,
+      y: 50, // start from bottom
+    },
+    animate: {
+      opacity: 1,
+      y: 0, // end at original position
+      transition: {
+        type: "spring",
+        stiffness: 100,
+        duration: 0.5,
+        delay: delay,
+        ease: "easeInOut",
+      },
+    },
+  };
+};
