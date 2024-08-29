@@ -1,6 +1,14 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+html {
+    overflow-x: hidden;
+    -webkit-overflow-x: hidden;
+    -moz-overflow-x: hidden;
+    -ms-overflow-x: hidden;
+    -o-overflow-x: hidden;
+}
+
 * {
     margin: 0;
     padding: 0;
@@ -13,7 +21,7 @@
     .primary-btn {
         @apply inline-block bg-primary text-white font-semibold rounded-lg duration-200 shadow-[0px_10px_8px_-7px_#ffd978] py-2 px-6;
         &:hover {
-            @apply bg-secondary shadow-[0px_10px_8px_-7px_#69a79c]
+            @apply bg-blue
         }
     }
     .button {
@@ -31,23 +39,7 @@
         --orange-gradient: 270deg, #ffb978 0%, #ff922d 100%;
         --shadow: 0px 23px 21px -8px 136, 160, 255, 0.25;
         /**
-* colors  */
-        --dark-jungle-green: hsl(188, 63%, 7%);
-        --prussian-blue: hsl(200, 69%, 14%);
-        --raisin-black-1: hsl(227, 29%, 13%);
-        --raisin-black-2: hsl(229, 17%, 19%);
-        --yellow-green: hsl(89, 72%, 45%);
-        --orange-soda: hsl(9, 100%, 62%);
-        --cultured-1: hsl(0, 0%, 93%);
-        --cultured-2: hsl(192, 24%, 96%);
-        --misty-rose: hsl(7, 56%, 91%);
-        --alice-blue: hsl(210, 100%, 97%);
-        --seashell: hsl(8, 100%, 97%);
-        --cadet: hsl(200, 15%, 43%);
-        --white: hsl(0, 0%, 100%);
-        --black: hsl(0, 0%, 0%);
-        --opal: hsl(180, 20%, 62%);
-        /**
+
 * typography
 */
         --ff-nunito-sans: "Nunito Sans", sans-serif;
@@ -67,15 +59,16 @@
 */
         --transition: 0.25s ease;
         /**
-* spacing
-*/
-        --section-padding: 100px;
-        /**
+
 * shadow
 */
         --shadow-1: 0 5px 20px 0 hsla(219, 56%, 21%, 0.1);
         --shadow-2: 0 16px 32px hsla(188, 63%, 7%, 0.1);
     }
+}
+
+.hide {
+    transform: translateY(-100%);
 }
 
 .grad {
@@ -86,6 +79,25 @@
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+
+/* REUSABLE */
+
+.section-subtitle {
+    font-family: monospace;
+    letter-spacing: 0.35em;
+    font-size: 1.5rem;
+}
+
+.flexColStart {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.shadow-c {
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
 }
 
 
@@ -116,7 +128,7 @@ SERVICES
 
 .service-list {
     display: flex;
-    flex-direction: column;
+    flex-wrap: wrap;
     justify-content: space-evenly;
     gap: 30px;
 }
@@ -124,7 +136,6 @@ SERVICES
 .service-card {
     text-align: center;
     padding: 60px 20px;
-    min-width: 35vh;
     border-radius: 3ch;
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
     .so {
@@ -173,6 +184,13 @@ SERVICES
 Value
 /* ------------------------------ */
 
+.accordionItem {
+    background: white;
+    box-shadow: 0px 8px 4px rgba(0, 0, 0, 0.1);
+    margin: 20px 0;
+    border-radius: 8px;
+}
+
 
 /* ------------------------------ */
 
@@ -204,6 +222,108 @@ Value
     }
 }
 
+
+/* property */
+
+
+/* .card {
+max-width: 20vw;
+} */
+
+.slider-card:hover img {
+    scale: 1.05;
+    transition: 0.4s ease-in-out;
+}
+
+.card-list {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    row-gap: 15px;
+}
+
+.card-item {
+    padding-block: 5px;
+    color: var(--cadet);
+    font-size: var(--fs-5);
+}
+
+.card-item:not(:last-child) {
+    padding-right: 15px;
+    border-right: 1px solid hsla(0, 0%, 0%, 0.2);
+    margin-right: 20px;
+}
+
+.card-item :is(strong, .icon) {
+    display: inline-block;
+}
+
+.card-item .icon {
+    font-size: 1rem;
+    margin-left: 6px;
+    margin-bottom: -2px;
+}
+
+.property-card .card-item span {
+    margin-top: 5px;
+}
+
+.arrow-container {
+    box-shadow: 0 0 10px rgba(162, 163, 175, 0.5);
+    cursor: pointer;
+}
+
+.card-badge {
+    color: var(--white);
+    font-size: var(--fs-7);
+    text-transform: uppercase;
+    position: absolute;
+    top: 45px;
+    right: 25px;
+    padding: 4px 8px;
+}
+
+.banner-actions {
+    position: absolute;
+    top: 205px;
+    left: 20px;
+    z-index: 1;
+}
+
+
+/* ------------- */
+
+
+/* OWNER */
+
+.round-outer {
+    height: 50vh;
+    width: 50vh;
+    border-radius: 50%;
+    position: relative;
+    background-color: black;
+}
+
+.image-con {
+    height: 30vh;
+    width: 30vh;
+    border-radius: 50%;
+    border: 2px solid;
+}
+
+
+/* ------------------------ */
+
+@media(min-width: 768px) {
+    .service-list>li {
+        width: calc(50% - 15px);
+    }
+}
+
+
+/* --------------------
+------------------ */
+
 @media(min-width: 992px) {
     .flexCenter {
         display: flex;
@@ -218,5 +338,20 @@ Value
     .section-align {
         grid-template-columns: repeat(2, minmax(0, 1fr));
         ;
+    }
+    .service-list>li {
+        width: calc(33.33% - 20px);
+    }
+    .round-outer {
+        height: 60vh;
+        width: 60vh;
+    }
+    .round-inner {
+        height: 50vh;
+        width: 50vh;
+    }
+    .image-con {
+        height: 40vh;
+        width: 40vh;
     }
 }

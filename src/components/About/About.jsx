@@ -2,28 +2,27 @@ import { IoHomeSharp } from "react-icons/io5";
 import { MdOutlineVerified } from "react-icons/md";
 import { PiCrown } from "react-icons/pi";
 import { GiButterflyFlower } from "react-icons/gi";
-import {motion} from 'framer-motion';
+
 
 
 const About = () => {
   return (
-    <section className=" ">
+    <section className=" " id="about">
       <div className=" dark:bg-black">
-        <h1 className="container dark:text-white">About Us</h1>
-        {/* About left */}
+        
         <div className="container py-12 grid lg:grid-cols-2">
+          {/* About left */}
           <img
             src="./about/about.png"
-            className="rounded-lg h-[300px] lg:w-[650px] lg:h-[500px] lg:"
+            className="rounded-3xl pt-8  "
             alt=""
           />
           {/* About right */}
           <div className="lg:px-4 dark:text-white">
-            <h2
-              // initial={{ x: 1, opacity: 0 }}
-              // animate={{ y: 2, opacity: 1 }}
-              // transition={{ duration: 0.5, type: "spring" }}
-              className="text-2xl md:text-3xl lg:text-5xl font-extrabold lg:leading-snug my-2"
+            <div className="container text-end top-8">
+              <h1 className="dark:text-white section-subtitle">About Us</h1>
+            </div>
+            <h2 className="text-2xl md:text-3xl lg:text-5xl font-extrabold lg:leading-snug my-2"
             >
               The Leading Real Estate Rental Marketplace.
             </h2>
