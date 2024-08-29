@@ -99,7 +99,7 @@ const Navbar = () => {
       }`}
     >
       <nav id="navbar">
-        <div className="flexCenter justify-around gap-x-[5rem] lg:gap-x-[10vw] md:gap-x-[15rem] xl:gap-x-[25vw] ">
+        <div className="flexCenter justify-between lg:justify-around gap-x-24 xs:gap-x-44 sm:gap-x-32 lg:gap-x-[10vw] md:gap-x-[15rem] xl:gap-x-[25vw] ">
           <img
             src="./logo2.png"
             className="w-40 h-20 py-2 lg:w-56"

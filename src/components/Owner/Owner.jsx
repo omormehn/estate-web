@@ -31,7 +31,7 @@ const Owner = () => {
               animate={inView ? "animate" : "initial"}
               className="flexCenter  flex-col-reverse w-[65%] mt-14 ml-16 "
             >
-              <div className="lg:absolute rounded-2xl w-[40vh] h-[15vh] md:w-[50vh] md:h-[18vh] lg:w-[60vh] lg:h-[20vh] bg-[#0D39A9] lg:mr-96 flex flex-col gap-1 justify-center text-white ">
+              <div className="lg:absolute rounded-2xl w-[60vw] h-[15vh] md:w-[50vh] md:h-[18vh] lg:w-[60vh] lg:h-[20vh] bg-[#0D39A9] lg:mr-96 flex flex-col gap-1 justify-center text-white ">
                 <h1 className="ml-4 font-bold text-2xl">CEO</h1>
                 <span className="ml-4 text-xl ">Ephraim Benjamin</span>
               </div>
@@ -45,7 +45,7 @@ const Owner = () => {
               </div>
             </motion.div>
             {/* card */}
-            <div className="relative right-5 lg:py-8 lg:pr-72 min-w-20 lg:min-w-full  border-2 border-l-8 border-l-black mt-8 shadow-c">
+            <div className="relative right-5 lg:py-8 m-auto lg:pr-72 border-2 border-l-8 border-l-black mt-8 shadow-c">
               <motion.div
                 variants={FadeInFromLeft(0.8)}
                 initial="initial"
@@ -63,7 +63,7 @@ const Owner = () => {
 
                 {/* text */}
                 <div className="leading-8 ">
-                  <p className=" lg:w-[40vw] px-4 text-left lg-text-">
+                  <p className=" lg:w-[40vw] px-4 text-left ">
                     Damisa Global Realty Ltd Introducing Ephraim Benjamin,
                     CEO/MD Ephraim Benjamin, a seasoned legal practitioner, is
                     the driving force behind Damisa Global Realty Ltd (DGR), a

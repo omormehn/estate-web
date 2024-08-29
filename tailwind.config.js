@@ -8,6 +8,7 @@ export default {
       },
       screens: {
         lg: "992px",
+        xs: "425px"
       },
       container: {
         center: true,
