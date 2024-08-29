@@ -4,6 +4,9 @@ export default {
   darkMode: "class",
   theme: {
     extend: {
+      backgroundImage: {
+        "hero":"url('/hero/house1.png')"
+      },
       screens: {
         lg: "992px",
       },
@@ -21,10 +24,11 @@ export default {
       colors: {
         primary: "#3498db",
         primary1: "#1f3e72",
+        section: "#F6FBFF",
         black: "#131110",
         blue: "#4066ff",
         lightBlue: "#eeeeff",
-        secondary: "var(--secondary)",
+        secondary: "var(--bluegradient)",
         som: "rgba(128, 128, 128, 0.143)",
       },
       fontFamily: {

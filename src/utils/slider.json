@@ -1,37 +1,67 @@
 [{
-        "name": "Aliva Priva Jardin",
+        "name": "Argnem aha",
         "price": "47,043",
-        "detail": "Jakarta Garden City Street, Cakung. Pulo Gadung, Jakarta Timur, DKI Jakarta",
-        "image": "./r1.png"
+        "detail": "lorem details on this specific house data on house details",
+        "image": "./properties/pr-1.png",
+        "bedroom": "2",
+        "bathroom": "4",
+        "sqrfeet": "9302",
+        "service": "For Sale",
+        "location": "Gwarinpa, Abuja"
     },
     {
-        "name": "Asatti Garden City",
+        "name": "Lekki Garden City",
         "price": "66,353",
-        "detail": "Pahlawan Street XVII No.215, Cinangka, Sawangan, Depok, Jawa Barat",
-        "image": "./r2.png"
+        "detail": "lorem details on this specific house data on house details",
+        "image": "./properties/pr-2.png",
+        "bedroom": "5",
+        "bathroom": "4",
+        "sqrfeet": "2455",
+        "service": "For Lease",
+        "location": "Gwarinpa, Abuja"
     },
     {
-        "name": "Citralan Puri Serang",
+        "name": "Sun City",
         "price": "35,853",
-        "detail": "Ruko Puri Indah Residence Block A7, Lingkar Street, Ciracas, Serang, Banten",
-        "image": "./r3.png"
+        "detail": "lorem details on this specific house data on house details",
+        "image": "./properties/pr-3.png",
+        "bedroom": "2",
+        "bathroom": "5",
+        "sqrfeet": "3513",
+        "service": "For Sale",
+        "location": "Gwarinpa, Abuja"
     },
     {
-        "name": "Aliva Priva Jardin",
+        "name": "Central Park",
         "price": "47,043",
-        "detail": "Jakarta Garden City Street, Cakung. Pulo Gadung, Jakarta Timur, DKI Jakarta",
-        "image": "./r1.png"
+        "detail": "lorem details on this specific house data on house details",
+        "image": "./properties/pr-4.png",
+        "bedroom": "1",
+        "bathroom": "2",
+        "sqrfeet": "2455",
+        "service": "For Rent",
+        "location": "Gwarinpa, Abuja"
     },
     {
-        "name": "Asatti Garden City",
+        "name": "Gwarinpa City",
         "price": "66,353",
-        "detail": "Pahlawan Street XVII No.215, Cinangka, Sawangan, Depok, Jawa Barat",
-        "image": "./r2.png"
+        "detail": "lorem details on this specific house data on house details",
+        "image": "./properties/pr-5.png",
+        "bedroom": "6",
+        "bathroom": "4",
+        "sqrfeet": "130",
+        "service": "For Lease",
+        "location": "Gwarinpa, Abuja"
     },
     {
-        "name": "Citralan Puri Serang",
+        "name": "Guzape Arena",
         "price": "35,853",
-        "detail": "Ruko Puri Indah Residence Block A7, Lingkar Street, Ciracas, Serang, Banten",
-        "image": "./r3.png"
+        "detail": "lorem details on this specific house data on house details",
+        "image": "./properties/pr-6.png",
+        "bedroom": "3",
+        "bathroom": "2",
+        "sqrfeet": "2001",
+        "service": "For Rent",
+        "location": "Gwarinpa, Abuja"
     }
 ]
