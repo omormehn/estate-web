@@ -26,11 +26,11 @@ const About = () => {
             <div className="container text-end top-8">
               <h1 className="dark:text-white section-subtitle">About Us</h1>
             </div>
-            <h2 className="text-2xl md:text-3xl lg:text-5xl font-extrabold lg:leading-snug my-2">
+            <h2 className="text-2xl md:text-3xl lg:text-3xl xl:text-5xl font-serif font-semibold lg:leading-snug my-2">
               The Leading Real Estate Rental Marketplace.
             </h2>
 
-            <p className="font-light my-6">
+            <p className="font-light my-6 ">
               Over 39,000 people work for us in more than 70 countries all over.
               This breadth of global coverage, combined with specialist
               services.
@@ -69,7 +69,7 @@ const About = () => {
                 <p className="about-item-text">Complete 24/7 Security</p>
               </li>
             </ul>
-            <div className="my-4">
+            <div className="my-4 ">
               <a href="" className="primary-btn">
                 Explore Now
               </a>

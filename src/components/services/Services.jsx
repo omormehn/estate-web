@@ -10,7 +10,7 @@ const Services = () => {
         <div className="container text-start pb-8">
           <h1 className="dark:text-white section-subtitle">OUR SERVICES</h1>
         </div>
-        <ul className="service-list  lg:flex-row  md:mt-auto">
+        <ul className="service-list   lg:flex-row  md:mt-auto">
           <li>
             <motion.div
               variants={FadeInFromLeft(0.5)}
