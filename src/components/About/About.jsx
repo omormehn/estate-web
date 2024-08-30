@@ -12,7 +12,7 @@ const About = () => {
 
   return (
     <section className=" " id="about">
-      <div ref={ref} className=" dark:bg-black">
+      <div ref={ref} >
         <motion.div
           variants={FadeInFromTop(0.6)}
           initial="initial"
@@ -22,9 +22,9 @@ const About = () => {
           {/* About left */}
           <img src="./about/about.png" className="rounded-3xl pt-8  " alt="" />
           {/* About right */}
-          <div ref={ref} className="lg:px-4 dark:text-white">
+          <div ref={ref} className="lg:px-4>
             <div className="container text-end top-8">
-              <h1 className="dark:text-white section-subtitle">About Us</h1>
+              <h1 className=" section-subtitle">About Us</h1>
             </div>
             <h2 className="text-2xl md:text-3xl lg:text-3xl xl:text-5xl font-serif font-semibold lg:leading-snug my-2">
               The Leading Real Estate Rental Marketplace.
