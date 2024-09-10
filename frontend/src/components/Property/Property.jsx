@@ -1,26 +1,44 @@
 import { Swiper, SwiperSlide, useSwiper } from "swiper/react";
 import "swiper/css";
-import data from "../../utils/slider.json";
-import { IoBedOutline } from "react-icons/io5";
-import { FaShower } from "react-icons/fa";
-import { TbRulerMeasure } from "react-icons/tb";
+import useProperties from "../../hooks/useProperties";
 import { IoIosArrowForward, IoIosArrowBack } from "react-icons/io";
-import { MdOutlineLocationOn } from "react-icons/md";
+import { PuffLoader } from "react-spinners";
 import useInViewHook from "../../utils/inView";
 import { motion } from "framer-motion";
 import { FadeInFromTop } from "../../utils/motion";
+import { PropertyCard } from "../PropertyCard/PropertyCard";
 
 
 
-const badgeColors = {
-  "For Sale": " bg-red-500",
-  "For Lease": "bg-green-500",
-  "For Rent": "bg-blue",
-};
+
+
 
 
 const Property = () => {
   const { ref, inView } = useInViewHook({ threshold: 0 });  
+
+  const { data, isError, isLoading } = useProperties();
+
+  if (isError) {
+    return (
+      <div>
+        <h1>Error while fetching data</h1>
+      </div>
+    );
+  }
+
+  if (isLoading) {
+    return (
+      <div className="flexCenter justify-center container h-[60vh]">
+        <PuffLoader
+          color={"#123abc"}
+          size={80}
+          radius={1}
+          aria-label="puff-loading"
+        />
+      </div>
+    );
+  }
 
   return (
     <section ref={ref} id="property">
@@ -43,59 +61,13 @@ const Property = () => {
             1100: { slidesPerView: 4 },
           }}
         >
-          {data.map((card, i) => (
+          {data.slice(0,8).map((card, i) => (
             <SwiperSlide key={i}>
-              <div className="slider-card mx-4">
-                <figure>
-                  <img
-                    src={card.image}
-                    alt=""
-                    className="my-8 relative z-0 rounded-lg h-52"
-                  />
-                  <div className={`card-badge ${badgeColors[card.service]}`}>
-                    {card.service}
-                  </div>
-                  <div className="banner-actions text-white font-bold">
-                    <button className="flex gap-2">
-                      <MdOutlineLocationOn className="mt-1" />
-                      <address>Gwarinpa, Abuja</address>
-                    </button>
-                  </div>
-                </figure>
-
-                <div className="mt-4 flexColStart leading-5">
-                  <p className="text-xl lg:text-2xl">₦ {card.price}</p>
-                  <h2 className="font-semibold text-xl">{card.name}</h2>
-                  <p>{card.detail}</p>
-                  <ul className="card-list">
-                    <li className="card-item">
-                      <strong>{card.bedroom}</strong>
-                      <IoBedOutline className="icon" />
-                      <br />
-                      <span>Bedrooms</span>
-                    </li>
-
-                    <li className="card-item">
-                      <strong>{card.bathroom}</strong>
-
-                      <FaShower className="icon" />
-                      <br />
-                      <span>Bathrooms</span>
-                    </li>
-
-                    <li className="card-item">
-                      <strong>{card.sqrfeet}</strong>
-                      <TbRulerMeasure className="icon" />
-                      <br />
-                      <span>Square Ft</span>
-                    </li>
-                  </ul>
-                </div>
-              </div>
+              <PropertyCard card={card}/>
             </SwiperSlide>
           ))}
           <div className="text-end container pt-8">
-            <a href="" className="border-b  border-black">
+            <a href="/properties" className="border-b  border-black">
               Show More
             </a>
           </div>

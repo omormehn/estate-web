@@ -4,11 +4,11 @@ export default {
   theme: {
     extend: {
       backgroundImage: {
-        "hero":"url('/hero/house1.png')"
+        hero: "url('/hero/house1.png')",
       },
       screens: {
         lg: "992px",
-        xs: "425px"
+        xs: "425px",
       },
       container: {
         center: true,
@@ -30,6 +30,7 @@ export default {
         lightBlue: "#eeeeff",
         secondary: "var(--bluegradient)",
         som: "rgba(128, 128, 128, 0.143)",
+        some: "rgba(120, 120, 120, 0.374)",
       },
       fontFamily: {
         poppins: ["Poppins", "sans-serif"],

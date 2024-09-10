@@ -19,7 +19,7 @@ html {
 
 @layer components {
     .primary-btn {
-        @apply inline-block bg-primary text-white font-semibold rounded-lg duration-200 shadow-[0px_10px_8px_-7px_#ffd978] py-2 px-6;
+        @apply inline-block bg-primary text-white font-semibold rounded-lg duration-200 py-2 px-6;
         &:hover {
             @apply bg-blue
         }
@@ -27,7 +27,7 @@ html {
     .button {
         @apply font-medium py-2 px-6 bg-gradient-to-l text-white border-none rounded-md transition duration-300 ease-in overflow-hidden;
         &:hover {
-            @apply cursor-pointer scale-110
+            @apply cursor-pointer scale-105
         }
     }
 }
@@ -102,6 +102,13 @@ html {
 
 .overlay {
     transition: opacity 0.3s ease-in-out;
+}
+
+.truncate {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    max-width: 300px;
 }
 
 
@@ -246,7 +253,7 @@ max-width: 20vw;
     display: flex;
     flex-wrap: wrap;
     align-items: center;
-    row-gap: 15px;
+    row-gap: 8px;
 }
 
 .card-item {
@@ -263,6 +270,7 @@ max-width: 20vw;
 
 .card-item :is(strong, .icon) {
     display: inline-block;
+    font-size: medium;
 }
 
 .card-item .icon {
@@ -299,6 +307,14 @@ max-width: 20vw;
 
 
 /* ------------- */
+
+.card-reg {
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.4), 0 20px 20px rgba(0, 0, 0, 0.6);
+}
+
+.icon-google {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
 
 
 /* OWNER */

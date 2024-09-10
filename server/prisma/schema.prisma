@@ -29,7 +29,8 @@ model Residency {
     userEmail String
     owner User @relation("Owner", fields: [userEmail], references: [email])
     createdAt DateTime @default(now())
-    uploadedAt DateTime @updatedAt
+    updatedAt  DateTime @updatedAt
 
     @@unique(fields: [address, userEmail])
+    
 }

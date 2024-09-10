@@ -18,7 +18,7 @@
         "bathroom": "4",
         "sqrfeet": "2455",
         "service": "For Lease",
-        "location": "Gwarinpa, Abuja"
+        "location": "Kubwa, Abuja"
     },
     {
         "name": "Sun City",
@@ -29,7 +29,7 @@
         "bathroom": "5",
         "sqrfeet": "3513",
         "service": "For Sale",
-        "location": "Gwarinpa, Abuja"
+        "location": "Life Camp, Abuja"
     },
     {
         "name": "Central Park",
@@ -40,7 +40,7 @@
         "bathroom": "2",
         "sqrfeet": "2455",
         "service": "For Rent",
-        "location": "Gwarinpa, Abuja"
+        "location": "Ikeja, Lagos"
     },
     {
         "name": "Gwarinpa City",
@@ -51,7 +51,7 @@
         "bathroom": "4",
         "sqrfeet": "130",
         "service": "For Lease",
-        "location": "Gwarinpa, Abuja"
+        "location": "Guzape, Abuja"
     },
     {
         "name": "Guzape Arena",

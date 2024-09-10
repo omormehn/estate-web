@@ -1,7 +1,7 @@
 
 import useInViewHook from "../../utils/inView";
 import { motion } from "framer-motion";
-import { FadeInFromBottom, FadeInFromLeft, FadeInFromTop } from "../../utils/motion";
+import {  FadeInFromLeft } from "../../utils/motion";
 
 
 const Owner = () => {
@@ -9,7 +9,7 @@ const Owner = () => {
 
 
   return (
-    <section>
+    <section id="contact">
       <div className="bg-section py-16">
         <div ref={ref} className="container py-16">
           <motion.div

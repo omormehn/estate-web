@@ -11,7 +11,7 @@ const About = () => {
   const { ref, inView } = useInViewHook({ threshold: 0 });
 
   return (
-    <section className=" " id="about">
+    <section id="about">
       <div ref={ref} className=" dark:bg-black">
         <motion.div
           variants={FadeInFromTop(0.6)}

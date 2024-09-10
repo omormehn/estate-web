@@ -2,6 +2,9 @@ import React from "react";
 import { FiMenu } from "react-icons/fi";
 // import { BiSolidMoon, BiSolidSun } from "react-icons/bi";
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+import { useAuth0 } from "@auth0/auth0-react"
+import ProfileMenu from "../ProfileMenu/ProfileMenu";
 
 const NavbarMenu = [
   {
@@ -12,7 +15,7 @@ const NavbarMenu = [
   {
     id: 2,
     name: "About Us",
-    url: "/about",
+    url: "#about",
   },
   {
     id: 3,
@@ -22,13 +25,14 @@ const NavbarMenu = [
   {
     id: 4,
     name: "Contact Us",
-    url: "/contact",
+    url: "#contact",
   },
 ];
 
 const Navbar = () => {
   const [isNavbarHidden, setIsNavbarHidden] = useState(false);
   const [prevScrollPosition, setPrevScrollPosition] = useState(0);
+  const {loginWithRedirect, isAuthenticated, error, logout} = useAuth0()
 
   //sets defaults values of keys
   const [showMenu, setShowMenu] = React.useState(false);
@@ -108,46 +112,53 @@ const Navbar = () => {
 
           {/* DESKTOP MENU */}
           <div className="list-none  hidden lg:flex lg:flex-row gap-8 text-white">
-            {NavbarMenu.map((menu) => (
+            {NavbarMenu.filter((menu) => {
+              if (isAuthenticated) {
+                return menu.name === "Home" || menu.name === "Properties";
+              } else {
+                return true;
+              }
+            }).map((menu) => (
               <li key={menu.id} className="py-2">
-                <a href={menu.url}>{menu.name}</a>
+                {menu.url.startsWith("#") ? (
+                  <a
+                    href={menu.url}
+                    onClick={(e) => {
+                      e.preventDefault();
+                      const section = document.querySelector(menu.url);
+                      section.scrollIntoView({ behavior: "smooth" });
+                    }}
+                  >
+                    {menu.name}
+                  </a>
+                ) : (
+                  <Link to={menu.url}>{menu.name}</Link>
+                )}
               </li>
             ))}
-            <a href="" className="button grad">
-              GET STARTED
-            </a>
-            {/* {theme == "dark" ? (
-              <BiSolidSun
-                className="text-2xl dark:text-white"
-                onClick={toggleTheme}
-              />
+
+            {isAuthenticated ? (
+              <div className="flexCenter gap-4">
+                <ProfileMenu/>
+                <a onClick={logout} className="button grad ">
+                  Logout
+                </a>
+              </div>
             ) : (
-              <BiSolidMoon
-                className="text-2xl z-50 text-white "
-                onClick={toggleTheme}
-              />
-            )} */}
+              <a onClick={loginWithRedirect} className=" button grad ">
+                GET STARTED
+              </a>
+            )}
           </div>
 
           {/* MOBILE MENU */}
           <div className="flex flex-row lg:hidden navbar">
-            {/* {theme == "dark" ? (
-              <BiSolidSun
-                className="text-2xl dark:text-white"
-                onClick={toggleTheme}
-              />
-            ) : (
-              <BiSolidMoon className="text-2xl " onClick={toggleTheme} />
-            )} */}
-
             <FiMenu
               className="text-3xl cursor-pointer sm:ml-48 mx-5 sm:mx-10 text-white"
               onClick={toggleMenu}
             />
             {showMenu && (
-              <div
-                
-              >
+              <div>
                 <div
                   className="fixed top-20 left-0 right-0 text-black
                                bg-white dark:bg-gray-900 dark:text-white shadow-md
@@ -157,7 +168,15 @@ const Navbar = () => {
                     className="flex flex-col
                         items-center gap-4"
                   >
-                    {NavbarMenu.map((menu) => (
+                    {NavbarMenu.filter((menu) => {
+                      if (isAuthenticated) {
+                        return (
+                          menu.name === "Home" || menu.name === "Properties"
+                        );
+                      } else {
+                        return true;
+                      }
+                    }).map((menu) => (
                       <li key={menu.name}>
                         <a
                           href={menu.url}
@@ -168,10 +187,17 @@ const Navbar = () => {
                       </li>
                     ))}
                   </ul>
+
                   <div className="flexCenter">
-                    <a href="" className=" button grad ">
-                      GET STARTED
-                    </a>
+                    {!isAuthenticated ? (
+                      <a onClick={loginWithRedirect} className=" button grad ">
+                        GET STARTED
+                      </a>
+                    ) : (
+                      <a onClick={logout} className=" button grad ">
+                        Logout
+                      </a>
+                    )}
                   </div>
                 </div>
               </div>
