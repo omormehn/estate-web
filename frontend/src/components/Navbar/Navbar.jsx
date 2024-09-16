@@ -4,7 +4,7 @@ import { FiMenu } from "react-icons/fi";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useAuth0 } from "@auth0/auth0-react"
-import ProfileMenu from "../ProfileMenu/ProfileMenu";
+// import ProfileMenu from "../ProfileMenu/ProfileMenu";
 
 const NavbarMenu = [
   {
@@ -32,7 +32,7 @@ const NavbarMenu = [
 const Navbar = () => {
   const [isNavbarHidden, setIsNavbarHidden] = useState(false);
   const [prevScrollPosition, setPrevScrollPosition] = useState(0);
-  const {loginWithRedirect, isAuthenticated, error, logout} = useAuth0()
+  const {loginWithRedirect, isAuthenticated, logout} = useAuth0()
 
   //sets defaults values of keys
   const [showMenu, setShowMenu] = React.useState(false);
@@ -139,7 +139,7 @@ const Navbar = () => {
 
             {isAuthenticated ? (
               <div className="flexCenter gap-4">
-                <ProfileMenu/>
+                {/* <ProfileMenu/> */}
                 <a onClick={logout} className="button grad ">
                   Logout
                 </a>

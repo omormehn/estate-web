@@ -3,7 +3,7 @@ import {BrowserRouter, Routes, Route} from "react-router-dom";
 import { Suspense } from 'react';
 import Layout from "./components/layout/Layout";
 import Properties from "./pages/Properties";
-import Register from "./pages/Register";
+
 import { QueryClient, QueryClientProvider } from "react-query";
 import { ReactQueryDevtools } from "react-query/devtools";
 import { ToastContainer } from "react-toastify";
@@ -26,7 +26,6 @@ function App() {
                 <Route path=":propertyId" element={<Property />} /> 
               </Route>
             </Route>
-            <Route path="/register" element={<Register />} />
           </Routes>
         </Suspense>
       </BrowserRouter>
