@@ -1,5 +1,5 @@
 import asyncHandler from "express-async-handler";
-import { prisma } from "../config/prigmaConfig.js";
+import prisma from "../config/prigmaConfig.js";
 
 const createResidency = asyncHandler(async (req, res) => {
   const {title, description, price, address, city, image,

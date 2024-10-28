@@ -1,5 +1,5 @@
 import asyncHandler from "express-async-handler";
-import { prisma } from "../config/prigmaConfig.js";
+import prisma from "../config/prigmaConfig.js";
 
 //create user
 const createUser = asyncHandler(async (req, res) => {

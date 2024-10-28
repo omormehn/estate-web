@@ -5,6 +5,8 @@ import cors from 'cors';
 
 import { userRoute } from "./routes/userRoutes.js";
 import { residencyRoute } from "./routes/residencyRoute.js";
+import authRoute from "./routes/authRoute.js"
+
 
 dotenv.config();
 
@@ -22,4 +24,5 @@ app.listen(PORT, () => {
 });
 
 app.use("/api/user", userRoute);
-app.use("/api/residency", residencyRoute)
+app.use("/api/residency", residencyRoute);
+app.use("/api/user/auth", authRoute);
