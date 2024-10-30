@@ -132,7 +132,7 @@ const Navbar = () => {
             ))}
 
             
-              <a  className=" button grad ">
+              <a href="/signup"  className=" button grad ">
                 GET STARTED
               </a>
          
@@ -168,13 +168,9 @@ const Navbar = () => {
                   </ul>
 
                   <div className="flexCenter">
-                      <a  className=" button grad ">
+                      <a href="/signup"  className=" button grad ">
                         GET STARTED
-                      </a>
-                      <a  className=" button grad ">
-                        Logout
-                      </a>
-                 
+                      </a>                 
                   </div>
                 </div>
               </div>

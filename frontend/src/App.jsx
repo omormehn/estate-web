@@ -8,6 +8,7 @@ import { ReactQueryDevtools } from "react-query/devtools";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css"
 import Property from "./pages/Property";
+import Register from "./pages/Register";
 
 function App() {
 
@@ -24,6 +25,7 @@ function App() {
                 <Route index element={<Properties />} /> 
                 <Route path=":propertyId" element={<Property />} /> 
               </Route>
+              <Route path="/signup" element={<Register/>}/>
             </Route>
           </Routes>
         </Suspense>
