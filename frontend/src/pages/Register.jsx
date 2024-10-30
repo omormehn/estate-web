@@ -1,24 +1,27 @@
 import { Card, Input, Button, Typography } from "@material-tailwind/react";
 import "./register.css";
-import axios from "axios";
+
 import { useState } from "react";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
+import { api } from "../utils/api";
+import { PuffLoader } from "react-spinners";
 
 const Register = () => {
-
+   const [loading, setLoading] = useState(false);
   const [  error, setError ] = useState('');
   const navigate =  useNavigate()
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true)
     const formData = new FormData(e.target);
     const username = formData.get("username");
     const email = formData.get("email");
     const password = formData.get("password");
     
   try {
-      await axios.post(
-        "http://localhost:8000/api/user/auth/register",
+      await api.post(
+        "/user/auth/register",
         {
           username,
           email,
@@ -30,6 +33,8 @@ const Register = () => {
   } catch (error) {
     console.log("error in register", error)
     setError(error)
+  } finally {
+    setLoading(false)
   }
     
   };
@@ -87,8 +92,23 @@ const Register = () => {
             </div>
 
             <div className="text-center">
-              <Button type="submit" className="mt-6 px-20 pt-2 text-slate-700 ">
-                Sign up
+              <Button
+                disabled={loading}
+                type="submit"
+                className="mt-6 px-20 pt-2 text-slate-700 "
+              >
+                {loading ? (
+                  <div className="flexCenter justify-center container ">
+                    <PuffLoader
+                      color={"#123abc"}
+                      size={43}
+                      radius={1}
+                      aria-label="puff-loading"
+                    />
+                  </div>
+                ) : (
+                  <h3> Sign Up</h3>
+                )}
               </Button>
             </div>
             <div className="mt-4">

@@ -1,29 +1,36 @@
 import { Card, Input, Button, Typography } from "@material-tailwind/react";
 import "./register.css";
-import axios from "axios";
+
 import { useState } from "react";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
+import { PuffLoader } from "react-spinners";
+import { api } from "../utils/api";
 
 const Login = () => {
   const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true);
     const formData = new FormData(e.target);
     const email = formData.get("email");
     const password = formData.get("password");
 
     try {
-      await axios.post("http://localhost:8000/api/user/auth/login", {
+      const response = await api.post("/user/auth/login", {
         email,
         password,
       });
+      localStorage.setItem("user", JSON.stringify(response.data))
       toast.success("Logged in Successfully.");
       navigate("/");
     } catch (error) {
       console.log("error in register", error);
       setError(error);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -68,14 +75,27 @@ const Login = () => {
             </div>
 
             <div className="text-center">
-              <Button type="submit" className="mt-6 px-20 pt-2 text-slate-700 ">
-                Sign in
+              <Button
+                disabled={loading}
+                type="submit"
+                className="mt-6 px-20 pt-2 text-slate-700 "
+              >
+                {loading ? (
+                  <div className="flexCenter justify-center container ">
+                    <PuffLoader
+                      color={"#123abc"}
+                      size={43}
+                      radius={1}
+                      aria-label="puff-loading"
+                    />
+                  </div>
+                ) : (
+                  <h3> Sign in</h3>
+                )}
               </Button>
             </div>
             <div className="mt-4">
-              {error && (
-                <span className="mt-4 text-red-800">Login Failed</span>
-              )}
+              {error && <span className="mt-4 text-red-800">Login Failed</span>}
             </div>
             <Typography color="gray" className="mt-4 py-2 font-normal">
               Don&apos;t have an account?{" "}
