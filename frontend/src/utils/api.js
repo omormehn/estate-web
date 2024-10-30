@@ -1,5 +1,4 @@
 import axios from "axios";
-import { toast } from "react-toastify";
 
 
 export const api = axios.create({
@@ -9,7 +8,7 @@ export const api = axios.create({
 const getAllProperties = async() => {
     try {
         const response = await api.get("/residency/allresd/", {
-            timeout: 10 * 1000,
+            timeout: 5 * 1000,
         });
 
         if (response.status === 400 || response.status === 500) {
@@ -17,22 +16,20 @@ const getAllProperties = async() => {
         }
         return response.data
     } catch (error) {
-        toast.error("Something went wrong")
-        throw error;
+        throw new error;
     }
 }
 const getProperty = async (id) => {
     try {
         const response = await api.get(`/residency/${id}`, {
-            timeout: 10 * 1000,
+            timeout: 5 * 1000,
         })
          if (response.status === 400 || response.status === 500) {
            throw response.data;
          }
          return response.data;
     } catch (error) {
-        toast.error("Something went wrong");
-        throw error;
+        throw new error;
     }
 }
 

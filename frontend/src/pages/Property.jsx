@@ -16,8 +16,6 @@ const Property = () => {
 
   const { data, isLoading, isError } = useQuery(["resd", id], () => getProperty(id));
 
-  console.log(data)
-
     if (isLoading) {
       return (
         <div className="flexCenter justify-center container h-[60vh]">

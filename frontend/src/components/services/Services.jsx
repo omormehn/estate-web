@@ -6,6 +6,7 @@ const Services = () => {
   const { ref, inView } = useInViewHook({threshold : 0})
   return (
     <section id="">
+      
       <div ref={ref} className="container py-12">
         <div className="container text-start pb-8">
           <h1 className="dark:text-white section-subtitle">OUR SERVICES</h1>

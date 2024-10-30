@@ -3,7 +3,7 @@ import { FiMenu } from "react-icons/fi";
 // import { BiSolidMoon, BiSolidSun } from "react-icons/bi";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { useAuth0 } from "@auth0/auth0-react"
+
 // import ProfileMenu from "../ProfileMenu/ProfileMenu";
 
 const NavbarMenu = [
@@ -32,7 +32,7 @@ const NavbarMenu = [
 const Navbar = () => {
   const [isNavbarHidden, setIsNavbarHidden] = useState(false);
   const [prevScrollPosition, setPrevScrollPosition] = useState(0);
-  const {loginWithRedirect, isAuthenticated, logout} = useAuth0()
+ 
 
   //sets defaults values of keys
   const [showMenu, setShowMenu] = React.useState(false);
@@ -84,7 +84,7 @@ const Navbar = () => {
   //  navbar
   useEffect(() => {
     const handleOutsideClick = (event) => {
-      if (!event.target.closest(".navbar")) {
+      if (!event.tar(".navbar")) {
         setShowMenu(false);
       }
     };
@@ -112,13 +112,7 @@ const Navbar = () => {
 
           {/* DESKTOP MENU */}
           <div className="list-none  hidden lg:flex lg:flex-row gap-8 text-white">
-            {NavbarMenu.filter((menu) => {
-              if (isAuthenticated) {
-                return menu.name === "Home" || menu.name === "Properties";
-              } else {
-                return true;
-              }
-            }).map((menu) => (
+            {NavbarMenu.map((menu) => (
               <li key={menu.id} className="py-2">
                 {menu.url.startsWith("#") ? (
                   <a
@@ -137,18 +131,11 @@ const Navbar = () => {
               </li>
             ))}
 
-            {isAuthenticated ? (
-              <div className="flexCenter gap-4">
-                {/* <ProfileMenu/> */}
-                <a onClick={logout} className="button grad ">
-                  Logout
-                </a>
-              </div>
-            ) : (
-              <a onClick={loginWithRedirect} className=" button grad ">
+            
+              <a  className=" button grad ">
                 GET STARTED
               </a>
-            )}
+         
           </div>
 
           {/* MOBILE MENU */}
@@ -168,15 +155,7 @@ const Navbar = () => {
                     className="flex flex-col
                         items-center gap-4"
                   >
-                    {NavbarMenu.filter((menu) => {
-                      if (isAuthenticated) {
-                        return (
-                          menu.name === "Home" || menu.name === "Properties"
-                        );
-                      } else {
-                        return true;
-                      }
-                    }).map((menu) => (
+                    {NavbarMenu.map((menu) => (
                       <li key={menu.name}>
                         <a
                           href={menu.url}
@@ -189,15 +168,13 @@ const Navbar = () => {
                   </ul>
 
                   <div className="flexCenter">
-                    {!isAuthenticated ? (
-                      <a onClick={loginWithRedirect} className=" button grad ">
+                      <a  className=" button grad ">
                         GET STARTED
                       </a>
-                    ) : (
-                      <a onClick={logout} className=" button grad ">
+                      <a  className=" button grad ">
                         Logout
                       </a>
-                    )}
+                 
                   </div>
                 </div>
               </div>
