@@ -9,6 +9,7 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css"
 import Property from "./pages/Property";
 import Register from "./pages/Register";
+import Login from "./pages/Login";
 
 function App() {
 
@@ -21,11 +22,12 @@ function App() {
           <Routes>
             <Route element={<Layout />}>
               <Route path="/" element={<Website />} />
-              <Route path="/properties"> 
-                <Route index element={<Properties />} /> 
-                <Route path=":propertyId" element={<Property />} /> 
+              <Route path="/properties">
+                <Route index element={<Properties />} />
+                <Route path=":propertyId" element={<Property />} />
               </Route>
-              <Route path="/signup" element={<Register/>}/>
+              <Route path="/signup" element={<Register />} />
+              <Route path="/login" element={<Login />} />
             </Route>
           </Routes>
         </Suspense>
