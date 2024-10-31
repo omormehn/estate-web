@@ -16,9 +16,9 @@ const Hero = () => {
   console.log(currentUser);
   return (
     <section className=" ">
-      <div className="bg-section dark:bg-black">
+      <div className="bg-section ">
         {/* top part */}
-        <div ref={ref} className="container text-center pt-40 dark:text-white">
+        <div ref={ref} className="container text-center pt-40">
           <motion.h1
             variants={FadeInFromTop(0.6)}
             initial="initial"
@@ -59,7 +59,7 @@ const Hero = () => {
             variants={FadeInFromLeft(0.6)}
             initial="initial"
             animate={inView ? "animate" : "initial"}
-            className="py-[20px] dark:text-white"
+            className="py-[20px] "
           >
             <p className="gap-1 mb-5 ">
               <MdOutlineAddHomeWork className="text-3xl" />
@@ -74,7 +74,7 @@ const Hero = () => {
               You are one step a way from realizing your dream home. 
             </p>
 
-            <a href="{{ url_for('property') }}" className="primary-btn mt-10">
+            <a href="/properties" className="primary-btn mt-10">
               {" "}
               Learn More
             </a>

@@ -2,17 +2,16 @@ import { IoHomeSharp } from "react-icons/io5";
 import { MdOutlineVerified } from "react-icons/md";
 import { PiCrown } from "react-icons/pi";
 import { GiButterflyFlower } from "react-icons/gi";
-import {  motion } from "framer-motion";
-import {  FadeInFromTop } from "../../utils/motion";
+import { motion } from "framer-motion";
+import { FadeInFromTop } from "../../utils/motion";
 import useInViewHook from "../../utils/inView";
-
 
 const About = () => {
   const { ref, inView } = useInViewHook({ threshold: 0 });
 
   return (
-    <section id="about">
-      <div ref={ref} className=" dark:bg-black">
+    <section className=" " id="about">
+      <div ref={ref}>
         <motion.div
           variants={FadeInFromTop(0.6)}
           initial="initial"
