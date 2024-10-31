@@ -2,7 +2,7 @@ import axios from "axios";
 
 
 export const api = axios.create({
-  baseURL: `${process.env.SERVER_SIDE}/api`,
+  baseURL: `${import.meta.env.SERVER_SIDE}/api`,
   withCredentials: true,
 });
 
