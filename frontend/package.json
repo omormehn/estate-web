@@ -35,6 +35,7 @@
         "react-toastify": "^10.0.5",
         "reactstrap": "^9.2.2",
         "safe-buffer": "^5.2.1",
+        "sass": "^1.80.5",
         "swiper": "^11.1.14",
         "use-swiper": "^1.2.1"
     },

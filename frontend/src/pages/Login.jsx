@@ -1,16 +1,20 @@
 import { Card, Input, Button, Typography } from "@material-tailwind/react";
 import "./register.css";
 
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { toast } from "react-toastify";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { PuffLoader } from "react-spinners";
 import { api } from "../utils/api";
+import AuthContext from "../context/AuthContext";
 
 const Login = () => {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
+
+   const { updateUser } = useContext(AuthContext);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
@@ -23,7 +27,7 @@ const Login = () => {
         email,
         password,
       });
-      localStorage.setItem("user", JSON.stringify(response.data))
+     updateUser(response.data);
       toast.success("Logged in Successfully.");
       navigate("/");
     } catch (error) {
@@ -99,9 +103,10 @@ const Login = () => {
             </div>
             <Typography color="gray" className="mt-4 py-2 font-normal">
               Don&apos;t have an account?{" "}
-              <a href="/register" className="font-medium text-gray-900">
+              <a href="/signup" className="font-medium text-gray-900">
                 Sign Up
               </a>
+            
             </Typography>
           </form>
         </div>

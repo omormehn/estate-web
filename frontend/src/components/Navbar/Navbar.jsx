@@ -3,6 +3,18 @@ import { FiMenu } from "react-icons/fi";
 // import { BiSolidMoon, BiSolidSun } from "react-icons/bi";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { useContext } from "react";
+import AuthContext from "../../context/AuthContext";
+import { api } from "../../utils/api";
+import { toast } from "react-toastify";
+import {
+  Menu,
+  MenuHandler,
+  MenuList,
+} from "@material-tailwind/react";
+ import { IoLogOutOutline } from "react-icons/io5";
+ import { FaRegUser } from "react-icons/fa";
+
 
 // import ProfileMenu from "../ProfileMenu/ProfileMenu";
 
@@ -32,7 +44,8 @@ const NavbarMenu = [
 const Navbar = () => {
   const [isNavbarHidden, setIsNavbarHidden] = useState(false);
   const [prevScrollPosition, setPrevScrollPosition] = useState(0);
- 
+  const [dropDownOpen, setDropDownOpen] = useState(false);
+  const { updateUser, currentUser } = useContext(AuthContext);
 
   //sets defaults values of keys
   const [showMenu, setShowMenu] = React.useState(false);
@@ -40,6 +53,16 @@ const Navbar = () => {
   //  const [theme, setTheme] = React.useState(
   //    localStorage.getItem("theme") ? localStorage.getItem("theme") : "light"
   //  );
+
+  const handleLogout = async () => {
+    await api.post("/user/auth/logout");
+    updateUser(null);
+    toast.success("Logged out Successfully.");
+    navigate("/");
+  };
+  const toggleDropDown = () => {
+    setDropDownOpen(!dropDownOpen);
+  };
 
   // for changes
   const toggleMenu = () => {
@@ -104,38 +127,85 @@ const Navbar = () => {
     >
       <nav id="navbar">
         <div className="flexCenter justify-between lg:justify-around gap-x-24 xs:gap-x-44 sm:gap-x-32 lg:gap-x-[10vw] md:gap-x-[15rem] xl:gap-x-[25vw] ">
-          <img
-            src="./logo2.png"
-            className="w-40 h-20 py-2 lg:w-56"
-            alt="logo"
-          />
+          <Link to="/">
+            <img
+              src="./logo2.png"
+              className="w-40 h-20 py-2 lg:w-56"
+              alt="logo"
+            />
+          </Link>
 
           {/* DESKTOP MENU */}
           <div className="list-none  hidden lg:flex lg:flex-row gap-8 text-white">
-            {NavbarMenu.map((menu) => (
-              <li key={menu.id} className="py-2">
-                {menu.url.startsWith("#") ? (
-                  <a
-                    href={menu.url}
-                    onClick={(e) => {
-                      e.preventDefault();
-                      const section = document.querySelector(menu.url);
-                      section.scrollIntoView({ behavior: "smooth" });
-                    }}
-                  >
-                    {menu.name}
-                  </a>
-                ) : (
-                  <Link to={menu.url}>{menu.name}</Link>
-                )}
-              </li>
-            ))}
+            {NavbarMenu.map((menu) => {
+              if (currentUser) {
+                return (
+                  (menu.name === "Properties" || menu.name === "Profile") && (
+                    <li key={menu.id} className="py-2 flex items-center gap-5">
+                      <Link to={menu.url}>{menu.name}</Link>
+                      <div className="flex gap-3 items-center">
+                        <Menu>
+                          <MenuHandler>
+                            <div className="flex items-center gap-4 cursor-pointer">
+                              <img
+                                className="w-7 rounded-full"
+                                src={currentUser.user.image || "image.png"}
+                                alt=""
+                              />
+                              <p className="text-sm font-semibold">
+                                {currentUser.user.username}
+                              </p>
+                            </div>
+                          </MenuHandler>
+                          <div className="absolute w-12">
+                            <MenuList className="z- flex flex-col border-0 px-3 py-6 gap-2">
+                              <div className="flex gap-2 items-center">
+                                <FaRegUser />
+                                <Link to="/profile">Profile</Link>
+                              </div>
+                              <div className="flex gap-2 items-center">
+                                <IoLogOutOutline />
+                                <p
+                                  onClick={handleLogout}
+                                  className="text-black font-normal cursor-pointer"
+                                >
+                                  Logout
+                                </p>
+                              </div>
+                            </MenuList>
+                          </div>
+                        </Menu>
+                      </div>
+                    </li>
+                  )
+                );
+              }
+              // If no user is logged in, show all menu items
+              return (
+                <li key={menu.id} className="py-2">
+                  {menu.url.startsWith("#") ? (
+                    <a
+                      href={menu.url}
+                      onClick={(e) => {
+                        e.preventDefault();
+                        const section = document.querySelector(menu.url);
+                        section.scrollIntoView({ behavior: "smooth" });
+                      }}
+                    >
+                      {menu.name}
+                    </a>
+                  ) : (
+                    <Link to={menu.url}>{menu.name}</Link>
+                  )}
+                </li>
+              );
+            })}
 
-            
-              <a href="/signup"  className=" button grad ">
+            {!currentUser && (
+              <a href="/signup" className="button grad">
                 GET STARTED
               </a>
-         
+            )}
           </div>
 
           {/* MOBILE MENU */}
@@ -155,23 +225,83 @@ const Navbar = () => {
                     className="flex flex-col
                         items-center gap-4"
                   >
-                    {NavbarMenu.map((menu) => (
-                      <li key={menu.name}>
-                        <a
-                          href={menu.url}
-                          className="text-xl font-semibold px-2 py-4 md:py-6 inline-block cursor-pointer"
-                        >
-                          {menu.name}
-                        </a>
-                      </li>
-                    ))}
+                    {NavbarMenu.map((menu) => {
+                      if (currentUser) {
+                        return (
+                          menu.name === "Properties" && (
+                            <li
+                              key={menu.id}
+                              className="py-2 flex flex-col  items-center gap-5"
+                            >
+                              <Link to={menu.url}>{menu.name}</Link>
+                              <div className=" gap-3 items-center">
+                                <Menu>
+                                  <MenuHandler>
+                                    <div className="flex items-center gap-4 cursor-pointer">
+                                      <img
+                                        className="w-7 rounded-full"
+                                        src={
+                                          currentUser.user.image || "image.png"
+                                        }
+                                        alt=""
+                                      />
+                                      <p className="text-sm font-semibold">
+                                        {currentUser.user.username}
+                                      </p>
+                                    </div>
+                                  </MenuHandler>
+                                  <div className="absolute w-12">
+                                    <MenuList className="z-50 flex flex-col border-0 px-3 py-6 gap-2">
+                                      <div className="flex gap-2 items-center">
+                                        <FaRegUser />
+                                        <Link to="/profile">Profile</Link>
+                                      </div>
+                                      <div className="flex gap-2 items-center">
+                                        <IoLogOutOutline />
+                                        <p
+                                          onClick={handleLogout}
+                                          className="text-black font-normal cursor-pointer"
+                                        >
+                                          Logout
+                                        </p>
+                                      </div>
+                                    </MenuList>
+                                  </div>
+                                </Menu>
+                              </div>
+                            </li>
+                          )
+                        );
+                      }
+                      return (
+                        <li key={menu.id} className="py-2">
+                          {menu.url.startsWith("#") ? (
+                            <a
+                              href={menu.url}
+                              onClick={(e) => {
+                                e.preventDefault();
+                                const section = document.querySelector(
+                                  menu.url
+                                );
+                                section.scrollIntoView({ behavior: "smooth" });
+                              }}
+                            >
+                              {menu.name}
+                            </a>
+                          ) : (
+                            <Link to={menu.url}>{menu.name}</Link>
+                          )}
+                        </li>
+                      );
+                    })}
                   </ul>
-
-                  <div className="flexCenter">
-                      <a href="/signup"  className=" button grad ">
+                  {!currentUser && (
+                    <div className="flex justify-center">
+                      <a href="/signup" className=" button grad">
                         GET STARTED
-                      </a>                 
-                  </div>
+                      </a>
+                    </div>
+                  )}
                 </div>
               </div>
             )}

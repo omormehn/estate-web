@@ -1,4 +1,4 @@
-import Website from "./pages/Website";
+import Website, { RequiredAuth } from "./pages/Website";
 import {BrowserRouter, Routes, Route} from "react-router-dom";
 import { Suspense } from 'react';
 import Layout from "./components/layout/Layout";
@@ -10,6 +10,7 @@ import "react-toastify/dist/ReactToastify.css"
 import Property from "./pages/Property";
 import Register from "./pages/Register";
 import Login from "./pages/Login";
+
 
 function App() {
 
@@ -28,6 +29,7 @@ function App() {
               </Route>
               <Route path="/signup" element={<Register />} />
               <Route path="/login" element={<Login />} />
+              <Route path="/profile" element={<RequiredAuth/>}/>
             </Route>
           </Routes>
         </Suspense>
