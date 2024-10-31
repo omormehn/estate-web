@@ -11,7 +11,7 @@ import Value from "./components/value/Value";
 
 function App() {
 
-  return <>
+  return <div className="overflow-x-hidden">
     <Navbar />
     <Hero />
     <About/>
@@ -20,7 +20,7 @@ function App() {
     <Property />
     <Owner />
     <Footer />
-  </>
+  </div>
   
 }
 

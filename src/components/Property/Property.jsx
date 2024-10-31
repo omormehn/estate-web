@@ -6,6 +6,11 @@ import { FaShower } from "react-icons/fa";
 import { TbRulerMeasure } from "react-icons/tb";
 import { IoIosArrowForward, IoIosArrowBack } from "react-icons/io";
 import { MdOutlineLocationOn } from "react-icons/md";
+import useInViewHook from "../../utils/inView";
+import { motion } from "framer-motion";
+import { FadeInFromTop } from "../../utils/motion";
+
+
 
 const badgeColors = {
   "For Sale": " bg-red-500",
@@ -15,9 +20,16 @@ const badgeColors = {
 
 
 const Property = () => {
+  const { ref, inView } = useInViewHook({ threshold: 0 });  
+
   return (
-    <section id="property">
-      <div className="container py-12 ">
+    <section ref={ref} id="property">
+      <motion.div
+        variants={FadeInFromTop(1)}
+        initial="initial"
+        animate={inView ? "animate" : "initial"}
+        className="container py-12 "
+      >
         <div>
           <h1 className="section-subtitle text-end">Our Listings</h1>
         </div>
@@ -45,10 +57,9 @@ const Property = () => {
                   </div>
                   <div className="banner-actions text-white font-bold">
                     <button className="flex gap-2">
-                      <MdOutlineLocationOn className="mt-1"/>
+                      <MdOutlineLocationOn className="mt-1" />
                       <address>Gwarinpa, Abuja</address>
                     </button>
-
                   </div>
                 </figure>
 
@@ -84,11 +95,13 @@ const Property = () => {
             </SwiperSlide>
           ))}
           <div className="text-end container pt-8">
-            <a href="" className="border-b  border-black">Show More</a>
+            <a href="" className="border-b  border-black">
+              Show More
+            </a>
           </div>
           <SliderButton />
         </Swiper>
-      </div>
+      </motion.div>
     </section>
   );
 }
