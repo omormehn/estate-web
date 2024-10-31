@@ -1,40 +1,20 @@
-import React from "react";
 import { MdOutlineAddHomeWork } from "react-icons/md";
-import { motion, useInView } from "framer-motion";
-import { FadeInFromTop, FadeInFromLeft, FadeInFromRight } from "../../utils/motion";
-
-
-export const FadeUp = (delay) => {
-  return {
-    initial: {
-      opacity: 0,
-      y: 50,
-    },
-    animate: {
-      opacity: 1,
-      y: 0,
-      transition: {
-        type: "spring",
-        stiffness: 100,
-        duration: 0.5,
-        delay: delay,
-        ease: "easeInOut",
-      },
-    },
-  };
-};
-
-
+import { motion } from "framer-motion";
+import {
+  FadeInFromTop,
+  FadeInFromLeft,
+  FadeInFromRight,
+} from "../../utils/motion";
+import useInViewHook from "../../utils/inView";
 
 const Hero = () => {
-  const ref = React.createRef();
-  const inView = useInView(ref, {threshold: 0 });
+  const { ref, inView } = useInViewHook({ threshold: 0 });
 
   return (
     <section className=" ">
-      <div className="bg-section dark:bg-black">
+      <div className="bg-section">
         {/* top part */}
-        <div ref={ref} className="container text-center pt-40 dark:text-white">
+        <div ref={ref} className="container text-center pt-40 ">
           <motion.h1
             variants={FadeInFromTop(0.6)}
             initial="initial"
@@ -46,13 +26,11 @@ const Hero = () => {
             Success
           </motion.h1>
 
-         
-          <h1 className="typewrite text-2xl font-bold tracking-[2rem] md:text-5xl md:tracking-[4rem] lg:text-7xl lg:tracking-[7rem] mt-10 text-wrap">
-            DAMISA
-          </h1>
-         
+          <div className="container ">
+            <h1 className="typewrite lg:my-4 text-2xl font-bold tracking-[2rem] md:text-5xl md:tracking-[4rem] lg:text-7xl lg:tracking-[5rem] xl:tracking-[7rem] mt-10 text-wrap">
+              DAMISA
+            </h1>
 
-          <div className="container">
             <p
               className="text-center md:text-right md:text-2xl lg:text-3xl font-poppins
         text-xl mr-4 md:mr-28 lg:-mr-16 tracking-[1rem] lg:tracking-[2rem] lg:whitespace-nowrap"
@@ -69,7 +47,7 @@ const Hero = () => {
             initial="initial"
             animate={inView ? "animate" : "initial"}
             src="./hero/house1.png"
-            className="rounded-lg pt-12 lg:order-1"
+            className="rounded-lg pt-12 lg:order-1 lg:"
             alt=""
           />
           {/* Hero bottom left */}
@@ -77,20 +55,19 @@ const Hero = () => {
             variants={FadeInFromLeft(0.6)}
             initial="initial"
             animate={inView ? "animate" : "initial"}
-            className="py-[20px] dark:text-white"
+            className="py-[20px]"
           >
             <p className="gap-1 mb-5 ">
               <MdOutlineAddHomeWork className="text-3xl" />
               <span className="font-bold text-sm  ">Real Estate Agency</span>
             </p>
 
-            <h2 className="font-poppins leading-[1.3] mb-5 text-3xl md:text-[2.5rem] lg:text-6xl font-semibold">
-              Discover Your Dream House Today
+            <h2 className="font-serif leading-[1.3] mb-5 text-3xl md:text-[2.5rem] xl:text-6xl  font-semibold">
+              Discover Your Dream Home Today
             </h2>
 
-            <p className="text-sm md:text-lg lg:text-xl pl-4 border-l-[1px] border-solid leading-6 font-light">
-              Lorem ipsum dolor sit amet, consectetur adipisicing elit, eiusmod
-              tempor incididunt .
+            <p className="text-sm md:text-lg lg:text-xl pl-4 border-l-[2px] border-solid leading-6 font-light">
+              You are one step a way from realizing your dream home. 
             </p>
 
             <a href="{{ url_for('property') }}" className="primary-btn mt-10">
@@ -102,6 +79,6 @@ const Hero = () => {
       </div>
     </section>
   );
-}
+};
 
-export default Hero
+export default Hero;
