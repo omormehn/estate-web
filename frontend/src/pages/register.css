@@ -1,0 +1,18 @@
+.input {
+    width: 15rem;
+}
+@media (min-width:375px) {
+    .input {
+        width: 18rem;
+    }
+}
+@media (min-width:425px) {
+    .input {
+        width: 20rem;
+    }
+}
+@media (min-width:728px) {
+    .input {
+        width: 24rem;
+    }
+}
