@@ -1,5 +1,5 @@
 import { Button } from "@material-tailwind/react";
-import Chat from "../../components/chat/Chat";
+import Chat from "../Chat/Chat";
 import "./profile.scss"
 import {api} from "../../utils/api";
 import { useNavigate } from "react-router-dom";
