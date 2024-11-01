@@ -2,7 +2,7 @@ import axios from "axios";
 
 
 export const api = axios.create({
-  baseURL: `${import.meta.env.SERVER_SIDE}/api`,
+  baseURL: https://estate-web-backend.onrender.com/api`,
   withCredentials: true,
 });
 
