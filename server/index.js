@@ -19,7 +19,7 @@ const PORT = process.env.PORT || 3000; // it can take 3000 as a fallback
 app.use(express.json());
 app.use(cookieParser());
 app.use(cors({
-    origin: process.env.CLIENT_URL,
+    origin: "https://estate-fullstack.netlify.app",
     credentials: true
 }))
 
