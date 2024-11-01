@@ -29,7 +29,7 @@ const Register = () => {
         }
       );
       toast.success('Account Created Successfully.')
-      navigate('login')
+      navigate('/login')
   } catch (error) {
     console.log("error in register", error)
     setError(error)
