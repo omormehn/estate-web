@@ -1,39 +1,46 @@
-import { Button } from "@material-tailwind/react";
+import {
+  Button,
+} from "@material-tailwind/react";
 import Chat from "../Chat/Chat";
-import "./profile.scss"
-import {api} from "../../utils/api";
+import "./profile.scss";
+import { api } from "../../utils/api";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import AuthContext from "../../context/AuthContext";
+import Modal from "../../utils/Modal";
+import { createPortal } from "react-dom";
 
 function ProfilePage() {
+  const [isOpen, setIsOpen] = useState(false);
+
   const navigate = useNavigate();
   const { updateUser, currentUser } = useContext(AuthContext);
 
   const handleLogout = async () => {
     await api.post("/user/auth/logout");
-    updateUser(null)
+    updateUser(null);
     toast.success("Logged out Successfully.");
-    navigate('/')
-  }
-
+    navigate("/");
+  };
 
   return (
     <div className="profilePage container pt-32">
       <div className="details">
         <div className="wrapper">
-          <div className="title">
-            <h1>User Information</h1>
-            <button>Update Profile</button>
+          <div className="title flex flex-col md:items-center md:flex-row">
+            <h1>User Information:</h1>
+
+            <div className=" lg:block pt-4 ">
+              {isOpen &&
+                createPortal(<Modal setIsOpen={setIsOpen} />, document.body)}
+              <button className="py-1 px-6" onClick={() => setIsOpen(true)}>Update Profile</button>
+            </div>
           </div>
           <div className="info">
             <span>
               Avatar:
-              <img
-                src={currentUser.image || "image.png"}
-                alt=""
-              />
+              <img src={currentUser.user.image || "image.png"} alt="" />
             </span>
             <span>
               Username: <b>{currentUser.user.username}</b>
@@ -45,7 +52,7 @@ function ProfilePage() {
               onClick={handleLogout}
               className="mt-6 px-20 pt-2 text-slate-700 "
             >
-               Logout
+              Logout
             </Button>
           </div>
           <div className="title">

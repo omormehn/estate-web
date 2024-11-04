@@ -1,6 +1,6 @@
 import bcrypt from "bcrypt";
 import { generateTokenAndSetCookie } from "../utils/generateTokenAndSetCookie.js";
-import prisma from "../config/prigmaConfig.js";
+import prisma from "../config/prismaConfig.js";
 
 export const register = async (req, res) => {
   const { email, password, username } = req.body;
