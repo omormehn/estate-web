@@ -11,9 +11,9 @@ import AuthContext from "../../context/AuthContext";
 import Modal from "../../utils/Modal";
 import { createPortal } from "react-dom";
 
+
 function ProfilePage() {
   const [isOpen, setIsOpen] = useState(false);
-
   const navigate = useNavigate();
   const { updateUser, currentUser } = useContext(AuthContext);
 
@@ -34,13 +34,16 @@ function ProfilePage() {
             <div className=" lg:block pt-4 ">
               {isOpen &&
                 createPortal(<Modal setIsOpen={setIsOpen} />, document.body)}
-              <button className="py-1 px-6" onClick={() => setIsOpen(true)}>Update Profile</button>
+              <button className="py-1 px-6" onClick={() => setIsOpen(true)}>
+                Update Profile
+              </button>
             </div>
           </div>
           <div className="info">
             <span>
               Avatar:
               <img src={currentUser.user.image || "image.png"} alt="" />
+             
             </span>
             <span>
               Username: <b>{currentUser.user.username}</b>

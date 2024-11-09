@@ -55,10 +55,14 @@ export const login = async (req, res) => {
         email,
       },
     });
+    if (!user ) {
+      return res.status(400).json({ message: "Invalid Credentials" });
+    }
  
-    const isValidPassword = await bcrypt.compare(password, user.password);
+       const isValidPassword = await bcrypt.compare(password, user.password);
+   
 
-    if(!user || !isValidPassword)  return res
+    if(!isValidPassword)  return res
       .status(401)
       .json({ message: "Invalid Credentials", success: false });
 

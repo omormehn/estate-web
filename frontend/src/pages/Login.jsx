@@ -3,7 +3,7 @@ import "./register.css";
 
 import { useContext, useState } from "react";
 import { toast } from "react-toastify";
-import { Link, useNavigate } from "react-router-dom";
+import {  useNavigate } from "react-router-dom";
 import { PuffLoader } from "react-spinners";
 import { api } from "../utils/api";
 import AuthContext from "../context/AuthContext";
@@ -27,12 +27,13 @@ const Login = () => {
         email,
         password,
       });
-     updateUser(response.data);
+      updateUser(response.data);
       toast.success("Logged in Successfully.");
       navigate("/");
     } catch (error) {
       console.log("error in register", error);
-      setError(error);
+      setError(error.response.data.message);
+     
     } finally {
       setLoading(false);
     }
@@ -54,6 +55,7 @@ const Login = () => {
                 Email
               </Typography>
               <Input
+                required
                 size="lg"
                 name="email"
                 type="email"
@@ -67,6 +69,7 @@ const Login = () => {
                 Password
               </Typography>
               <Input
+                required
                 type="password"
                 name="password"
                 size="lg"
@@ -99,7 +102,7 @@ const Login = () => {
               </Button>
             </div>
             <div className="mt-4">
-              {error && <span className="mt-4 text-red-800">Login Failed</span>}
+              {error && <span className="mt-4 text-red-800">{error}</span>}
             </div>
             <Typography color="gray" className="mt-4 py-2 font-normal">
               Don&apos;t have an account?{" "}
