@@ -28,11 +28,11 @@ const Footer = () => {
         <div className="py-10 lg:py-0 lg:ml-8 text-lgcode is goo">
           <h1 className="mt-4 text-lg font-bold">Quick Links</h1>
           <div className="grid gap-3 py-8">
-            <a href="">Home</a>
-            <a href="">About</a>
+            <a href="/">Home</a>
+            <a href="#about">About</a>
             <a href="">Services</a>
-            <a href="">Properties</a>
-            <a href="">Become an Agent</a>
+            <a href="/properties">Properties</a>
+            <a href="#contact">Become an Agent</a>
           </div>
         </div>
         {/* Col-3 */}

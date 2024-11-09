@@ -79,6 +79,7 @@ const Login = () => {
                   className: "before:content-none after:content-none",
                 }}
               />
+              <a className="" href="/">Forgot Password?</a>
             </div>
 
             <div className="text-center">

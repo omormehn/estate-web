@@ -9,7 +9,7 @@ export const api = axios.create({
 const getAllProperties = async() => {
     try {
         const response = await api.get("/residency/allresd/", {
-            timeout: 5 * 1000,
+            timeout: 5 * 100,
         });
 
         if (response.status === 400 || response.status === 500) {

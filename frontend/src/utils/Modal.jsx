@@ -51,7 +51,7 @@ const Modal = ({ setIsOpen }) => {
           </div>
           <div className=" pt-4">
             <div className="flex gap-10">
-              <img className="w-14 rounded-full" src={avatar || "image.png"} alt="" />
+              <img className="w-14 rounded-full" src={avatar ? (avatar) : ("../../public/image.png")} alt="" />
               <UploadWidget
                 uwConfig={{
                   cloudName: "omormehn",

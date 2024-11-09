@@ -54,7 +54,7 @@ function UploadWidget({ uwConfig, setAvatar }) {
         className="text-black"
         onClick={initializeCloudinaryWidget}
       >
-        Add Image
+       Upload
       </Button>
     </CloudinaryScriptContext.Provider>
   );

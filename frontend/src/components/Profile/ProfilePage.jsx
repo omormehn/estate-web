@@ -25,7 +25,7 @@ function ProfilePage() {
   };
 
   return (
-    <div className="profilePage container pt-32">
+    <div className="profilePage  container pt-32">
       <div className="details">
         <div className="wrapper">
           <div className="title flex flex-col md:items-center md:flex-row">
@@ -43,7 +43,6 @@ function ProfilePage() {
             <span>
               Avatar:
               <img src={currentUser.user.image || "image.png"} alt="" />
-             
             </span>
             <span>
               Username: <b>{currentUser.user.username}</b>
@@ -53,14 +52,16 @@ function ProfilePage() {
             </span>
             <Button
               onClick={handleLogout}
-              className="mt-6 px-20 pt-2 text-slate-700 "
+              className="mt-6 max-w-48 pt-2 text-slate-700 "
             >
               Logout
             </Button>
           </div>
-          <div className="title">
-            <h1>My List</h1>
-            <button>Create New Post</button>
+          <div className="title items-center">
+            <h1 className="font-bold">My List</h1>
+            <button className="py-2 px-2" onClick={() => setIsOpen(true)}>
+               Create New Post
+            </button>
           </div>
 
           <div className="title">

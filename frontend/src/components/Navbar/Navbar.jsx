@@ -2,7 +2,7 @@ import React from "react";
 import { FiMenu } from "react-icons/fi";
 // import { BiSolidMoon, BiSolidSun } from "react-icons/bi";
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useContext } from "react";
 import AuthContext from "../../context/AuthContext";
 import { api } from "../../utils/api";
@@ -14,9 +14,6 @@ import {
 } from "@material-tailwind/react";
  import { IoLogOutOutline } from "react-icons/io5";
  import { FaRegUser } from "react-icons/fa";
-
-
-// import ProfileMenu from "../ProfileMenu/ProfileMenu";
 
 const NavbarMenu = [
   {
@@ -44,8 +41,9 @@ const NavbarMenu = [
 const Navbar = () => {
   const [isNavbarHidden, setIsNavbarHidden] = useState(false);
   const [prevScrollPosition, setPrevScrollPosition] = useState(0);
-  const [dropDownOpen, setDropDownOpen] = useState(false);
   const { updateUser, currentUser } = useContext(AuthContext);
+
+  const navigate = useNavigate();
 
   //sets defaults values of keys
   const [showMenu, setShowMenu] = React.useState(false);
@@ -60,9 +58,7 @@ const Navbar = () => {
     toast.success("Logged out Successfully.");
     navigate("/");
   };
-  const toggleDropDown = () => {
-    setDropDownOpen(!dropDownOpen);
-  };
+
 
   // for changes
   const toggleMenu = () => {
@@ -126,13 +122,21 @@ const Navbar = () => {
       }`}
     >
       <nav id="navbar">
-        <div className="flexCenter justify-between lg:justify-around gap-x-24 xs:gap-x-44 sm:gap-x-32 lg:gap-x-[10vw] md:gap-x-[15rem] xl:gap-x-[25vw] ">
+        <div
+          className={
+            currentUser
+              ? "flexCenter justify-between lg:justify-around gap-x-24 xs:gap-x-44 sm:gap-x-32 lg:gap-x-[15vw] md:gap-x-[20rem] xl:gap-x-[35vw]"
+              : "flexCenter justify-between lg:justify-around gap-x-24 xs:gap-x-44 sm:gap-x-32 lg:gap-x-[1vw] md:gap-x-[20rem]"
+          }
+        >
           <Link to="/">
-            <img
-              src="./logo2.png"
-              className="w-40 h-20 py-2 lg:w-56"
-              alt="logo"
-            />
+            <div className="lg:pr-28">
+              <img
+                src="./logo2.png"
+                className="w-36 h-20 py-2 lg:w-56  lg:pr-10"
+                alt="logo"
+              />
+            </div>
           </Link>
 
           {/* DESKTOP MENU */}
@@ -202,7 +206,7 @@ const Navbar = () => {
             })}
 
             {!currentUser && (
-              <a href="/signup" className="button grad">
+              <a href="/login" className="button grad">
                 GET STARTED
               </a>
             )}
@@ -233,7 +237,8 @@ const Navbar = () => {
                               key={menu.id}
                               className="py-2 flex flex-col  items-center gap-5"
                             >
-                              <Link to={menu.url}>{menu.name}</Link>
+                              <Link to={menu.url} >{menu.name} </Link>
+                              {window.location.reload}
                               <div className=" gap-3 items-center">
                                 <Menu>
                                   <MenuHandler>
@@ -280,16 +285,20 @@ const Navbar = () => {
                               href={menu.url}
                               onClick={(e) => {
                                 e.preventDefault();
+                                setShowMenu(false);
                                 const section = document.querySelector(
                                   menu.url
                                 );
                                 section.scrollIntoView({ behavior: "smooth" });
+                                
                               }}
                             >
                               {menu.name}
                             </a>
                           ) : (
-                            <Link to={menu.url}>{menu.name}</Link>
+                            <Link onClick={() => {
+                              setShowMenu(false)
+                            }} to={menu.url}>{menu.name}</Link>
                           )}
                         </li>
                       );
@@ -297,7 +306,7 @@ const Navbar = () => {
                   </ul>
                   {!currentUser && (
                     <div className="flex justify-center">
-                      <a href="/signup" className=" button grad">
+                      <a href="/login" className=" button grad">
                         GET STARTED
                       </a>
                     </div>
