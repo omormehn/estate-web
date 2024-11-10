@@ -28,6 +28,6 @@ app.listen(PORT, () => {
 });
 
 app.use("/api/user", userRoute);
-app.use("/api/residency", residencyRoute);
+app.use("/api/user/residency", residencyRoute);
 app.use("/api/user/auth", authRoute);
 app.use("/api/user/test", testRoute);

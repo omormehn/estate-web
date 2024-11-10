@@ -23,7 +23,7 @@ const Login = () => {
     const password = formData.get("password");
 
     try {
-      const response = await api.post("/user/auth/login", {
+      const response = await api.post("/auth/login", {
         email,
         password,
       });
@@ -31,7 +31,7 @@ const Login = () => {
       toast.success("Logged in Successfully.");
       navigate("/");
     } catch (error) {
-      console.log("error in register", error);
+      console.log("error in login", error);
       setError(error.response.data.message);
      
     } finally {

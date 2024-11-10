@@ -3,12 +3,12 @@ import { useContext, useState } from "react";
 import { RiCloseLine } from "react-icons/ri";
 import { PuffLoader } from "react-spinners";
 import "./modal.css";
-import AuthContext from "../context/AuthContext";
-import { api } from "./api";
+import AuthContext from "../../context/AuthContext";
+import { api } from "../../utils/api";
 import { toast } from "react-toastify";
-import UploadWidget from "../components/UploadWidget/UploadWidget";
+import UploadWidget from "../UploadWidget/UploadWidget";
 
-const Modal = ({ setIsOpen }) => {
+const UpdateModal = ({ setIsOpen }) => {
   const [loading, setLoading] = useState(false);
   const { currentUser, updateUser } = useContext(AuthContext);
   const [ avatar, setAvatar ] = useState(currentUser.user.image);
@@ -108,4 +108,4 @@ const Modal = ({ setIsOpen }) => {
   );
 };
 
-export default Modal;
+export default UpdateModal;

@@ -53,7 +53,7 @@ const Navbar = () => {
   //  );
 
   const handleLogout = async () => {
-    await api.post("/user/auth/logout");
+    await api.post("/auth/logout");
     updateUser(null);
     toast.success("Logged out Successfully.");
     navigate("/");

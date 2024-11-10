@@ -4,11 +4,13 @@ import {
   getAllResidencies,
   getResidency,
 } from "../controllers/residencyController.js";
+import { verifyToken } from "../middleware/verifyToken.js";
+import { isAdmin } from "../middleware/adminMiddleware.js";
 const router = express.Router()
 
 
 //route to create
-router.post("/create", createResidency)
+router.post("/create", verifyToken, isAdmin, createResidency)
 
 //route to get all
 router.get("/allresd", getAllResidencies)

@@ -2,14 +2,14 @@ import axios from "axios";
 
 
 export const api = axios.create({
-  baseURL: `http://localhost:5000/api`,
+  baseURL: `http://localhost:5000/api/user`,
   withCredentials: true,
 });
 
 const getAllProperties = async() => {
     try {
         const response = await api.get("/residency/allresd/", {
-            timeout: 5 * 100,
+          timeout: 5 * 100,
         });
 
         if (response.status === 400 || response.status === 500) {

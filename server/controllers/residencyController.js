@@ -3,7 +3,7 @@ import prisma from "../config/prismaConfig.js";
 
 const createResidency = asyncHandler(async (req, res) => {
   const {title, description, price, address, city, image,
-    facilities, userEmail
+    facilities
   } = req.body.data
 
   console.log(req.body.data)
@@ -18,7 +18,6 @@ const createResidency = asyncHandler(async (req, res) => {
         city,
         image,
         facilities,
-        owner: {connect: {email: userEmail}},
       },
     });
 

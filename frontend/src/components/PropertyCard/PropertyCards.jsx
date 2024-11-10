@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import { MdOutlineLocationOn } from "react-icons/md";
+
 import { badgeColors } from "../Property/badgeColor";
 import { IoBedOutline } from "react-icons/io5";
 import { FaShower } from "react-icons/fa";

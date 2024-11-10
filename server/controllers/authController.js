@@ -65,8 +65,9 @@ export const login = async (req, res) => {
     if(!isValidPassword)  return res
       .status(401)
       .json({ message: "Invalid Credentials", success: false });
+    
+    generateTokenAndSetCookie(res, user.id);
 
-    generateTokenAndSetCookie(res, user._id);
 
         res.status(200).json({
           message: "Logged in successfully",
@@ -74,6 +75,7 @@ export const login = async (req, res) => {
             id: user.id, 
             email: user.email,
             username: user.username,
+            role: user.role
           },
         });
 

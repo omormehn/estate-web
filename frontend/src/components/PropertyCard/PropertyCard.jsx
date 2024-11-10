@@ -6,10 +6,10 @@ import { FaShower } from "react-icons/fa";
 import { TbRulerMeasure } from "react-icons/tb";
 import { LuHeart } from "react-icons/lu";
 import { useNavigate } from "react-router-dom";
-import { useState } from "react";
+
 export const PropertyCard = ({card}) => {
    const navigate = useNavigate();
-   const [ error, setError ] = useState(null);
+  
 
 
   return (

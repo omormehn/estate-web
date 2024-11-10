@@ -1,24 +1,26 @@
 import {
   Button,
 } from "@material-tailwind/react";
-import Chat from "../Chat/Chat";
 import "./profile.scss";
-import { api } from "../../utils/api";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { useContext, useState } from "react";
 import AuthContext from "../../context/AuthContext";
-import Modal from "../../utils/Modal";
 import { createPortal } from "react-dom";
+import CreateModal from "../Modal/CreateModal";
+import UpdateModal from "../Modal/UpdateModal";
+import { api } from "../../utils/api";
+import Chat from "../Chat/Chat";
 
 
 function ProfilePage() {
   const [isOpen, setIsOpen] = useState(false);
+  const[opened, setOpen] = useState(false);
   const navigate = useNavigate();
   const { updateUser, currentUser } = useContext(AuthContext);
-
+  const isAdmin = currentUser && currentUser.user.role === "ADMIN";
   const handleLogout = async () => {
-    await api.post("/user/auth/logout");
+    await api.post("/auth/logout");
     updateUser(null);
     toast.success("Logged out Successfully.");
     navigate("/");
@@ -33,7 +35,10 @@ function ProfilePage() {
 
             <div className=" lg:block pt-4 ">
               {isOpen &&
-                createPortal(<Modal setIsOpen={setIsOpen} />, document.body)}
+                createPortal(
+                  <UpdateModal setIsOpen={setIsOpen} />,
+                  document.body
+                )}
               <button className="py-1 px-6" onClick={() => setIsOpen(true)}>
                 Update Profile
               </button>
@@ -59,9 +64,13 @@ function ProfilePage() {
           </div>
           <div className="title items-center">
             <h1 className="font-bold">My List</h1>
-            <button className="py-2 px-2" onClick={() => setIsOpen(true)}>
-               Create New Post
-            </button>
+            {opened &&
+              createPortal(<CreateModal setOpen={setOpen} />, document.body)}
+            {isAdmin && (
+              <button className="py-2 px-2" onClick={() => setOpen(true)}>
+                Create Post
+              </button>
+            )}
           </div>
 
           <div className="title">
