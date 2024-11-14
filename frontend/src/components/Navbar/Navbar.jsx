@@ -264,7 +264,10 @@ const Navbar = () => {
                                       <div className="flex gap-2 items-center">
                                         <IoLogOutOutline />
                                         <p
-                                          onClick={handleLogout}
+                                          onClick={() => {
+                                            handleLogout();
+                                            setShowMenu(false)
+                                          }}
                                           className="text-black font-normal cursor-pointer"
                                         >
                                           Logout
@@ -306,7 +309,9 @@ const Navbar = () => {
                   </ul>
                   {!currentUser && (
                     <div className="flex justify-center">
-                      <a href="/login" className=" button grad">
+                      <a href="/login" onClick={(() => {
+                        setShowMenu(false);
+                      })} className=" button grad">
                         GET STARTED
                       </a>
                     </div>

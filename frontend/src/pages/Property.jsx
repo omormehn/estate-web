@@ -7,15 +7,23 @@ import { FaShower } from "react-icons/fa";
 import { TbRulerMeasure } from "react-icons/tb";
 import { IoBedOutline } from "react-icons/io5";
 import { MdOutlineLocationOn } from "react-icons/md";
+import { useEffect } from "react";
+import useFavorites from "../hooks/useFavorites";
 
 
 const Property = () => {
   const { pathname } = useLocation();
   const id = pathname.split("/").slice(-1)[0]
-  console.log(id);
+   const { data, isLoading, isError } = useQuery(["resd", id], () =>
+     getProperty(id)
+   );
 
-  const { data, isLoading, isError } = useQuery(["resd", id], () => getProperty(id));
+  const { fav, addToFav } = useFavorites(id)
+  useEffect(() => {
+    window.scrollTo(0,0)
+  })
 
+ 
     if (isLoading) {
       return (
         <div className="flexCenter justify-center container h-[60vh]">
@@ -56,7 +64,15 @@ const Property = () => {
             <p className="text-2xl text-start font-semibold  tracking-wide">
               ₦ {data.price}
             </p>
-            <LuHeart size={24} className="cursor-pointer " />
+              <div
+                className={`flex items-center justify-center rounded-full ${
+                  fav ? "bg-red-500" : "bg-transparent"
+                } p-1 cursor-pointer`}
+                onClick={addToFav}
+              >
+                <LuHeart size={23} />
+              </div>
+            
           </div>
 
           <a href="">
@@ -101,9 +117,6 @@ const Property = () => {
           {/* book visit */}
           <button className="primary-btn mt-4 lg:w-[30vw]">Book Visit</button>
         </div>
-
-     
-        
       </div>
     </div>
   );

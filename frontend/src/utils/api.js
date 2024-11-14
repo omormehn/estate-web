@@ -9,7 +9,7 @@ export const api = axios.create({
 const getAllProperties = async() => {
     try {
         const response = await api.get("/residency/allresd/", {
-          timeout: 5 * 100,
+          timeout: 5 * 1000,
         });
 
         if (response.status === 400 || response.status === 500) {
@@ -33,6 +33,7 @@ const getProperty = async (id) => {
         throw new error;
     }
 }
+
 
 export {getAllProperties}
 

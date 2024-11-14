@@ -16,6 +16,6 @@ router.post("/create", verifyToken, isAdmin, createResidency)
 router.get("/allresd", getAllResidencies)
 
 //route to get one by id
-router.get("/:id", getResidency)
+router.get("/:id", verifyToken, getResidency)
 
 export { router as residencyRoute };
