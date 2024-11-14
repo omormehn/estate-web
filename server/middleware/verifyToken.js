@@ -10,6 +10,6 @@ export const verifyToken = async (req, res, next) => {
         req.user = payload;
         next();
       });
-        console.log("User  ID from token:", req.userId);
+       
        
 }

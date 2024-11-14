@@ -75,13 +75,15 @@ export const login = async (req, res) => {
             id: user.id, 
             email: user.email,
             username: user.username,
-            role: user.role
+            role: user.role,
+            
           },
         });
 
 
     
   } catch (error) {
+    console.log(error)
     return res.status(400).json({ success: false, message: error.message });
   }
 };
