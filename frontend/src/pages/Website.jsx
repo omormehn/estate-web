@@ -7,30 +7,33 @@ import Services from "../components/services/Services";
 import Value from "../components/value/Value";
 import AuthContext from "../context/AuthContext";
 import { Navigate } from "react-router-dom";
-import ProfilePage from "../components/Profile/ProfilePage"
+import ProfilePage from "../components/Profile/ProfilePage";
 
 const Website = () => {
+  const { currentUser } = useContext(AuthContext);
   return (
     <div className="overflow-x-hidden">
-      
       <Hero />
-      <About />
-      <Services />
-      <Value />
       <Property />
-      <Owner />
-     
+      {currentUser === null && (
+        <div>
+          <About />
+          <Services />
+          <Owner />
+          <Value />
+        </div>
+      )}
     </div>
   );
-}
+};
 export const RequiredAuth = () => {
   const { currentUser } = useContext(AuthContext);
   return currentUser ? (
     <div>
-      <ProfilePage/>
+      <ProfilePage />
     </div>
   ) : (
-    <Navigate to="/login"/>
-  )
-}
-export default Website
+    <Navigate to="/login" />
+  );
+};
+export default Website;

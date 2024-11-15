@@ -31,7 +31,11 @@ function ProfilePage() {
       <div className="details">
         <div className="wrapper">
           <div className="title flex flex-col md:items-center md:flex-row">
-            <h1>User Information:</h1>
+            {currentUser.user.role === "ADMIN" ? (
+              <h1>Admin Information:</h1>
+            ) : (
+              <h1>User Information:</h1>
+            )}
 
             <div className=" lg:block pt-4 ">
               {isOpen &&
@@ -63,7 +67,7 @@ function ProfilePage() {
             </Button>
           </div>
           <div className="title items-center">
-            <h1 className="font-bold">My List</h1>
+            <h1 className="font-bold"></h1>
             {opened &&
               createPortal(<CreateModal setOpen={setOpen} />, document.body)}
             {isAdmin && (

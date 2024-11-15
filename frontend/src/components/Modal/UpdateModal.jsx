@@ -22,7 +22,7 @@ const UpdateModal = ({ setIsOpen }) => {
     try {
      
 
-      const res = await api.put(`/user/update-user/${currentUser.user.id}`, {
+      const res = await api.put(`/update-user/${currentUser.user.id}`, {
         username,
         email,
         password,
@@ -51,7 +51,11 @@ const UpdateModal = ({ setIsOpen }) => {
           </div>
           <div className=" pt-4">
             <div className="flex gap-10">
-              <img className="w-14 rounded-full" src={avatar ? (avatar) : ("../../public/image.png")} alt="" />
+              <img
+                className="w-14 rounded-full"
+                src={avatar ? avatar : "../../public/image.png"}
+                alt=""
+              />
               <UploadWidget
                 uwConfig={{
                   cloudName: "omormehn",
@@ -64,14 +68,19 @@ const UpdateModal = ({ setIsOpen }) => {
               />
             </div>
 
-            <form onSubmit={handleUpload} className="flex flex-col gap-y-4 pt-6">
+            <form
+              onSubmit={handleUpload}
+              className="flex flex-col gap-y-4 pt-6"
+            >
               <input
+                required
                 name="username"
                 type="text"
                 defaultValue={currentUser.user.username}
                 className="w-full p-2 border border-gray-400 rounded-md"
               />
               <input
+                required
                 name="email"
                 type="email"
                 defaultValue={currentUser.user.email}

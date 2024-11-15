@@ -13,7 +13,7 @@ import { messageRoute } from "./routes/messageRoute.js";
 
 dotenv.config();
 
-const app = express();
+export const app = express();
 
 const PORT = process.env.PORT || 3000; // it can take 3000 as a fallback
 

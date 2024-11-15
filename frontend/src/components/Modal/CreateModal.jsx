@@ -52,7 +52,7 @@ const CreateModal = ({ setOpen }) => {
       <div className="centered">
         <div className="modal xs:w-[80vw] lg:w-[70vw] h-[90vh] md:h-[70vh] lg:h-[80vh] overflow-auto ">
           <div className="flex justify-between gap-x-16 z-20">
-            <h5 className="text-black font-bold">Update Profile</h5>
+            <h5 className="text-black font-bold">Add Residency</h5>
             <button className="" onClick={() => setOpen(false)}>
               <RiCloseLine size={23} style={{ marginBottom: "-3px" }} />
             </button>
@@ -66,6 +66,7 @@ const CreateModal = ({ setOpen }) => {
             >
               <label htmlFor="">Title</label>
               <input
+                required
                 name="title"
                 type="text"
                 className="w-full p-2 border border-gray-400 rounded-md"
@@ -77,6 +78,7 @@ const CreateModal = ({ setOpen }) => {
               />
               <label htmlFor="">Price</label>
               <input
+                required
                 name="price"
                 placeholder="Price"
                 type="number"
@@ -84,18 +86,21 @@ const CreateModal = ({ setOpen }) => {
               />
               <label htmlFor="">Address</label>
               <input
+                required
                 name="address"
                 type="text"
                 className="w-full p-2 border border-gray-400 rounded-md"
               />
               <label htmlFor="">City</label>
               <input
+                required
                 name="city"
                 type="text"
                 className="w-full p-2 border border-gray-400 rounded-md"
               />
               <h1>Facilities</h1>
               <input
+                required
                 name="beds"
                 placeholder="Beds"
                 type="number"
@@ -113,12 +118,14 @@ const CreateModal = ({ setOpen }) => {
                 setAvatar={setImage}
               />
               <input
+                required
                 name="bathroom"
                 placeholder="Bathroom"
                 type="number"
                 className="w-full p-2 border border-gray-400 rounded-md"
               />
               <input
+                required
                 name="size"
                 placeholder="Square Feet"
                 type="number"
