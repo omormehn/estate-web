@@ -5,16 +5,8 @@ import axios from "axios";
 
 
 export const api = axios.create({
-<<<<<<< HEAD
   // eslint-disable-next-line no-undef
   baseURL: `${process.env.SERVER_SIDE}/api/user`,
-=======
-
-  
-
-  baseURL: `https://estate-web-backend-2.onrender.com/api/user`,
-
->>>>>>> f5475743531b240d0ab00b987a4516597d95d787
   withCredentials: true,
 });
 
