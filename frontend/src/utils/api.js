@@ -1,8 +1,12 @@
 import axios from "axios";
 
 
+
+
+
 export const api = axios.create({
-  baseURL: `http://localhost:5000/api/user`,
+  // eslint-disable-next-line no-undef
+  baseURL: `${process.env.SERVER_SIDE}/api/user`,
   withCredentials: true,
 });
 
