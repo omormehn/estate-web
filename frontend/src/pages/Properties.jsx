@@ -4,9 +4,11 @@ import SearchBar from "../components/Search/SearchBar";
 import useProperties from "../hooks/useProperties";
 import { PuffLoader } from "react-spinners";
 import { Button } from "@material-tailwind/react";
+
 const Properties = () => {
   const [error, setError] = useState(false);
   const { data, isError, isLoading, refetch } = useProperties();
+  
 
   useEffect(() => {
     window.scrollTo(0,0);

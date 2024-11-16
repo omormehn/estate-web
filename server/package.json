@@ -22,6 +22,7 @@
         "mongodb": "^6.8.0",
         "nodemon": "^3.1.4",
         "npm": "file:",
-        "prisma": "^5.19.0"
+        "prisma": "^5.19.0",
+        "socket.io": "^4.8.1"
     }
 }

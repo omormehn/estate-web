@@ -21,7 +21,7 @@ const Register = () => {
     
   try {
       await api.post(
-        "/user/auth/register",
+        "/auth/register",
         {
           username,
           email,
@@ -55,6 +55,7 @@ const Register = () => {
                 Username
               </Typography>
               <Input
+                required
                 size="lg"
                 name="username"
                 placeholder="Enter Username"
@@ -67,6 +68,7 @@ const Register = () => {
                 Email
               </Typography>
               <Input
+                required
                 size="lg"
                 name="email"
                 type="email"

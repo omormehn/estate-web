@@ -1,39 +1,57 @@
-import { Button } from "@material-tailwind/react";
-import Chat from "../Chat/Chat";
-import "./profile.scss"
-import {api} from "../../utils/api";
+import {
+  Button,
+} from "@material-tailwind/react";
+import "./profile.scss";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import AuthContext from "../../context/AuthContext";
+import { createPortal } from "react-dom";
+import CreateModal from "../Modal/CreateModal";
+import UpdateModal from "../Modal/UpdateModal";
+import { api } from "../../utils/api";
+import Chat from "../Chat/Chat";
+
 
 function ProfilePage() {
+  const [isOpen, setIsOpen] = useState(false);
+  const[opened, setOpen] = useState(false);
   const navigate = useNavigate();
   const { updateUser, currentUser } = useContext(AuthContext);
-
+  const isAdmin = currentUser && currentUser.user.role === "ADMIN";
   const handleLogout = async () => {
-    await api.post("/user/auth/logout");
-    updateUser(null)
+    await api.post("/auth/logout");
+    updateUser(null);
     toast.success("Logged out Successfully.");
-    navigate('/')
-  }
-
+    navigate("/");
+  };
 
   return (
-    <div className="profilePage container pt-32">
+    <div className="profilePage  container pt-32">
       <div className="details">
         <div className="wrapper">
-          <div className="title">
-            <h1>User Information</h1>
-            <button>Update Profile</button>
+          <div className="title flex flex-col md:items-center md:flex-row">
+            {currentUser.user.role === "ADMIN" ? (
+              <h1>Admin Information:</h1>
+            ) : (
+              <h1>User Information:</h1>
+            )}
+
+            <div className=" lg:block pt-4 ">
+              {isOpen &&
+                createPortal(
+                  <UpdateModal setIsOpen={setIsOpen} />,
+                  document.body
+                )}
+              <button className="py-1 px-6" onClick={() => setIsOpen(true)}>
+                Update Profile
+              </button>
+            </div>
           </div>
           <div className="info">
             <span>
               Avatar:
-              <img
-                src={currentUser.image || "image.png"}
-                alt=""
-              />
+              <img src={currentUser.user.image || "image.png"} alt="" />
             </span>
             <span>
               Username: <b>{currentUser.user.username}</b>
@@ -43,14 +61,20 @@ function ProfilePage() {
             </span>
             <Button
               onClick={handleLogout}
-              className="mt-6 px-20 pt-2 text-slate-700 "
+              className="mt-6 max-w-48 pt-2 text-slate-700 "
             >
-               Logout
+              Logout
             </Button>
           </div>
-          <div className="title">
-            <h1>My List</h1>
-            <button>Create New Post</button>
+          <div className="title items-center">
+            <h1 className="font-bold"></h1>
+            {opened &&
+              createPortal(<CreateModal setOpen={setOpen} />, document.body)}
+            {isAdmin && (
+              <button className="py-2 px-2" onClick={() => setOpen(true)}>
+                Create Post
+              </button>
+            )}
           </div>
 
           <div className="title">

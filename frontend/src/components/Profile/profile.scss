@@ -43,15 +43,14 @@
 
             .title {
                 display: flex;
-                align-items: center;
+                
                 justify-content: space-between;
 
                 h1 {
-                    font-weight: 300;
+                    font-weight: 600;
                 }
 
                 button {
-                    padding: 12px 24px;
                     background-color: #fece51;
                     cursor: pointer;
                     border: none;

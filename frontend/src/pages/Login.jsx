@@ -3,7 +3,7 @@ import "./register.css";
 
 import { useContext, useState } from "react";
 import { toast } from "react-toastify";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { PuffLoader } from "react-spinners";
 import { api } from "../utils/api";
 import AuthContext from "../context/AuthContext";
@@ -11,9 +11,8 @@ import AuthContext from "../context/AuthContext";
 const Login = () => {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
+  const { updateUser } = useContext(AuthContext);
   const navigate = useNavigate();
-
-   const { updateUser } = useContext(AuthContext);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -23,18 +22,19 @@ const Login = () => {
     const password = formData.get("password");
 
     try {
-      const response = await api.post("/user/auth/login", {
+      const response = await api.post("/auth/login", {
         email,
         password,
       });
-     updateUser(response.data);
+      updateUser(response.data);
       toast.success("Logged in Successfully.");
       navigate("/");
     } catch (error) {
-      console.log("error in register", error);
-      setError(error);
+      console.log("error in login", error);
+      setError(error.response.data.message);
     } finally {
       setLoading(false);
+      setError("");
     }
   };
 
@@ -54,11 +54,12 @@ const Login = () => {
                 Email
               </Typography>
               <Input
+                required
                 size="lg"
                 name="email"
                 type="email"
                 placeholder="Enter Email"
-                className="input border-2 rounded-md px-2  !border-t-blue-gray-200 focus:!border-t-gray-900"
+                className={`input border-2 rounded-md px-2 !border-t-blue-gray-200 focus:!border-t-gray-900`}
                 labelProps={{
                   className: "before:content-none after:content-none",
                 }}
@@ -67,15 +68,19 @@ const Login = () => {
                 Password
               </Typography>
               <Input
+                required
                 type="password"
                 name="password"
                 size="lg"
                 placeholder="********"
-                className="input border-2 rounded-md px-2  !border-t-blue-gray-200 focus:!border-t-gray-900"
+                className={`input border-2 rounded-md px-2 !border-t-blue-gray-200 focus:!border-t-gray-900`}
                 labelProps={{
                   className: "before:content-none after:content-none",
                 }}
               />
+              <a className="" href="/">
+                Forgot Password?
+              </a>
             </div>
 
             <div className="text-center">
@@ -99,14 +104,13 @@ const Login = () => {
               </Button>
             </div>
             <div className="mt-4">
-              {error && <span className="mt-4 text-red-800">Login Failed</span>}
+              {error && <span className="mt-4 text-red-800">{error}</span>}
             </div>
             <Typography color="gray" className="mt-4 py-2 font-normal">
               Don&apos;t have an account?{" "}
               <a href="/signup" className="font-medium text-gray-900">
                 Sign Up
               </a>
-            
             </Typography>
           </form>
         </div>

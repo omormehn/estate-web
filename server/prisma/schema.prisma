@@ -7,18 +7,9 @@ datasource db {
     url      = env("DATABASE_URL")
 }
 
-model User {
-    id               String      @id @default(auto()) @map("_id") @db.ObjectId
-    username         String
-    email            String      @unique
-    password         String
-    isVerified       Boolean     @default(false)
-    image            String?
-    bookedVisits     Json[]
-    favResidenceID   String[]    @db.ObjectId
-    ownedResidencies Residency[] @relation("Owner")
-    createdAt        DateTime    @default(now()) @map("created_at")
-    updatedAt        DateTime    @updatedAt @map("updated_at")
+enum Role {
+    ADMIN
+    USER
 }
 
 model Residency {
@@ -30,10 +21,43 @@ model Residency {
     city        String
     image       String
     facilities  Json
-    userEmail   String
-    owner       User     @relation("Owner", fields: [userEmail], references: [email])
     createdAt   DateTime @default(now())
     updatedAt   DateTime @updatedAt
 
-    @@unique(fields: [address, userEmail])
+    @@unique(fields: [address])
+}
+
+model User {
+    id             String   @id @default(auto()) @map("_id") @db.ObjectId
+    username       String
+    email          String   @unique
+    password       String
+    isVerified     Boolean  @default(false)
+    image          String?
+    bookedVisits   Json[]
+    favResidenceID String[] @db.ObjectId
+    createdAt      DateTime @default(now()) @map("created_at")
+    updatedAt      DateTime @updatedAt @map("updated_at")
+    role           Role     @default(USER)
+    chats          Chat[]   @relation(fields: [chatIds], references: [id])
+    chatIds        String[] @db.ObjectId
+}
+
+model Chat {
+    id          String    @id @default(auto()) @map("_id") @db.ObjectId
+    users       User[]    @relation(fields: [userIds], references: [id])
+    userIds     String[]  @db.ObjectId
+    createdAt   DateTime  @default(now())
+    seenBy      String[]  @db.ObjectId
+    messages    Message[]
+    lastMessage String?
+}
+
+model Message {
+    id        String   @id @default(auto()) @map("_id") @db.ObjectId
+    text      String
+    userId    String
+    chat      Chat     @relation(fields: [chatId], references: [id])
+    chatId    String   @db.ObjectId
+    createdAt DateTime @default(now())
 }

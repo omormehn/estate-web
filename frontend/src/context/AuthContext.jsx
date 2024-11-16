@@ -1,9 +1,10 @@
-import React, { createContext, useEffect, useState } from 'react'
+import { createContext, useEffect, useState } from 'react'
 
 
 
 const AuthContext = createContext();
 
+// eslint-disable-next-line react/prop-types
 export const AuthContextProvider = ({children}) => {
     const [ currentUser, setCurrentUser ] = useState(
         JSON.parse(localStorage.getItem('user')) || null

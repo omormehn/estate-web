@@ -2,14 +2,18 @@ import axios from "axios";
 
 
 export const api = axios.create({
-  baseURL: `https://estate-web-backend-2.onrender.com/api`,
+
+  
+
+  baseURL: `https://estate-web-backend-2.onrender.com/api/user`,
+
   withCredentials: true,
 });
 
 const getAllProperties = async() => {
     try {
         const response = await api.get("/residency/allresd/", {
-            timeout: 5 * 1000,
+          timeout: 5 * 1000,
         });
 
         if (response.status === 400 || response.status === 500) {
@@ -33,6 +37,7 @@ const getProperty = async (id) => {
         throw new error;
     }
 }
+
 
 export {getAllProperties}
 
