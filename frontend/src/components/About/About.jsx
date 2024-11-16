@@ -21,7 +21,7 @@ const About = () => {
           {/* About left */}
           <img src="./about/about.png" className="rounded-3xl pt-8  " alt="" />
           {/* About right */}
-          <div ref={ref} className="lg:px-4 dark:text-white">
+          <div ref={ref} className="lg:px-4">
             <div className="container text-end top-8">
               <h1 className="dark:text-white section-subtitle">About Us</h1>
             </div>
