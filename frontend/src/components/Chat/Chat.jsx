@@ -1,121 +1,137 @@
-import { useState } from "react";
+/* eslint-disable react/prop-types */
+import { useContext, useEffect, useRef, useState } from "react";
 import "./Chat.scss";
+import AuthContext from "../../context/AuthContext";
+import { api } from "../../utils/api";
+import { format } from "timeago.js";
+import SocketContext from "../../context/SocketContext";
 
-function Chat() {
-  const [chat, setChat] = useState(true);
+function Chat({ chats }) {
+  const [chat, setChat] = useState(null);
+  const chatArray = chats.chats || [];
+
+  const { currentUser } = useContext(AuthContext);
+  const { socket } = useContext(SocketContext);
+
+  const messageEndRef = useRef();
+
+  useEffect(() => {
+    messageEndRef.current?.scrollIntoView({behavior: "smooth"});
+  }, [chat])
+
+  const openChat = async (id, receiver) => {
+    try {
+      const response = await api.get(`/chat/${id}`);
+      setChat({ ...response.data.chat, receiver });
+    } catch (error) {
+      console.log("error in chat", error);
+    }
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const formData = new FormData(e.target);
+    const text = formData.get("text");
+    if (!text) return;
+
+    try {
+      e.target.reset();
+      const response = await api.post(`/message/${chat.id}`, { text });
+      setChat((prev) => ({
+        ...prev,
+        messages: [...prev.messages, response.data],
+      }));
+      const id = chat.receiver.id
+      socket.emit("sendMessage", {
+        receiverId: id,
+        data: response.data,
+      });
+    
+    } catch (error) {
+      console.error("error in add chat", error);
+    }
+  };
+
+  useEffect(() => {
+    const read = async () => {
+      try {
+        await api.put("/chat/read/" + chat.id);
+      } catch (error) {
+        console.error("error in read", error);
+      }
+    };
+
+    if (chat && socket) {
+      socket.on("getMessage", (data) => {
+        if (chat.id === data.chatId) {
+          setChat((prev) => ({ ...prev, messages: [...prev.messages, data] }));
+          read();
+        }
+      });
+    }
+  });
+
   return (
     <div className="chat">
       <div className="messages">
         <h1>Messages</h1>
-        <div className="message">
-          <img
-            src="https://images.pexels.com/photos/91227/pexels-photo-91227.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
-            alt=""
-          />
-          <span>John Doe</span>
-          <p>Lorem ipsum dolor sit amet...</p>
-        </div>
-        <div className="message">
-          <img
-            src="https://images.pexels.com/photos/91227/pexels-photo-91227.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
-            alt=""
-          />
-          <span>John Doe</span>
-          <p>Lorem ipsum dolor sit amet...</p>
-        </div>
-        <div className="message">
-          <img
-            src="https://images.pexels.com/photos/91227/pexels-photo-91227.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
-            alt=""
-          />
-          <span>John Doe</span>
-          <p>Lorem ipsum dolor sit amet...</p>
-        </div>
-        <div className="message">
-          <img
-            src="https://images.pexels.com/photos/91227/pexels-photo-91227.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
-            alt=""
-          />
-          <span>John Doe</span>
-          <p>Lorem ipsum dolor sit amet...</p>
-        </div>
-        <div className="message">
-          <img
-            src="https://images.pexels.com/photos/91227/pexels-photo-91227.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
-            alt=""
-          />
-          <span>John Doe</span>
-          <p>Lorem ipsum dolor sit amet...</p>
-        </div>
-        <div className="message">
-          <img
-            src="https://images.pexels.com/photos/91227/pexels-photo-91227.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
-            alt=""
-          />
-          <span>John Doe</span>
-          <p>Lorem ipsum dolor sit amet...</p>
-        </div>
+        {Array.isArray(chatArray) && chatArray.length > 0 ? (
+          chatArray.map((chat) => (
+            <div
+              className="message"
+              key={chat.id}
+              style={{
+                backgroundColor:
+                  chat.seenBy.includes(currentUser.id) || chat?.id === chat.id
+                    ? "white"
+                    : "#fecd514e",
+              }}
+              onClick={() => openChat(chat.id, chat.receiver)}
+            >
+              <img src={chat.receiver.image || "/image.png"} alt="" />
+              <span>{chat.receiver.username}</span>
+              <p>{chat.lastMessage}</p>
+            </div>
+          ))
+        ) : (
+          <p>No messages available.</p>
+        )}
       </div>
       {chat && (
         <div className="chatBox">
           <div className="top">
             <div className="user">
-              <img
-                src="https://images.pexels.com/photos/91227/pexels-photo-91227.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
-                alt=""
-              />
-              John Doe
+              <img src={chat.receiver.image || "/image.png"} alt="" />
+              {chat.receiver.username}
             </div>
             <span className="close" onClick={() => setChat(null)}>
               X
             </span>
           </div>
           <div className="center">
-            <div className="chatMessage">
-              <p>Lorem ipsum dolor sit amet</p>
-              <span>1 hour ago</span>
-            </div>
-            <div className="chatMessage own">
-              <p>Lorem ipsum dolor sit amet</p>
-              <span>1 hour ago</span>
-            </div>
-            <div className="chatMessage">
-              <p>Lorem ipsum dolor sit amet</p>
-              <span>1 hour ago</span>
-            </div>
-            <div className="chatMessage own">
-              <p>Lorem ipsum dolor sit amet</p>
-              <span>1 hour ago</span>
-            </div>
-            <div className="chatMessage">
-              <p>Lorem ipsum dolor sit amet</p>
-              <span>1 hour ago</span>
-            </div>
-            <div className="chatMessage own">
-              <p>Lorem ipsum dolor sit amet</p>
-              <span>1 hour ago</span>
-            </div>
-            <div className="chatMessage">
-              <p>Lorem ipsum dolor sit amet</p>
-              <span>1 hour ago</span>
-            </div>
-            <div className="chatMessage own">
-              <p>Lorem ipsum dolor sit amet</p>
-              <span>1 hour ago</span>
-            </div>
-            <div className="chatMessage">
-              <p>Lorem ipsum dolor sit amet</p>
-              <span>1 hour ago</span>
-            </div>
-            <div className="chatMessage own">
-              <p>Lorem ipsum dolor sit amet</p>
-              <span>1 hour ago</span>
-            </div>
+            {chat.messages.map((message) => (
+              <div
+                style={{
+                  alignSelf:
+                    message.userId === currentUser.user.id
+                      ? "flex-end"
+                      : "flex-start",
+                  textAlign:
+                    message.userId === currentUser.user.id ? "right" : "left",
+                }}
+                key={message.id}
+                className="chatMessage"
+              >
+                <p>{message.text}</p>
+                <span>{format(message.createdAt)}</span>
+              </div>
+            ))}
+            <div className="bg-red-500 top-0" ref={messageEndRef}></div>
           </div>
-          <div className="bottom">
-            <textarea></textarea>
-            <button>Send</button>
-          </div>
+          <form onSubmit={handleSubmit} className="bottom">
+            <textarea name="text"></textarea>
+            <button type="submit">Send</button>
+          </form>
         </div>
       )}
     </div>

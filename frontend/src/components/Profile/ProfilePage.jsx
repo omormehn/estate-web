@@ -1,10 +1,8 @@
-import {
-  Button,
-} from "@material-tailwind/react";
+import { Button } from "@material-tailwind/react";
 import "./profile.scss";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import AuthContext from "../../context/AuthContext";
 import { createPortal } from "react-dom";
 import CreateModal from "../Modal/CreateModal";
@@ -12,18 +10,42 @@ import UpdateModal from "../Modal/UpdateModal";
 import { api } from "../../utils/api";
 import Chat from "../Chat/Chat";
 
-
 function ProfilePage() {
   const [isOpen, setIsOpen] = useState(false);
-  const[opened, setOpen] = useState(false);
+  const [opened, setOpen] = useState(false);
   const navigate = useNavigate();
+  const [loading, setLoading] = useState(true);
+  const [chatResponse, setChatResponse] = useState(null);
+  const [error, setError] = useState(null);
   const { updateUser, currentUser } = useContext(AuthContext);
   const isAdmin = currentUser && currentUser.user.role === "ADMIN";
+
+
+
+  useEffect(() => {
+    const fetchChats = async () => {
+      try {
+        const response = await api.get("/chat/chats");
+
+        const data = await response.data;
+        setChatResponse(data);
+      } catch (err) {
+        setError(err.message);
+
+        console.log("dat", err);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchChats();
+  }, []);
+
   const handleLogout = async () => {
     await api.post("/auth/logout");
     updateUser(null);
     toast.success("Logged out Successfully.");
-    navigate("/");
+    navigate("/login");
   };
 
   return (
@@ -84,7 +106,14 @@ function ProfilePage() {
       </div>
       <div className="chatContainer">
         <div className="wrapper">
-          <Chat />
+          <h1>Chats</h1>
+          {loading ? (
+            <p>Loading chats...</p>
+          ) : error ? (
+            <p>Error loading chats: {error}</p>
+          ) : (
+            <Chat chats={chatResponse} />
+          )}
         </div>
       </div>
     </div>

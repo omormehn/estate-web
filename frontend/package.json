@@ -36,7 +36,9 @@
         "reactstrap": "^9.2.2",
         "safe-buffer": "^5.2.1",
         "sass": "^1.80.5",
+        "socket.io-client": "^4.8.1",
         "swiper": "^11.1.14",
+        "timeago.js": "^4.0.2",
         "use-swiper": "^1.2.1"
     },
     "devDependencies": {

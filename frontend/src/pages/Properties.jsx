@@ -53,7 +53,7 @@ const Properties = () => {
               data.map((card, i) => <PropertyCards card={card} key={i} />)
             ) : (
               <div className="flexCenter justify-center items-center flex-col gap-8 mt-8">
-                <h1>No Properties Found</h1>
+                <h1>No Data</h1>
               </div>
             )
           )}

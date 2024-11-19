@@ -7,13 +7,9 @@ import { useContext } from "react";
 import AuthContext from "../../context/AuthContext";
 import { api } from "../../utils/api";
 import { toast } from "react-toastify";
-import {
-  Menu,
-  MenuHandler,
-  MenuList,
-} from "@material-tailwind/react";
- import { IoLogOutOutline } from "react-icons/io5";
- import { FaRegUser } from "react-icons/fa";
+import { Menu, MenuHandler, MenuList } from "@material-tailwind/react";
+import { IoLogOutOutline } from "react-icons/io5";
+import { FaRegUser } from "react-icons/fa";
 
 const NavbarMenu = [
   {
@@ -58,7 +54,6 @@ const Navbar = () => {
     toast.success("Logged out Successfully.");
     navigate("/");
   };
-
 
   // for changes
   const toggleMenu = () => {
@@ -237,14 +232,14 @@ const Navbar = () => {
                               key={menu.id}
                               className="py-2 flex flex-col  items-center gap-5"
                             >
-                              <Link to={menu.url} >{menu.name} </Link>
+                              <Link to={menu.url}>{menu.name} </Link>
                               {window.location.reload}
                               <div className=" gap-3 items-center">
                                 <Menu>
                                   <MenuHandler>
-                                    <div className="flex items-center gap-4 cursor-pointer">
+                                    <div className="flex  items-center gap-4 cursor-pointer">
                                       <img
-                                        className="w-7 rounded-full"
+                                        className="size-8 rounded-full"
                                         src={
                                           currentUser.user.image || "image.png"
                                         }
@@ -257,7 +252,12 @@ const Navbar = () => {
                                   </MenuHandler>
                                   <div className="absolute w-12">
                                     <MenuList className="z-50 flex flex-col border-0 px-3 py-6 gap-2">
-                                      <div className="flex gap-2 items-center">
+                                      <div
+                                        className="flex gap-2 items-center"
+                                        onClick={() => {
+                                          setShowMenu(false);
+                                        }}
+                                      >
                                         <FaRegUser />
                                         <Link to="/profile">Profile</Link>
                                       </div>
@@ -266,7 +266,7 @@ const Navbar = () => {
                                         <p
                                           onClick={() => {
                                             handleLogout();
-                                            setShowMenu(false)
+                                            setShowMenu(false);
                                           }}
                                           className="text-black font-normal cursor-pointer"
                                         >
@@ -293,15 +293,19 @@ const Navbar = () => {
                                   menu.url
                                 );
                                 section.scrollIntoView({ behavior: "smooth" });
-                                
                               }}
                             >
                               {menu.name}
                             </a>
                           ) : (
-                            <Link onClick={() => {
-                              setShowMenu(false)
-                            }} to={menu.url}>{menu.name}</Link>
+                            <Link
+                              onClick={() => {
+                                setShowMenu(false);
+                              }}
+                              to={menu.url}
+                            >
+                              {menu.name}
+                            </Link>
                           )}
                         </li>
                       );
@@ -309,9 +313,13 @@ const Navbar = () => {
                   </ul>
                   {!currentUser && (
                     <div className="flex justify-center">
-                      <a href="/login" onClick={(() => {
-                        setShowMenu(false);
-                      })} className=" button grad">
+                      <a
+                        href="/login"
+                        onClick={() => {
+                          setShowMenu(false);
+                        }}
+                        className=" button grad"
+                      >
                         GET STARTED
                       </a>
                     </div>
