@@ -3,7 +3,7 @@ import { defer } from 'react-router-dom';
 
 export const api = axios.create({
   // eslint-disable-next-line no-undef
-  baseURL: `${process.env.SERVER_SIDE}/api/user`,
+  baseURL: `https://estate-web-backend3.onrender.com/api/user`,
   withCredentials: true,
 });
 
