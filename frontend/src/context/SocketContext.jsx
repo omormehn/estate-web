@@ -8,7 +8,7 @@ export const SocketContextProvider = ({ children }) => {
   const [socket, setSocket] = useState(null);
   const { currentUser } = useContext(AuthContext);
   useEffect(() => {
-    setSocket(io("http://localhost:5001"));   
+    setSocket(io("https://estate-web-socketio.onrender.com"));   
   }, []);
 
   useEffect(() => {
