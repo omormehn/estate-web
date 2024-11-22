@@ -45,7 +45,6 @@ const Navbar = () => {
   //sets defaults values of keys
   const [showMenu, setShowMenu] = React.useState(false);
 
-  
   const handleLogout = async () => {
     await api.post("/auth/logout");
     updateUser(null);
@@ -81,11 +80,11 @@ const Navbar = () => {
 
   useEffect(() => {
     if (showMenu) {
-     document.documentElement.style.overflow = "hidden";
+      document.documentElement.style.overflow = "hidden";
     } else {
       document.documentElement.classList.remove("overflow-hidden");
     }
-  }, [showMenu])
+  }, [showMenu]);
 
   return (
     <section
@@ -238,10 +237,13 @@ const Navbar = () => {
             </div>
 
             {showMenu && (
-              <div onClick={(() => {
-                setShowMenu(false)
-                document.documentElement.style.overflow = "scroll";
-              })} className="fixed h-full w-screen left-0 backdrop-blur-md top-0 right-0   bg-black/50">
+              <div
+                onClick={() => {
+                  setShowMenu(false);
+                  document.documentElement.style.overflow = "scroll";
+                }}
+                className="fixed h-full w-screen left-0 backdrop-blur-md top-0 right-0   bg-black/50"
+              >
                 <div className="flex flex-col w-8/12 absolute right-0 h-screen bg-white rounded-l-lg ">
                   <IoCloseOutline
                     onClick={() => {

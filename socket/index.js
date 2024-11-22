@@ -6,7 +6,7 @@ dotenv.config();
 const PORT = process.env.PORT;
 const io = new Server({
   cors: {
-    origin: "http://localhost:5173",
+    origin: "https://estate-fullstack.netlify.app",
   },
 });
 

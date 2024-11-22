@@ -15,7 +15,7 @@ dotenv.config();
 
 export const app = express();
 
-const PORT = process.env.PORT || 3000; // it can take 3000 as a fallback
+const PORT = process.env.PORT || 3000; 
 const CLIENT_URL = process.env.CLIENT_URL
 
 app.use(express.json());
