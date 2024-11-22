@@ -36,7 +36,9 @@
         "reactstrap": "^9.2.2",
         "safe-buffer": "^5.2.1",
         "sass": "^1.80.5",
+        "socket.io-client": "^4.8.1",
         "swiper": "^11.1.14",
+        "timeago.js": "^4.0.2",
         "use-swiper": "^1.2.1"
     },
     "devDependencies": {
@@ -51,6 +53,7 @@
         "eslint-plugin-react-refresh": "^0.4.9",
         "globals": "^15.9.0",
         "postcss": "^8.4.41",
+        "react-error-overlay": "^6.0.9",
         "tailwindcss": "^3.4.9",
         "vite": "^5.4.0"
     }

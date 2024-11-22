@@ -1,19 +1,16 @@
 import React from "react";
 import { FiMenu } from "react-icons/fi";
-// import { BiSolidMoon, BiSolidSun } from "react-icons/bi";
+import { IoCloseOutline } from "react-icons/io5";
+
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useContext } from "react";
 import AuthContext from "../../context/AuthContext";
 import { api } from "../../utils/api";
 import { toast } from "react-toastify";
-import {
-  Menu,
-  MenuHandler,
-  MenuList,
-} from "@material-tailwind/react";
- import { IoLogOutOutline } from "react-icons/io5";
- import { FaRegUser } from "react-icons/fa";
+import { Menu, MenuHandler, MenuList } from "@material-tailwind/react";
+import { IoLogOutOutline } from "react-icons/io5";
+import { FaRegUser } from "react-icons/fa";
 
 const NavbarMenu = [
   {
@@ -48,10 +45,7 @@ const Navbar = () => {
   //sets defaults values of keys
   const [showMenu, setShowMenu] = React.useState(false);
 
-  //  const [theme, setTheme] = React.useState(
-  //    localStorage.getItem("theme") ? localStorage.getItem("theme") : "light"
-  //  );
-
+  
   const handleLogout = async () => {
     await api.post("/auth/logout");
     updateUser(null);
@@ -59,25 +53,10 @@ const Navbar = () => {
     navigate("/");
   };
 
-
   // for changes
   const toggleMenu = () => {
     setShowMenu(!showMenu);
   };
-
-  // const toggleTheme = () => {
-  //   setTheme(theme === "light" ? "dark" : "light");
-  // };
-
-  //  useEffect(() => {
-  //    if (theme === "dark") {
-  //      document.documentElement.classList.add("dark");
-  //      localStorage.setItem("theme", "dark");
-  //    } else {
-  //      document.documentElement.classList.remove("dark");
-  //      localStorage.setItem("theme", "light");
-  //    }
-  //  }, [theme]);
 
   // for scroll position
   useEffect(() => {
@@ -100,37 +79,30 @@ const Navbar = () => {
     };
   }, [prevScrollPosition]);
 
-  //  navbar
   useEffect(() => {
-    const handleOutsideClick = (event) => {
-      if (!event.tar(".navbar")) {
-        setShowMenu(false);
-      }
-    };
-
-    document.addEventListener("click", handleOutsideClick);
-
-    return () => {
-      document.removeEventListener("click", handleOutsideClick);
-    };
-  }, []);
+    if (showMenu) {
+     document.documentElement.style.overflow = "hidden";
+    } else {
+      document.documentElement.classList.remove("overflow-hidden");
+    }
+  }, [showMenu])
 
   return (
     <section
-      className={`bg-black fixed w-full top-0 z-50 overflow-hidden   ${
-        isNavbarHidden ? "hide" : ""
+      className={`navbar bg-black fixed w-full top-0 z-50 overflow-hidden transition-transform  ease-in-out   ${
+        isNavbarHidden ? " hide" : "navbar-visible"
       }`}
     >
       <nav id="navbar">
         <div
           className={
             currentUser
-              ? "flexCenter justify-between lg:justify-around gap-x-24 xs:gap-x-44 sm:gap-x-32 lg:gap-x-[15vw] md:gap-x-[20rem] xl:gap-x-[35vw]"
+              ? "flexCenter justify-between lg:justify-around gap-x-24 xs:gap-x-44 sm:gap-x-32 lg:gap-x-[10vw] md:gap-x-[20rem] xl:gap-x-[35vw]"
               : "flexCenter justify-between lg:justify-around gap-x-24 xs:gap-x-44 sm:gap-x-32 lg:gap-x-[1vw] md:gap-x-[20rem]"
           }
         >
           <Link to="/">
-            <div className="lg:pr-28">
+            <div className="imaging flex items-start  justify-start lg:pr-28">
               <img
                 src="./logo2.png"
                 className="w-36 h-20 py-2 lg:w-56  lg:pr-10"
@@ -213,76 +185,85 @@ const Navbar = () => {
           </div>
 
           {/* MOBILE MENU */}
-          <div className="flex flex-row lg:hidden navbar">
-            <FiMenu
-              className="text-3xl cursor-pointer sm:ml-48 mx-5 sm:mx-10 text-white"
-              onClick={toggleMenu}
-            />
+          <div className="flex lg:hidden navbar">
+            <div className="">
+              {currentUser ? (
+                <div className=" flex absolute top-2 -right-5">
+                  <Menu className="">
+                    <MenuHandler>
+                      <div className="flex  items-center pt-4 gap-4 cursor-pointer">
+                        <img
+                          className="size-8 rounded-full"
+                          src={currentUser.user.image || "image.png"}
+                          alt=""
+                        />
+                        <p className="text-sm font-semibold">
+                          {currentUser.user.username}
+                        </p>
+                      </div>
+                    </MenuHandler>
+                    <div className="absolute w-12">
+                      <MenuList className="z-50 flex flex-col border-0 px-3 py-6 gap-2">
+                        <div
+                          className="flex gap-2 items-center"
+                          onClick={() => {
+                            setShowMenu(false);
+                          }}
+                        >
+                          <FaRegUser />
+                          <Link to="/profile">Profile</Link>
+                        </div>
+                        <div className="flex gap-2 items-center">
+                          <IoLogOutOutline />
+                          <p
+                            onClick={() => {
+                              handleLogout();
+                              setShowMenu(false);
+                            }}
+                            className="text-black font-normal cursor-pointer"
+                          >
+                            Logout
+                          </p>
+                        </div>
+                      </MenuList>
+                    </div>
+                  </Menu>
+                </div>
+              ) : (
+                <FiMenu
+                  className="text-3xl cursor-pointer sm:ml-48 mx-5 sm:mx-10 text-white"
+                  onClick={toggleMenu}
+                />
+              )}
+            </div>
+
             {showMenu && (
-              <div>
-                <div
-                  className="fixed top-20 left-0 right-0 text-black
-                               bg-white dark:bg-gray-900 dark:text-white shadow-md
-                              rounded-b-xl z-50 py-10 "
-                >
-                  <ul
-                    className="flex flex-col
-                        items-center gap-4"
-                  >
+              <div onClick={(() => {
+                setShowMenu(false)
+                document.documentElement.style.overflow = "scroll";
+              })} className="fixed h-full w-screen left-0 backdrop-blur-md top-0 right-0   bg-black/50">
+                <div className="flex flex-col w-8/12 absolute right-0 h-screen bg-white rounded-l-lg ">
+                  <IoCloseOutline
+                    onClick={() => {
+                      setShowMenu(false);
+                    }}
+                    className=" m-4 mb-8 text-3xl cursor-pointer"
+                  />
+                  <ul className="px-10 font-semibold ">
                     {NavbarMenu.map((menu) => {
                       if (currentUser) {
                         return (
                           menu.name === "Properties" && (
-                            <li
-                              key={menu.id}
-                              className="py-2 flex flex-col  items-center gap-5"
-                            >
-                              <Link to={menu.url} >{menu.name} </Link>
+                            <li key={menu.id} className="">
+                              <Link to={menu.url}>{menu.name} </Link>
                               {window.location.reload}
-                              <div className=" gap-3 items-center">
-                                <Menu>
-                                  <MenuHandler>
-                                    <div className="flex items-center gap-4 cursor-pointer">
-                                      <img
-                                        className="w-7 rounded-full"
-                                        src={
-                                          currentUser.user.image || "image.png"
-                                        }
-                                        alt=""
-                                      />
-                                      <p className="text-sm font-semibold">
-                                        {currentUser.user.username}
-                                      </p>
-                                    </div>
-                                  </MenuHandler>
-                                  <div className="absolute w-12">
-                                    <MenuList className="z-50 flex flex-col border-0 px-3 py-6 gap-2">
-                                      <div className="flex gap-2 items-center">
-                                        <FaRegUser />
-                                        <Link to="/profile">Profile</Link>
-                                      </div>
-                                      <div className="flex gap-2 items-center">
-                                        <IoLogOutOutline />
-                                        <p
-                                          onClick={() => {
-                                            handleLogout();
-                                            setShowMenu(false)
-                                          }}
-                                          className="text-black font-normal cursor-pointer"
-                                        >
-                                          Logout
-                                        </p>
-                                      </div>
-                                    </MenuList>
-                                  </div>
-                                </Menu>
-                              </div>
+                              <div className=" "></div>
                             </li>
                           )
                         );
                       }
                       return (
-                        <li key={menu.id} className="py-2">
+                        <li key={menu.id} className="py-5">
                           {menu.url.startsWith("#") ? (
                             <a
                               href={menu.url}
@@ -293,25 +274,33 @@ const Navbar = () => {
                                   menu.url
                                 );
                                 section.scrollIntoView({ behavior: "smooth" });
-                                
                               }}
                             >
                               {menu.name}
                             </a>
                           ) : (
-                            <Link onClick={() => {
-                              setShowMenu(false)
-                            }} to={menu.url}>{menu.name}</Link>
+                            <Link
+                              onClick={() => {
+                                setShowMenu(false);
+                              }}
+                              to={menu.url}
+                            >
+                              {menu.name}
+                            </Link>
                           )}
                         </li>
                       );
                     })}
                   </ul>
                   {!currentUser && (
-                    <div className="flex justify-center">
-                      <a href="/login" onClick={(() => {
-                        setShowMenu(false);
-                      })} className=" button grad">
+                    <div className="flex px-10 pt-8">
+                      <a
+                        href="/login"
+                        onClick={() => {
+                          setShowMenu(false);
+                        }}
+                        className=" button grad"
+                      >
                         GET STARTED
                       </a>
                     </div>

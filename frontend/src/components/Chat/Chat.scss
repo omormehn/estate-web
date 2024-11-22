@@ -69,8 +69,8 @@
       }
     }
     .center {
-      height: 350px;
-      overflow: scroll;
+      max-height: 400px;
+      overflow-y: auto;
       padding: 20px;
       display: flex;
       flex-direction: column;

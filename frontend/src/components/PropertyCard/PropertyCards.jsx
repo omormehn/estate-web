@@ -41,7 +41,8 @@ const PropertyCards = ({ card }) => {
         </div>
         <h2
           className="font-semibold text-xl"
-          onClick={() => navigate(`../properties/${card.id}`)}
+
+          onClick={() => currentUser ? navigate(`../properties/${card.id}`) : navigate(`/login`)}
         >
           {truncate(card.title, { length: 30 })}
         </h2>
