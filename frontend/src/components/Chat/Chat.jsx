@@ -17,7 +17,7 @@ function Chat({ chats }) {
 
   useEffect(() => {
     messageEndRef.current?.scrollIntoView({behavior: "smooth"});
-  }, [chat])
+  }, [chat?.messages])
 
   const openChat = async (id, receiver) => {
     try {
@@ -28,18 +28,40 @@ function Chat({ chats }) {
     }
   };
 
+  const handleKeyDown = (event) => {
+    if (event.key === "Enter" && !event.shiftKey) {
+      event.preventDefault();
+      event.target.form.dispatchEvent(
+        new Event("submit", { cancelable: true, bubbles: true })
+      );
+    }
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     const formData = new FormData(e.target);
     const text = formData.get("text");
     if (!text) return;
 
+    const tempMessage = {
+      id: `temp-${Date.now()}`,
+      userId: currentUser.user.id,
+      text,
+      createdAt: new Date().toISOString()
+    }
+
     try {
+      setChat((prev) => ({
+        ...prev,
+        messages: [...prev.messages, tempMessage]
+      }))
       e.target.reset();
       const response = await api.post(`/message/${chat.id}`, { text });
       setChat((prev) => ({
         ...prev,
-        messages: [...prev.messages, response.data],
+       messages: prev.messages.map((message) =>
+        message.id === tempMessage.id ? response.data : message
+        )
       }));
       const id = chat.receiver.id
       socket.emit("sendMessage", {
@@ -49,7 +71,15 @@ function Chat({ chats }) {
     
     } catch (error) {
       console.error("error in add chat", error);
+      setChat((prev) => ({
+        ...prev,
+        messages: prev.messages.filter(
+          (message) => message.id !== tempMessage.id
+        ),
+      }));
+      console.log("Message not sent")
     }
+    
   };
 
   useEffect(() => {
@@ -62,14 +92,18 @@ function Chat({ chats }) {
     };
 
     if (chat && socket) {
-      socket.on("getMessage", (data) => {
-        if (chat.id === data.chatId) {
-          setChat((prev) => ({ ...prev, messages: [...prev.messages, data] }));
-          read();
-        }
-      });
+      const handleMessage = (data) => {
+         if (chat.id === data.chatId) {
+           setChat((prev) => ({ ...prev, messages: [...prev.messages, data] }));
+           read();
+         }
+      }
+     
+        return () => {
+          socket.off("getMessage", handleMessage);
+        };
     }
-  });
+  },[chat, socket]);
 
   return (
     <div className="chat">
@@ -98,7 +132,7 @@ function Chat({ chats }) {
         )}
       </div>
       {chat && (
-        <div className="chatBox">
+        <div className="chatBox pt-96">
           <div className="top">
             <div className="user">
               <img src={chat.receiver.image || "/image.png"} alt="" />
@@ -126,10 +160,10 @@ function Chat({ chats }) {
                 <span>{format(message.createdAt)}</span>
               </div>
             ))}
-            <div className="bg-red-500 top-0" ref={messageEndRef}></div>
+            <div ref={messageEndRef}></div>
           </div>
           <form onSubmit={handleSubmit} className="bottom">
-            <textarea name="text"></textarea>
+            <textarea name="text" onKeyDown={handleKeyDown}></textarea>
             <button type="submit">Send</button>
           </form>
         </div>

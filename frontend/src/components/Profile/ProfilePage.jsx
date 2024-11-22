@@ -110,7 +110,7 @@ function ProfilePage() {
           {loading ? (
             <p>Loading chats...</p>
           ) : error ? (
-            <p>Error loading chats: {error}</p>
+            <p>Error loading chats</p>
           ) : (
             <Chat chats={chatResponse} />
           )}

@@ -33,12 +33,9 @@ io.on("connection", (socket) => {
   });
 
   socket.on("sendMessage", ({ receiverId, data }) => {
-     console.log("Current online users:", onlineUser);
     const receiver = getUser(receiverId);
-    console.log("ee", receiver);
     if (receiver) {
       io.to(receiver.socketId).emit("getMessage", data);
-      console.log("ee", receiver)
     }
   });
 

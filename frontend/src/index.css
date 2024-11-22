@@ -112,6 +112,39 @@ html {
 }
 
 
+.no-scroll {
+  overflow: hidden;
+}
+
+.navbar {
+  transition: transform 0.3s ease, opacity 0.3s ease;
+}
+.navbar-hidden {
+  transform: translateY(-100%);
+  opacity: 0;
+}
+
+@media (min-width: 375px) {
+    .imaging{
+        position: relative;
+        right: 20px;
+    }
+}
+@media (min-width: 425px) {
+    .imaging{
+        position: relative;
+        right: 8px;
+    }
+}
+
+@media (min-width: 768px) {
+    .imaging{
+        position: relative;
+        right: -8px;
+    }
+}
+
+
 /* ==================== */
 
 
