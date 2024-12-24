@@ -28,7 +28,7 @@ export const register = async (req, res) => {
     });
 
     //jwt
-    generateTokenAndSetCookie(res, user._id);
+    generateTokenAndSetCookie(res, user.id);
 
     res.status(201).json({
       success: true,

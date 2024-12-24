@@ -20,8 +20,6 @@ const UpdateModal = ({ setIsOpen }) => {
 
     const { username, email, password } = Object.fromEntries(formData);
     try {
-     
-
       const res = await api.put(`/update-user/${currentUser.user.id}`, {
         username,
         email,

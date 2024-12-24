@@ -38,7 +38,7 @@ const updateUser = asyncHandler(async (req, res) => {
   const { password, image, ...inputs } = req.body;
   try {
     let updatedPassword = null;
-    if (password) {
+    if (password) { 
       updatedPassword = await bcrypt.hash(password, 10);
     }
 

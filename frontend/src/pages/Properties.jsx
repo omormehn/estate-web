@@ -4,10 +4,12 @@ import SearchBar from "../components/Search/SearchBar";
 import useProperties from "../hooks/useProperties";
 import { PuffLoader } from "react-spinners";
 import { Button } from "@material-tailwind/react";
+import { useSearch } from "../context/SearchContext";
 
 const Properties = () => {
   const [error, setError] = useState(false);
   const { data, isError, isLoading, refetch } = useProperties();
+  const { search } = useSearch();
   
 
   useEffect(() => {
@@ -50,7 +52,10 @@ const Properties = () => {
             </div>
           ) : (
             Array.isArray(data) && data.length > 0 ? (
-              data.map((card, i) => <PropertyCards card={card} key={i} />)
+              data.filter((item) => {
+                if (search === "") return item;
+                else return item.title.toLowerCase().includes(search.toLowerCase());
+              }).map((card, i) => <PropertyCards card={card} key={i} />)
             ) : (
               <div className="flexCenter justify-center items-center flex-col gap-8 mt-8">
                 <h1>No Data</h1>
