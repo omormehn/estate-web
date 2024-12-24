@@ -96,7 +96,7 @@ const Navbar = () => {
         <div
           className={
             currentUser
-              ? "flexCenter justify-between lg:justify-around gap-x-24 xs:gap-x-44 sm:gap-x-32 lg:gap-x-[10vw] md:gap-x-[20rem] xl:gap-x-[35vw]"
+              ? "flex justify-around  items-center md:justify-start  lg:justify-around gap-x-20  xs:gap-x-44 sm:gap-x-32 lg:gap-x-[10vw] md:gap-x-[20rem] xl:gap-x-[35vw]"
               : "flexCenter justify-between lg:justify-around gap-x-24 xs:gap-x-44 sm:gap-x-32 lg:gap-x-[1vw] md:gap-x-[20rem]"
           }
         >
@@ -187,16 +187,16 @@ const Navbar = () => {
           <div className="flex lg:hidden navbar">
             <div className="">
               {currentUser ? (
-                <div className=" flex absolute top-2 -right-5">
+                <div className="flex absolute right-4 top-2">
                   <Menu className="">
                     <MenuHandler>
-                      <div className="flex  items-center pt-4 gap-4 cursor-pointer">
+                      <div className="flex items-center gap-4 pt-4 cursor-pointer">
                         <img
                           className="size-8 rounded-full"
                           src={currentUser.user.image || "image.png"}
                           alt=""
                         />
-                        <p className="text-sm font-semibold">
+                        <p className="hidden md:block text-slate-300 text-sm font-semibold">
                           {currentUser.user.username}
                         </p>
                       </div>
@@ -242,7 +242,7 @@ const Navbar = () => {
                   setShowMenu(false);
                   document.documentElement.style.overflow = "scroll";
                 }}
-                className="fixed h-full w-screen left-0 backdrop-blur-md top-0 right-0   bg-black/50"
+                className="fixed h-full w-screen left-0 backdrop-blur-md top-0 right-0 bg-black/50"
               >
                 <div className="flex flex-col w-8/12 absolute right-0 h-screen bg-white rounded-l-lg ">
                   <IoCloseOutline

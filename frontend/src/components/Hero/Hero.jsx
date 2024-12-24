@@ -32,7 +32,7 @@ const Hero = () => {
 
           <div className="container ">
             <h1 className="typewrite lg:my-4 text-2xl font-bold tracking-[2rem] md:text-5xl md:tracking-[4rem] lg:text-7xl lg:tracking-[5rem] xl:tracking-[7rem] mt-10 text-wrap">
-              DAMISA
+              Realtor
             </h1>
 
             <p

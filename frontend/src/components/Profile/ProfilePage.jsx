@@ -2,44 +2,22 @@ import { Button } from "@material-tailwind/react";
 import "./profile.scss";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import { useContext, useEffect, useState } from "react";
+import { useContext,  useState } from "react";
 import AuthContext from "../../context/AuthContext";
 import { createPortal } from "react-dom";
 import CreateModal from "../Modal/CreateModal";
 import UpdateModal from "../Modal/UpdateModal";
 import { api } from "../../utils/api";
-import Chat from "../Chat/Chat";
+
 
 function ProfilePage() {
   const [isOpen, setIsOpen] = useState(false);
   const [opened, setOpen] = useState(false);
   const navigate = useNavigate();
-  const [loading, setLoading] = useState(true);
-  const [chatResponse, setChatResponse] = useState(null);
-  const [error, setError] = useState(null);
   const { updateUser, currentUser } = useContext(AuthContext);
   const isAdmin = currentUser && currentUser.user.role === "ADMIN";
 
 
-
-  useEffect(() => {
-    const fetchChats = async () => {
-      try {
-        const response = await api.get("/chat/chats");
-
-        const data = await response.data;
-        setChatResponse(data);
-      } catch (err) {
-        setError(err.message);
-
-        console.log("dat", err);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchChats();
-  }, []);
 
   const handleLogout = async () => {
     await api.post("/auth/logout");
@@ -49,7 +27,7 @@ function ProfilePage() {
   };
 
   return (
-    <div className="profilePage  container pt-32">
+    <div className="profilePage container pt-32">
       <div className="details">
         <div className="wrapper">
           <div className="title flex flex-col md:items-center md:flex-row">
@@ -82,8 +60,8 @@ function ProfilePage() {
               E-mail: <b>{currentUser.user.email}</b>
             </span>
             <Button
+              className="mt-6  max-w-48 pt-2 text-black primary-btn  "
               onClick={handleLogout}
-              className="mt-6 max-w-48 pt-2 text-slate-700 "
             >
               Logout
             </Button>
@@ -98,22 +76,9 @@ function ProfilePage() {
               </button>
             )}
           </div>
-
           <div className="title">
             <h1>Saved List</h1>
           </div>
-        </div>
-      </div>
-      <div className="chatContainer">
-        <div className="wrapper">
-          <h1>Chats</h1>
-          {loading ? (
-            <p>Loading chats...</p>
-          ) : error ? (
-            <p>Error loading chats</p>
-          ) : (
-            <Chat chats={chatResponse} />
-          )}
         </div>
       </div>
     </div>

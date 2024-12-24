@@ -7,8 +7,7 @@ import { userRoute } from "./routes/userRoutes.js";
 import { residencyRoute } from "./routes/residencyRoute.js";
 import authRoute from "./routes/authRoute.js"
 import testRoute from "./routes/testRoutes.js";
-import { chatRoute } from "./routes/chatRoute.js";
-import { messageRoute } from "./routes/messageRoute.js";
+
 
 
 dotenv.config();
@@ -33,5 +32,4 @@ app.use("/api/user", userRoute);
 app.use("/api/user/residency", residencyRoute);
 app.use("/api/user/auth", authRoute);
 app.use("/api/user/test", testRoute);
-app.use("/api/user/chat", chatRoute);
-app.use("/api/user/message", messageRoute);
+
