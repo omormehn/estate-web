@@ -10,10 +10,9 @@ const Properties = () => {
   const [error, setError] = useState(false);
   const { data, isError, isLoading, refetch } = useProperties();
   const { search } = useSearch();
-  
 
   useEffect(() => {
-    window.scrollTo(0,0);
+    window.scrollTo(0, 0);
     if (isError) {
       setError(true);
     } else {
@@ -23,7 +22,7 @@ const Properties = () => {
 
   const handleRetry = () => {
     refetch();
-  }
+  };
 
   return (
     <section className="mt-40">
@@ -50,17 +49,22 @@ const Properties = () => {
                 Retry
               </Button>
             </div>
-          ) : (
-            Array.isArray(data) && data.length > 0 ? (
-              data.filter((item) => {
+          ) : Array.isArray(data) && data.length > 0 && (
+            (() => {
+              const filteredData = data.filter((item) => {
                 if (search === "") return item;
-                else return item.title.toLowerCase().includes(search.toLowerCase());
-              }).map((card, i) => <PropertyCards card={card} key={i} />)
-            ) : (
-              <div className="flexCenter justify-center items-center flex-col gap-8 mt-8">
-                <h1>No Data</h1>
-              </div>
-            )
+                return item.title.toLowerCase().includes(search.toLowerCase());
+              });
+              return filteredData.length > 0 ? (
+                filteredData.map((card, i) => (
+                  <PropertyCards card={card} key={i} />
+                ))
+              ) : (
+                <div className="flexCenter justify-center items-center flex-col gap-8 mt-8">
+                  <h1>Item Not Found</h1>
+                </div>
+              );
+            })()
           )}
         </div>
       </div>

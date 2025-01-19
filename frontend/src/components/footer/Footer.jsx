@@ -1,7 +1,6 @@
 import { LuMail } from "react-icons/lu";
 import { BsTelephone } from "react-icons/bs";
-import { FaGithub, FaLinkedin } from "react-icons/fa6";
-import { FaInstagram } from "react-icons/fa6";
+import { FaFacebook, FaWhatsapp, FaInstagram } from "react-icons/fa6";
 import { Link } from "react-router-dom";
 
 const Footer = () => {
@@ -12,16 +11,16 @@ const Footer = () => {
         {/* col-1 */}
         <div className="">
           <p className="py-4">
-            No 57 A place, There, <br /> Abuja, Nigeria
+            No 57 Gbazango, Kubwa, <br /> Abuja, Nigeria
           </p>
           <a href="tel:+234 8025557683" className="flex gap-4 py-4">
             <BsTelephone className="mt-1" />
-            +234 802-555-7683
+            +234 491-121-2119
           </a>
 
           <a href="mailto:damisaglobalrealty1@gmail.com" className="flex gap-4">
             <LuMail className="mt-1" />
-            nathanuseni@gmail.com
+            damisaglobalrealty1@gmail.com
           </a>
         </div>
         {/* col-2 */}
@@ -38,24 +37,24 @@ const Footer = () => {
         {/* Col-3 */}
         <div className="flex justify-center flex-col py-5">
           <h1 className="font-bold">Follow Us on</h1>
-          <div className="flex gap-5 py-4 cursor-pointer">
+          <div className="flex gap-5 py-4 socials">
             <Link
-              target="https://github.com/omormehn"
-              to={"https://github.com/omormehn"}
+              // target="https://"
+              // to={"https:"}
             >
-              <FaGithub />
+              <FaWhatsapp/>
             </Link>
             <Link
-              target="https://www.instagram.com/omormehn?igsh=Y2V6cmNzaGRndXN2"
-              to={"https://www.instagram.com/omormehn?igsh=Y2V6cmNzaGRndXN2"}
+              target="https://www.instagram.com/damisaglobalrealty01?igsh=MTkzOW1xbGphZWF0NQ=="
+              to={"https://www.instagram.com/damisaglobalreal ty01?igsh=MTkzOW1xbGphZWF0NQ=="}
             >
               <FaInstagram />
             </Link>
             <Link
-              target="https://www.linkedin.com/in/nathan-useni-1a190b23a"
-              to={"https://www.linkedin.com/in/nathan-useni-1a190b23a"}
+              // target="https://"
+              // to={"https://"}
             >
-              <FaLinkedin />
+              <FaFacebook />
             </Link>
           </div>
         </div>
