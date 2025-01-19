@@ -368,6 +368,11 @@ max-width: 20vw;
 }
 
 
+
+.socials>* {
+    cursor: pointer;
+}
+
 /* ------------------------ */
 
 @media(min-width: 768px) {

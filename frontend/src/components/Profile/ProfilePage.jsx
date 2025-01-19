@@ -2,7 +2,7 @@ import { Button } from "@material-tailwind/react";
 import "./profile.scss";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import { useContext,  useState } from "react";
+import { useContext, useState, useEffect } from "react";
 import AuthContext from "../../context/AuthContext";
 import { createPortal } from "react-dom";
 import CreateModal from "../Modal/CreateModal";
@@ -16,6 +16,10 @@ function ProfilePage() {
   const navigate = useNavigate();
   const { updateUser, currentUser } = useContext(AuthContext);
   const isAdmin = currentUser && currentUser.user.role === "ADMIN";
+
+  useEffect(() => {
+    window.scrollTo(0,0)
+  }, [])
 
 
 

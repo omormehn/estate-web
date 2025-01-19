@@ -31,8 +31,8 @@ const PropertyCards = ({ card }) => {
           {currentUser && (
             <div
               className={`flex items-center justify-center rounded-full ${
-                fav ? "bg-red-500" : "bg-transparent"
-              } p-1 cursor-pointer`}
+                fav ? "text-red-500" : "bg-transparent"
+              } transition-all duration-300 ease-in-out p-1 cursor-pointer`}
               onClick={addToFav}
             >
               <LuHeart size={23} />

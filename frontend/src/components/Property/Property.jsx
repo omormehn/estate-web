@@ -9,6 +9,9 @@ import { FadeInFromTop } from "../../utils/motion";
 import { PropertyCard } from "../PropertyCard/PropertyCard";
 import { useEffect, useState } from "react";
 import { Button } from "@material-tailwind/react";
+import { useContext } from "react";
+import AuthContext from "../../context/AuthContext";
+import { useNavigate } from "react-router-dom";
 
 
 
@@ -21,6 +24,10 @@ const Property = () => {
   const { ref, inView } = useInViewHook({ threshold: 0 });
 
   const { data, isError, isLoading, refetch } = useProperties();
+
+  const { currentUser } = useContext(AuthContext);
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (isError) {
@@ -84,7 +91,7 @@ const Property = () => {
               </div>
             )}
             <div className="text-end container pt-8">
-              <a href="/properties" className="border-b border-black">
+              <a href={currentUser ? ("/properties" ) : navigate( "/login", { state: "/properties" })} className="border-b border-black">
                 Show More
               </a>
             </div>

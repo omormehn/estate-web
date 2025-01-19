@@ -17,6 +17,8 @@ export const PropertyCard = ({ card }) => {
   const {fav, addToFav} = useFavorites(card.id);
 
 
+
+
   return (
     <div className="slider-card mx-4 cursor-pointer">
       <figure>
@@ -39,7 +41,7 @@ export const PropertyCard = ({ card }) => {
           {currentUser && (
             <div
               className={`flex items-center justify-center rounded-full ${
-                fav ? "bg-red-500" : "bg-transparent"
+                fav ? "text-red-500" : "bg-transparent"
               } p-1 cursor-pointer`}
               onClick={addToFav}
             >
@@ -64,14 +66,14 @@ export const PropertyCard = ({ card }) => {
         </a>
         <ul className="card-list">
           <li className="card-item">
-            <strong>{card.bedroom}</strong>
+            <strong>{card.facilities.bedrooms}</strong>
             <IoBedOutline className="icon" />
             <br />
             <span>Bedrooms</span>
           </li>
 
           <li className="card-item">
-            <strong>{card.bathroom}</strong>
+            <strong>{card.facilities.bathrooms}</strong>
 
             <FaShower className="icon" />
             <br />
@@ -79,7 +81,7 @@ export const PropertyCard = ({ card }) => {
           </li>
 
           <li className="card-item">
-            <strong>{card.sqrfeet}</strong>
+            <strong>{card.facilities.squareft}</strong>
             <TbRulerMeasure className="icon" />
             <br />
             <span>Square Ft</span>

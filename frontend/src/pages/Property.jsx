@@ -21,7 +21,7 @@ const Property = () => {
   const { fav, addToFav } = useFavorites(id)
   useEffect(() => {
     window.scrollTo(0,0)
-  })
+  }, [])
 
  
     if (isLoading) {
@@ -64,15 +64,14 @@ const Property = () => {
             <p className="text-2xl text-start font-semibold  tracking-wide">
               ₦ {data.price}
             </p>
-              <div
-                className={`flex items-center justify-center rounded-full ${
-                  fav ? "bg-red-500" : "bg-transparent"
-                } p-1 cursor-pointer`}
-                onClick={addToFav}
-              >
-                <LuHeart size={23} />
-              </div>
-            
+            <div
+              className={`flex items-center justify-center rounded-full ${
+                fav ? "text-red-500" : "bg-transparent"
+              } transition-all duration-300 ease-in-out p-1 cursor-pointer`}
+              onClick={addToFav}
+            >
+              <LuHeart size={23} />
+            </div>
           </div>
 
           <a href="">
