@@ -1,10 +1,2 @@
-Open 2 terminal
-cd frontend
-npm install
-npm run dev
-
-cd server
-npm install
-npm run start
-
-Site Demo
+##ESTATE WEBSITE##
+The estate website provides a solution for realtors to handle their businesses from one go!
