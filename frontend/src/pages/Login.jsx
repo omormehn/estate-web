@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import { Card, Input, Button, Typography } from "@material-tailwind/react";
 import "./register.css";
 

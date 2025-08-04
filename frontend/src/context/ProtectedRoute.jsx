@@ -4,22 +4,23 @@ import { api } from "../utils/api";
 
 const ProtectedRoute = createContext();
 
+// eslint-disable-next-line react/prop-types
 export const ProtectedRouteProvider = ({ children }) => {
   const navigate = useNavigate();
-  const [isAuth, setIsAuth] = useState(false);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   useEffect(() => {
     const checkAuth = async () => {
       const res = await api.post("/verify");
-      setIsAuth(true);
+      setIsAuthenticated(true);
       if (res.status === 401) navigate("/login");
       console.log(res);
     };
     checkAuth();
-  }, [isAuth]);
+  }, [isAuthenticated, navigate]);
 
   return (
-    <ProtectedRoute.Provider value={{ isAuth }}>
+    <ProtectedRoute.Provider value={{ isAuthenticated }}>
       {children}
     </ProtectedRoute.Provider>
   );

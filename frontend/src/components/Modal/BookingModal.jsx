@@ -1,4 +1,4 @@
-import React from "react";
+/* eslint-disable react/prop-types */
 import { MdOutlineClose } from "react-icons/md";
 import { IoMdInformationCircleOutline } from "react-icons/io";
 
@@ -30,7 +30,7 @@ const BookingModal = ({ setShowModal, showModal }) => {
             />
             <div className="flex items-start gap-2 pt-2">
             <IoMdInformationCircleOutline size={25} /> 
-            <p className="text-[0.7rem]">  Describe how you want your visit to the specified house to be. Please note that <br /> it'll be communicated back to you if the date is suitable and convenient for both parties.</p>
+            <p className="text-[0.7rem]">  Describe how you want your visit to the specified house to be. Please note that <br /> it&apos;ll be communicated back to you if the date is suitable and convenient for both parties.</p>
             </div>
           </div>
           <button className="primary-btn font-medium">Submit</button>

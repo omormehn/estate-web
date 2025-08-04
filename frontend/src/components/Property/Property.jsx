@@ -15,10 +15,6 @@ import { useNavigate } from "react-router-dom";
 
 
 
-
-
-
-
 const Property = () => {
   const [error, setError] = useState(false);
   const { ref, inView } = useInViewHook({ threshold: 0 });

@@ -12,15 +12,13 @@ const Website = () => {
   const { currentUser } = useContext(AuthContext);
   return (
     <div className="overflow-x-hidden">
-      <Hero />
-      <Property />
-      {currentUser === null && (
-        <div>
-          <About />
-          <Services />
-          <Value />
-        </div>
-      )}
+      <div>
+        <Hero />
+        <Property />
+        <About />
+        <Services />
+        <Value />
+      </div>
     </div>
   );
 };

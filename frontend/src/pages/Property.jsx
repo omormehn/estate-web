@@ -9,9 +9,7 @@ import { IoBedOutline } from "react-icons/io5";
 import { MdOutlineLocationOn } from "react-icons/md";
 import { useEffect, useState } from "react";
 import useFavorites from "../hooks/useFavorites";
-import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import Calendar from "../components/Calendar/Calendar";
 import BookingModal from "../components/Modal/BookingModal";
 import { Button } from "@material-tailwind/react";
 
@@ -20,8 +18,6 @@ import { Button } from "@material-tailwind/react";
 
 const Property = () => {
   const [showModal, setShowModal] = useState(false);
-  const [selectedDate, setSelectedDate] = useState(null);
-  const [showCalendar, setShowCalendar] = useState(false);
   const { pathname } = useLocation();
 
 
@@ -34,11 +30,6 @@ const Property = () => {
   useEffect(() => {
     window.scrollTo(0,0)
   }, []);
-
-  const handleDateChange = (date) => {
-    setSelectedDate(date);
-    console.log(date)
-  }
  
     if (isLoading) {
       return (

@@ -1,5 +1,5 @@
 import Website, { RequiredAuth } from "./pages/Website";
-import { BrowserRouter, Routes, Route, useNavigate } from "react-router-dom";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { Suspense, useContext } from "react";
 import Layout from "./components/layout/Layout";
 import Properties from "./pages/Properties";

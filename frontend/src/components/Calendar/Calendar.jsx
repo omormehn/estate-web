@@ -2,12 +2,12 @@ import { useState } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
-const Calendar = ({ onDateSelect }) => {
+const Calendar = () => {
   const [selectedDate, setSelectedDate] = useState(null);
 
   const handleChange = (selectedDate) => {
     setSelectedDate(selectedDate);
-    onDateSelect(selectedDate);
+
   };
 
   return (
