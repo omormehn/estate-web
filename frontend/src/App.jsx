@@ -1,18 +1,21 @@
 import Website, { RequiredAuth } from "./pages/Website";
-import {BrowserRouter, Routes, Route} from "react-router-dom";
-import { Suspense } from 'react';
+import { BrowserRouter, Routes, Route, useNavigate } from "react-router-dom";
+import { Suspense, useContext } from "react";
 import Layout from "./components/layout/Layout";
 import Properties from "./pages/Properties";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { ReactQueryDevtools } from "react-query/devtools";
 import { ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css"
+import "react-toastify/dist/ReactToastify.css";
 import Property from "./pages/Property";
 import Register from "./pages/Register";
 import Login from "./pages/Login";
-
+import  ProtectedRoute, { ProtectedRouteProvider } from "./context/ProtectedRoute.jsx";
 
 function App() {
+
+  const checkAuth = useContext(ProtectedRoute);
+  console.log(checkAuth);
 
   const queryClient = new QueryClient();
   return (
@@ -24,11 +27,18 @@ function App() {
               <Route path="/" element={<Website />} />
               <Route path="/properties">
                 <Route index element={<Properties />} />
-                <Route path=":propertyId" element={<Property />} />
+                <Route
+                  path=":propertyId"
+                  element={
+                    <ProtectedRouteProvider >
+                      <Property />
+                    </ProtectedRouteProvider>
+                  }
+                />
               </Route>
               <Route path="/signup" element={<Register />} />
               <Route path="/login" element={<Login />} />
-              <Route path="/profile" element={<RequiredAuth/>}/>
+              <Route path="/profile" element={<RequiredAuth />} />
             </Route>
           </Routes>
         </Suspense>
@@ -37,7 +47,6 @@ function App() {
       <ReactQueryDevtools initialIsOpen={false} />
     </QueryClientProvider>
   );
-  
 }
 
-export default App
+export default App;

@@ -13,7 +13,6 @@ const Hero = () => {
   const { ref, inView } = useInViewHook({ threshold: 0 });
   const {currentUser} = useContext(AuthContext)
 
-  console.log(currentUser);
   return (
     <section className=" ">
       <div className="bg-section ">

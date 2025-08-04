@@ -78,11 +78,44 @@ export const login = async (req, res) => {
     });
   } catch (error) {
     console.log(error);
-    return res.status(400).json({ success: false, message: "Something went wrong. Please check your internet connection" });
+    return res.status(400).json({
+      success: false,
+      message: "Something went wrong. Please check your internet connection",
+    });
   }
 };
 export const logout = async (req, res) => {
   res.clearCookie("token");
   res.status(200).json({ success: true, message: "Logged out successfully" });
 };
-// export const register = async (req, res) => {};
+
+export const socialLogin = async (req, res) => {
+  const { id, email, username, image } = req.body;
+
+  try {
+    let user = await prisma.user.findFirst({
+      where: {
+        email,
+      },
+    });
+
+    if (!user) {
+      const newUser = await prisma.user.create({
+        data: {
+          id,
+          email,
+          username,
+          image,
+        },
+      });
+      res
+        .status(200)
+        .json({ message: "User logged in successfully!", newUser });
+        console.log(newUser);
+    }
+
+  } catch (error) {
+    res.status(500).json({ message: "Error logging in user", error });
+    console.error(error);
+  }
+};

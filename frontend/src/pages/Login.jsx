@@ -1,18 +1,67 @@
 import { Card, Input, Button, Typography } from "@material-tailwind/react";
 import "./register.css";
 
-import { useContext, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import { PuffLoader } from "react-spinners";
 import { api } from "../utils/api";
 import AuthContext from "../context/AuthContext";
 
+import {
+  getAuth,
+  GoogleAuthProvider,
+  getRedirectResult,
+  signInWithRedirect,
+} from "firebase/auth";
+import { auth } from "./../utils/firebaseConfig";
+
 const Login = () => {
+  const navigate = useNavigate();
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
+  const topRef = useRef(null);
   const { updateUser } = useContext(AuthContext);
-  const navigate = useNavigate();
+
+  const auth = getAuth();
+
+  const googleProvider  = new GoogleAuthProvider();
+
+  const handleGoogleLogin = async () => {
+    try {
+      // await signInWithRedirect(auth, googleProvider);
+      const user = result.user;
+      // After redirection
+      const result = await getRedirectResult(auth);
+      if (result) {
+        const user = result.user;
+        console.log(user);
+      }
+      
+      console.log(result);
+      const response = await api.post("/auth/social-login", {
+        id: user.uid,
+        email: user.email,
+        username: user.displayName,
+        image: user.photoURL,
+      });
+      console.log(response);
+      updateUser(response.data);
+      console.log(user.photoURL);
+      navigate("/");
+    } catch (error) {
+      console.error("Error during login:", error.message);
+    }
+  }
+
+  // useEffect(() => {
+  //   handleGoogleLogin();
+  // }, [])
+
+
+  useEffect(() => {
+    topRef.current && topRef.current.scrollIntoView({ behavior: "smooth" });
+  }, [])
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -39,7 +88,10 @@ const Login = () => {
   };
 
   return (
-    <section className="container flex justify-center items-center pt-28 overflow-x-hidden">
+    <section
+      ref={topRef}
+      className="container flex justify-center items-center pt-28 overflow-x-hidden"
+    >
       <Card color="transparent" shadow={true} className=" min-w-72 py-3 ">
         <div className="px-6">
           <Typography variant="h4" color="blue-gray">
@@ -48,6 +100,21 @@ const Login = () => {
           <Typography color="gray" className="mt-1 font-normal">
             Welcome Back! <br /> Enter your details to login.
           </Typography>
+
+          <Button
+            variant="outlined"
+            size="lg"
+            className="flex h-12 mt-8 border-blue-gray-200 items-center justify-center gap-2"
+            fullWidth
+            onClick={handleGoogleLogin}
+          >
+            <img
+              src={`https://www.material-tailwind.com/logos/logo-google.png`}
+              alt="google"
+              className="h-6 w-6"
+            />{" "}
+            SIGN IN WITH GOOGLE
+          </Button>
           <form onSubmit={handleSubmit} className="mt-8 mb-2  max-w-screen-lg ">
             <div className="mb-1 flex flex-col gap-6 ">
               <Typography variant="h6" color="blue-gray" className="-mb-5">
@@ -69,6 +136,8 @@ const Login = () => {
               </Typography>
               <Input
                 required
+                security="password"
+                autoComplete="current-password"
                 type="password"
                 name="password"
                 size="lg"

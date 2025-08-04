@@ -1,5 +1,5 @@
 import { useQuery } from "react-query";
-import { useLocation } from "react-router-dom";
+import {  useLocation } from "react-router-dom";
 import { getProperty } from "../utils/api";
 import { PuffLoader } from "react-spinners";
 import { LuHeart } from "react-icons/lu";
@@ -7,22 +7,38 @@ import { FaShower } from "react-icons/fa";
 import { TbRulerMeasure } from "react-icons/tb";
 import { IoBedOutline } from "react-icons/io5";
 import { MdOutlineLocationOn } from "react-icons/md";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import useFavorites from "../hooks/useFavorites";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+import Calendar from "../components/Calendar/Calendar";
+import BookingModal from "../components/Modal/BookingModal";
+import { Button } from "@material-tailwind/react";
+
+
 
 
 const Property = () => {
+  const [showModal, setShowModal] = useState(false);
+  const [selectedDate, setSelectedDate] = useState(null);
+  const [showCalendar, setShowCalendar] = useState(false);
   const { pathname } = useLocation();
+
+
   const id = pathname.split("/").slice(-1)[0]
-   const { data, isLoading, isError } = useQuery(["resd", id], () =>
+   const { data, isLoading, isError, refetch } = useQuery(["resd", id], () =>
      getProperty(id)
    );
 
   const { fav, addToFav } = useFavorites(id)
   useEffect(() => {
     window.scrollTo(0,0)
-  }, [])
+  }, []);
 
+  const handleDateChange = (date) => {
+    setSelectedDate(date);
+    console.log(date)
+  }
  
     if (isLoading) {
       return (
@@ -38,9 +54,11 @@ const Property = () => {
     }
 
      if (isError) {
+      refetch;
        return (
          <div>
            <h1>Error while fetching data</h1>
+           <Button>Retry</Button>
          </div>
        );
      }
@@ -114,7 +132,18 @@ const Property = () => {
           </div>
 
           {/* book visit */}
-          <button className="primary-btn mt-4 lg:w-[30vw]">Book Visit</button>
+          <button className="primary-btn mt-4 lg:w-[30vw]" onClick={() => setShowModal(!showModal)}>Book Visit</button>
+
+           {/* Modal */}
+           {showModal && (
+            <div className="">
+              <BookingModal setShowModal={setShowModal} showModal={showModal}/>
+            </div>
+          )}
+
+          {isError && (
+            <div>Error</div>
+          )}
         </div>
       </div>
     </div>
