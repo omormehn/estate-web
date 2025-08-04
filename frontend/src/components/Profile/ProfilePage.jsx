@@ -33,7 +33,7 @@ function ProfilePage() {
             <div className="flex flex-col md:flex-row md:items-end md:space-x-6 -mt-16">
               <div className="relative mb-4 md:mb-0">
                 <img
-                  src={currentUser.user.image || "image.png"}
+                  src={currentUser?.user.image || "image.png"}
                   alt="Profile"
                   className="w-32 h-32 rounded-full border-4 border-white shadow-lg object-cover"
                 />
@@ -42,10 +42,10 @@ function ProfilePage() {
                 <div className="flex flex-col md:flex-row md:items-center md:justify-between">
                   <div>
                     <h1 className="text-3xl font-bold text-gray-900 mb-2">
-                      {currentUser.user.username}
+                      {currentUser?.user.username}
                     </h1>
                     <p className="text-gray-600 mb-2">
-                      {currentUser.user.email}
+                      {currentUser?.user.email}
                     </p>
                     {isAdmin && (
                       <span className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-purple-100 text-purple-800">
@@ -108,7 +108,7 @@ function ProfilePage() {
             <div className="flex items-center space-x-4">
               <span className="text-gray-600 font-medium w-24">Avatar:</span>
               <img
-                src={currentUser.user.image || "image.png"}
+                src={currentUser?.user.image || "image.png"}
                 alt="Avatar"
                 className="w-16 h-16 rounded-full object-cover border-2 border-gray-200"
               />
@@ -116,13 +116,13 @@ function ProfilePage() {
             <div className="flex items-center space-x-4">
               <span className="text-gray-600 font-medium w-24">Username:</span>
               <span className="font-semibold text-gray-900">
-                {currentUser.user.username}
+                {currentUser?.user.username}
               </span>
             </div>
             <div className="flex items-center space-x-4">
               <span className="text-gray-600 font-medium w-24">Email:</span>
               <span className="font-semibold text-gray-900">
-                {currentUser.user.email}
+                {currentUser?.user.email}
               </span>
             </div>
           </div>

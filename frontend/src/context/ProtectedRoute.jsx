@@ -11,16 +11,28 @@ export const ProtectedRouteProvider = ({ children }) => {
 
   useEffect(() => {
     const checkAuth = async () => {
-      const res = await api.post("/verify");
-      setIsAuthenticated(true);
-      if (res.status === 401) navigate("/login");
-      console.log(res);
+      try {
+        const res = await api.post("/verify");
+
+        if (res.status === 200) {
+          setIsAuthenticated(true);
+        }
+      } catch (error) {
+        navigate("/login");
+        setIsAuthenticated(false);
+        console.error("Authentication check failed:", error);
+        throw new Error(error);
+      }
     };
     checkAuth();
-  }, [isAuthenticated, navigate]);
+  }, [navigate]);
 
   return (
-    <ProtectedRoute.Provider value={{ isAuthenticated }}>
+    <ProtectedRoute.Provider
+      value={{
+        isAuthenticated,
+      }}
+    >
       {children}
     </ProtectedRoute.Provider>
   );

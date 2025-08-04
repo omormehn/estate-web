@@ -9,7 +9,7 @@ import { Navigate } from "react-router-dom";
 import ProfilePage from "../components/Profile/ProfilePage";
 
 const Website = () => {
-  const { currentUser } = useContext(AuthContext);
+
   return (
     <div className="overflow-x-hidden">
       <div>
@@ -22,14 +22,14 @@ const Website = () => {
     </div>
   );
 };
-export const RequiredAuth = () => {
-  const { currentUser } = useContext(AuthContext);
-  return currentUser ? (
-    <div>
-      <ProfilePage />
-    </div>
-  ) : (
-    <Navigate to="/login" />
-  );
-};
+// export const RequiredAuth = () => {
+//   const { currentUser } = useContext(AuthContext);
+//   return currentUser ? (
+//     <div>
+//       <ProfilePage />
+//     </div>
+//   ) : (
+//     <Navigate to="/login" />
+//   );
+// };
 export default Website;
