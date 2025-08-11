@@ -82,7 +82,7 @@ const Login = () => {
       toast.success("Logged in Successfully.");
       navigate(from, { replace: true });
     } catch (error) {
-      console.log("error in login", error.response.data.message);
+      console.log("error in login", error);
       setError(error.response.data.message);
     } finally {
       setLoading(false);
