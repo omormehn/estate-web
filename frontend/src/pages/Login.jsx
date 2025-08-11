@@ -78,6 +78,7 @@ const Login = () => {
         email,
         password,
       });
+      console.log(response);
       updateUser(response.data);
       toast.success("Logged in Successfully.");
       navigate(from, { replace: true });
