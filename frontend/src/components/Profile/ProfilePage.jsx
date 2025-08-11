@@ -55,7 +55,7 @@ function ProfilePage() {
                   </div>
                   <div className="mt-4 md:mt-0 flex space-x-3">
                     <button
-                      className="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+                      className="px-6 py-2 bg-primary text-white rounded-lg hover:bg-blue-700 transition-colors"
                       onClick={() => setIsOpen(true)}
                     >
                       Update Profile
@@ -100,7 +100,7 @@ function ProfilePage() {
         </div>
 
         {/* User Info Card */}
-        <div className="bg-white rounded-xl shadow-lg p-6">
+        {/* <div className="bg-white rounded-xl shadow-lg p-6">
           <h3 className="text-lg font-semibold text-gray-900 mb-6">
             {isAdmin ? "Admin Information" : "User Information"}
           </h3>
@@ -126,7 +126,7 @@ function ProfilePage() {
               </span>
             </div>
           </div>
-        </div>
+        </div> */}
       </div>
 
       {/* Modals */}
