@@ -4,7 +4,7 @@ import "./register.css";
 
 import { useContext, useEffect, useRef, useState } from "react";
 import { toast } from "react-toastify";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { PuffLoader } from "react-spinners";
 import { api } from "../utils/api";
 import AuthContext from "../context/AuthContext";
@@ -22,11 +22,13 @@ const Login = () => {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const topRef = useRef(null);
-  const { updateUser } = useContext(AuthContext);
+  const { updateUser, currentUser } = useContext(AuthContext);
+  const location = useLocation();
 
   const auth = getAuth();
+  const from = location.state?.from || "/";
 
-  const googleProvider  = new GoogleAuthProvider();
+  const googleProvider = new GoogleAuthProvider();
 
   const handleGoogleLogin = async () => {
     try {
@@ -38,7 +40,7 @@ const Login = () => {
         const user = result.user;
         console.log(user);
       }
-      
+
       console.log(result);
       const response = await api.post("/auth/social-login", {
         id: user.uid,
@@ -53,16 +55,16 @@ const Login = () => {
     } catch (error) {
       console.error("Error during login:", error.message);
     }
-  }
+  };
 
   // useEffect(() => {
   //   handleGoogleLogin();
   // }, [])
 
-
   useEffect(() => {
     topRef.current && topRef.current.scrollIntoView({ behavior: "smooth" });
-  }, [])
+  }, []);
+
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -78,14 +80,19 @@ const Login = () => {
       });
       updateUser(response.data);
       toast.success("Logged in Successfully.");
-      navigate("/");
+      navigate(from, { replace: true });
     } catch (error) {
-      console.log("error in login", error);
+      console.log("error in login", error.response.data.message);
       setError(error.response.data.message);
     } finally {
       setLoading(false);
-      setError("");
     }
+  };
+  const handleLogout = async () => {
+    await api.post("/auth/logout");
+    updateUser(null);
+    toast.success("Logged out Successfully.");
+    navigate("/login");
   };
 
   return (
@@ -95,12 +102,29 @@ const Login = () => {
     >
       <Card color="transparent" shadow={true} className=" min-w-72 py-3 ">
         <div className="px-6">
-          <Typography variant="h4" color="blue-gray">
-            Sign In
-          </Typography>
-          <Typography color="gray" className="mt-1 font-normal">
-            Welcome Back! <br /> Enter your details to login.
-          </Typography>
+          {currentUser ? (
+            <div className="">
+              <Typography variant="h5" color="blue-gray">
+                You are already logged in as {currentUser.user?.username}
+              </Typography>
+              <button
+                onClick={handleLogout}
+                color="black"
+                className="py-1 px-2 text-sm rounded-md bg-gray-400 font-"
+              >
+                Logout
+              </button>
+            </div>
+          ) : (
+            <div>
+              <Typography variant="h4" color="blue-gray">
+                Sign In
+              </Typography>
+              <Typography color="gray" className="mt-1 font-normal">
+                Welcome Back! <br /> Enter your details to login.
+              </Typography>
+            </div>
+          )}
 
           <Button
             variant="outlined"
@@ -122,7 +146,6 @@ const Login = () => {
                 Email
               </Typography>
               <Input
-                required
                 size="lg"
                 name="email"
                 type="email"
@@ -136,7 +159,6 @@ const Login = () => {
                 Password
               </Typography>
               <Input
-                required
                 security="password"
                 autoComplete="current-password"
                 type="password"
@@ -148,6 +170,9 @@ const Login = () => {
                   className: "before:content-none after:content-none",
                 }}
               />
+              <div>
+                {error && <span className="mt-4 text-red-800">{error}</span>}
+              </div>
               <a className="" href="/">
                 Forgot Password?
               </a>
@@ -157,25 +182,23 @@ const Login = () => {
               <Button
                 disabled={loading}
                 type="submit"
-                className="mt-6 px-20 pt-2 text-slate-700 "
+                className="mt-6 px-28 pt-2 py-4 bg-primary  text-slate-700 "
               >
                 {loading ? (
                   <div className="flexCenter justify-center container ">
                     <PuffLoader
                       color={"#123abc"}
-                      size={43}
-                      radius={1}
+                      size={20}
+                      radius={0}
                       aria-label="puff-loading"
                     />
                   </div>
                 ) : (
-                  <h3> Sign in</h3>
+                  <p className="text-base"> Sign in</p>
                 )}
               </Button>
             </div>
-            <div className="mt-4">
-              {error && <span className="mt-4 text-red-800">{error}</span>}
-            </div>
+
             <Typography color="gray" className="mt-4 py-2 font-normal">
               Don&apos;t have an account?{" "}
               <a href="/signup" className="font-medium text-gray-900">

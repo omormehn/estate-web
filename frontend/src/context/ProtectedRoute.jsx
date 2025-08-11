@@ -1,41 +1,17 @@
-import { createContext, useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { api } from "../utils/api";
 
-const ProtectedRoute = createContext();
+import { Navigate, useLocation } from "react-router-dom";
+
 
 // eslint-disable-next-line react/prop-types
-export const ProtectedRouteProvider = ({ children }) => {
-  const navigate = useNavigate();
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
+export const ProtectedRoute = ({ children, currentUser }) => {
+  const location = useLocation();
 
-  useEffect(() => {
-    const checkAuth = async () => {
-      try {
-        const res = await api.post("/verify");
+  if (!currentUser) {
+    // Redirect to login and remember where they tried to go
+    return <Navigate to="/login" state={{ from: location.pathname }} replace />;
+  }
 
-        if (res.status === 200) {
-          setIsAuthenticated(true);
-        }
-      } catch (error) {
-        navigate("/login");
-        setIsAuthenticated(false);
-        console.error("Authentication check failed:", error);
-        throw new Error(error);
-      }
-    };
-    checkAuth();
-  }, [navigate]);
-
-  return (
-    <ProtectedRoute.Provider
-      value={{
-        isAuthenticated,
-      }}
-    >
-      {children}
-    </ProtectedRoute.Provider>
-  );
+  return children;
 };
 
 export default ProtectedRoute;

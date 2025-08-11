@@ -1,6 +1,6 @@
 import Website from "./pages/Website";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { Suspense } from "react";
+import { Suspense, useContext } from "react";
 import Layout from "./components/layout/Layout";
 import Properties from "./pages/Properties";
 import { QueryClient, QueryClientProvider } from "react-query";
@@ -10,11 +10,13 @@ import "react-toastify/dist/ReactToastify.css";
 import Property from "./pages/Property";
 import Register from "./pages/Register";
 import Login from "./pages/Login";
-import { ProtectedRouteProvider } from "./context/ProtectedRoute.jsx";
+import ProtectedRoute from "./context/ProtectedRoute.jsx";
 import ProfilePage from "./components/Profile/ProfilePage.jsx";
+import AuthContext from "./context/AuthContext.jsx";
 
 function App() {
   const queryClient = new QueryClient();
+  const { currentUser } = useContext(AuthContext);
   return (
     <QueryClientProvider client={queryClient}>
       <BrowserRouter>
@@ -27,9 +29,9 @@ function App() {
                 <Route
                   path=":propertyId"
                   element={
-                    <ProtectedRouteProvider>
+                    <ProtectedRoute currentUser={currentUser}>
                       <Property />
-                    </ProtectedRouteProvider>
+                    </ProtectedRoute>
                   }
                 />
               </Route>
@@ -38,9 +40,9 @@ function App() {
               <Route
                 path="/profile"
                 element={
-                  <ProtectedRouteProvider>
+                  <ProtectedRoute currentUser={currentUser}>
                     <ProfilePage />
-                  </ProtectedRouteProvider>
+                  </ProtectedRoute>
                 }
               />
             </Route>
