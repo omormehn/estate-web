@@ -25,22 +25,24 @@ const useFavorites = (cardId) => {
     };
     fetchFav();
   }, [currentUser, cardId]);
+  // console.log({currentUser}, "currentUser in useFavorites");
 
   const addToFav = async () => {
+    if (!currentUser || !currentUser.user) {
+      toast.error("Please login to add to favorites");
+      return;
+    }
     const email = currentUser.user.email;
     setFav((prevFav) => !prevFav);
     try {
       const response = await api.post(`/to-fav/${cardId}`, {
         email,
       });
-      console.log(response.data)
+      console.log(response.data);
     } catch (error) {
       toast.error("Something went wrong");
-      console.error(
-        "Error adding to favorites:",
-        error.response ? error.response.data : error.message
-      );
       setFav((prevFav) => !prevFav);
+      throw new Error("Failed to add to favorites", error);
     }
   };
   return { fav, addToFav };

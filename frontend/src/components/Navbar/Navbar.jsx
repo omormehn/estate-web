@@ -124,11 +124,11 @@ const Navbar = () => {
                             <div className="flex items-center gap-4 cursor-pointer">
                               <img
                                 className="w-7 rounded-full"
-                                src={currentUser.user.image || "image.png"}
+                                src={currentUser.user?.image || "image.png"}
                                 alt=""
                               />
                               <p className="text-sm font-semibold">
-                                {currentUser.user.username}
+                                {currentUser.user?.username}
                               </p>
                             </div>
                           </MenuHandler>
