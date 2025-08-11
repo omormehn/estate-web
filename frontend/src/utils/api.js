@@ -1,11 +1,22 @@
 import axios from "axios";
-import { defer } from 'react-router-dom';
 
 export const api = axios.create({
   // eslint-disable-next-line no-undef
   baseURL: `https://estate-web-haiw.onrender.com/api/user`,
   withCredentials: true,
 });
+
+api.interceptors.response.use(
+    res => res,
+    error => {
+        if (error.response.status === 401) {
+            console.error("Unauthorized access - redirecting to login");
+            localStorage.removeItem("user");
+            window.location.href = "/login";
+        }
+        return Promise.reject(error);
+    }
+)
 
 const getAllProperties = async() => {
     try {
@@ -35,12 +46,6 @@ const getProperty = async (id) => {
     }
 }
 
-export const getChat = async () => {
-    const chats = api('/chat/chats');
-    return defer({
-        chatRes: chats
-    })
-}
 
 
 export {getAllProperties}

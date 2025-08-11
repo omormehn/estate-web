@@ -52,7 +52,7 @@ export const PropertyCard = ({ card }) => {
         <h2
           onClick={() => {
             if (currentUser === null) {
-              navigate('/login')
+              navigate('/login', { state: { from: `/properties/${card.id}` } });   
               return;
             }
             navigate(`../properties/${card.id}`);

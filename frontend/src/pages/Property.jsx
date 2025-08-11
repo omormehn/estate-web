@@ -7,47 +7,56 @@ import { FaShower } from "react-icons/fa";
 import { TbRulerMeasure } from "react-icons/tb";
 import { IoBedOutline } from "react-icons/io5";
 import { MdOutlineLocationOn } from "react-icons/md";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import useFavorites from "../hooks/useFavorites";
-
+import "react-datepicker/dist/react-datepicker.css";
+import BookingModal from "../components/Modal/BookingModal";
+import { Button } from "@material-tailwind/react";
+import { FaArrowLeftLong } from "react-icons/fa6";
 
 const Property = () => {
+  const [showModal, setShowModal] = useState(false);
   const { pathname } = useLocation();
-  const id = pathname.split("/").slice(-1)[0]
-   const { data, isLoading, isError } = useQuery(["resd", id], () =>
-     getProperty(id)
-   );
 
-  const { fav, addToFav } = useFavorites(id)
+  const id = pathname.split("/").slice(-1)[0];
+  const { data, isLoading, isError, refetch } = useQuery(["resd", id], () =>
+    getProperty(id)
+  );
+
+  const { fav, addToFav } = useFavorites(id);
   useEffect(() => {
-    window.scrollTo(0,0)
-  }, [])
+    window.scrollTo(0, 0);
+  }, []);
 
- 
-    if (isLoading) {
-      return (
-        <div className="flexCenter justify-center container h-[60vh]">
-          <PuffLoader
-            color={"#123abc"}
-            size={80}
-            radius={1}
-            aria-label="puff-loading"
-          />
-        </div>
-      );
-    }
+  if (isLoading) {
+    return (
+      <div className="flexCenter justify-center container h-[60vh]">
+        <PuffLoader
+          color={"#123abc"}
+          size={80}
+          radius={1}
+          aria-label="puff-loading"
+        />
+      </div>
+    );
+  }
 
-     if (isError) {
-       return (
-         <div>
-           <h1>Error while fetching data</h1>
-         </div>
-       );
-     }
+  if (isError) {
+    refetch;
+    return (
+      <div>
+        <h1>Error while fetching data</h1>
+        <Button>Retry</Button>
+      </div>
+    );
+  }
+  const route = () => {
+    window.history.back();
+  };
 
-  
   return (
     <div className="container mt-40">
+      <FaArrowLeftLong className="cursor-pointer" onClick={route} />
       <h2 className="font-semibold text-2xl text-blue my-8">{data.title}</h2>
       {/* image */}
       <div>
@@ -114,11 +123,25 @@ const Property = () => {
           </div>
 
           {/* book visit */}
-          <button className="primary-btn mt-4 lg:w-[30vw]">Book Visit</button>
+          <button
+            className="primary-btn mt-4 lg:w-[30vw]"
+            onClick={() => setShowModal(!showModal)}
+          >
+            Book Visit
+          </button>
+
+          {/* Modal */}
+          {showModal && (
+            <div className="">
+              <BookingModal setShowModal={setShowModal} showModal={showModal} />
+            </div>
+          )}
+
+          {isError && <div>Error</div>}
         </div>
       </div>
     </div>
   );
-}
+};
 
-export default Property
+export default Property;

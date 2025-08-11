@@ -74,6 +74,7 @@ const deleteUser = asyncHandler(async (req, res) => {
     res.status(401).json({ message: "Failed to delete user" });
   }
 });
+
 //book visit to residency
 const bookVisit = asyncHandler(async (req, res) => {
   //fetch email and date

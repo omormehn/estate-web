@@ -6,14 +6,11 @@ import {
   FadeInFromRight,
 } from "../../utils/motion";
 import useInViewHook from "../../utils/inView";
-import { useContext } from "react";
-import AuthContext from "../../context/AuthContext";
 
 const Hero = () => {
   const { ref, inView } = useInViewHook({ threshold: 0 });
-  const {currentUser} = useContext(AuthContext)
 
-  console.log(currentUser);
+
   return (
     <section className=" ">
       <div className="bg-section ">

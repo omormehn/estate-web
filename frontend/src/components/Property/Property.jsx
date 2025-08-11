@@ -13,12 +13,6 @@ import { useContext } from "react";
 import AuthContext from "../../context/AuthContext";
 import { useNavigate } from "react-router-dom";
 
-
-
-
-
-
-
 const Property = () => {
   const [error, setError] = useState(false);
   const { ref, inView } = useInViewHook({ threshold: 0 });
@@ -67,7 +61,9 @@ const Property = () => {
         {error ? (
           <div className="flex justify-center items-center flex-col gap-8 mt-8">
             <h1>Error in Fetching Projects</h1>
-            <Button className="text-black px-4 py-2" onClick={handleRetry}>Retry</Button>
+            <Button className="text-black px-4 py-2" onClick={handleRetry}>
+              Retry
+            </Button>
           </div>
         ) : (
           <Swiper
@@ -90,8 +86,17 @@ const Property = () => {
                 <h1>No Properties Available</h1>
               </div>
             )}
-            <div className="text-end container pt-8">
-              <a href={currentUser ? ("/properties" ) : navigate( "/login", { state: "/properties" })} className="border-b border-black">
+            <div className="text-end container pt-8 cursor-pointer">
+              <a
+                onClick={() => {
+                  if (!currentUser) {
+                    navigate("/login", { state: { from: "/properties"} });
+                  } else {
+                    navigate("/properties");
+                  }
+                }}
+                className="border-b border-black"
+              >
                 Show More
               </a>
             </div>
@@ -101,21 +106,20 @@ const Property = () => {
       </motion.div>
     </section>
   );
-}
+};
 
 export default Property;
 
-
 const SliderButton = () => {
-    const slider = useSwiper();
-    return (
-      <div className="flex mt-10 justify-center text-4xl lg:text-4xl gap-8">
-        <div className="arrow-container" onClick={() => slider.slidePrev(1000)}>
-          <IoIosArrowBack />
-        </div>
-        <div className="arrow-container" onClick={() => slider.slideNext(1000)}>
-          <IoIosArrowForward />
-        </div>
+  const slider = useSwiper();
+  return (
+    <div className="flex mt-10 justify-center text-4xl lg:text-4xl gap-8">
+      <div className="arrow-container" onClick={() => slider.slidePrev(1000)}>
+        <IoIosArrowBack />
       </div>
-    );
-}
+      <div className="arrow-container" onClick={() => slider.slideNext(1000)}>
+        <IoIosArrowForward />
+      </div>
+    </div>
+  );
+};

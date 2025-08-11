@@ -8,8 +8,7 @@ import {
 } from "../controllers/residencyController.js";
 import { verifyToken } from "../middleware/verifyToken.js";
 import { isAdmin } from "../middleware/adminMiddleware.js";
-const router = express.Router()
-
+const router = express.Router();
 
 //route to create
 router.post("/create", verifyToken, isAdmin, createResidency);
@@ -20,7 +19,7 @@ router.get("/allresd", getAllResidencies);
 //route to get one by id
 router.get("/:id", verifyToken, getResidency);
 
-router.put("/:id",verifyToken, isAdmin, updateResidency);
+router.put("/:id", verifyToken, isAdmin, updateResidency);
 
 router.delete("/:id", verifyToken, isAdmin, deleteResidency);
 
