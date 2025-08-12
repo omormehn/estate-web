@@ -5,17 +5,18 @@ export const api = axios.create({
   withCredentials: true,
 });
 
-api.interceptors.response.use(
-    res => res,
-    error => {
-        if (error.response.status === 401) {
-            console.error("Unauthorized access - redirecting to login");
-            localStorage.removeItem("user");
-            window.location.href = "/login";
-        }
-        return Promise.reject(error);
-    }
-)
+// api.interceptors.response.use(
+//     res => res, 
+//     error => {
+//         console.error("API Error:", error);
+//         if (error?.response?.status === 401 && window.location.pathname !== "/login") {
+//             console.error("Unauthorized access - redirecting to login");
+//             localStorage.removeItem("user");
+//             window.location.href = "/login";
+//         }
+//         return Promise.reject(error);
+//     }
+// )
 
 const getAllProperties = async() => {
     try {

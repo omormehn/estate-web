@@ -1,5 +1,6 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
-
+import { useState } from "react";
 import { badgeColors } from "../Property/badgeColor";
 import { IoBedOutline } from "react-icons/io5";
 import { FaShower } from "react-icons/fa";
@@ -10,11 +11,15 @@ import { useNavigate } from "react-router-dom";
 import { useContext } from "react";
 import AuthContext from "../../context/AuthContext";
 import useFavorites from "../../hooks/useFavorites";
+import { FaBookmark } from "react-icons/fa6";
+import { FaRegBookmark } from "react-icons/fa6";
+import { RxBookmark } from "react-icons/rx";
 
 const PropertyCards = ({ card }) => {
   const navigate = useNavigate();
   const { currentUser } = useContext(AuthContext);
   const { fav, addToFav } = useFavorites(card.id);
+  const [bookMark, setBookMark] = useState(false);
 
   return (
     <div className="slider-card mx-4 cursor-pointer">
@@ -28,21 +33,31 @@ const PropertyCards = ({ card }) => {
       <div className="mt-4 flexColStart leading-5">
         <div className="flex justify-between">
           <p className="text-xl lg:text-2xl">₦ {card.price}</p>
-          {currentUser && (
+          <div className="flex flex-row items-center gap-4">
             <div
               className={`flex items-center justify-center rounded-full ${
                 fav ? "text-red-500" : "bg-transparent"
-              } transition-all duration-300 ease-in-out p-1 cursor-pointer`}
+              } p-1 cursor-pointer`}
               onClick={addToFav}
             >
               <LuHeart size={23} />
             </div>
-          )}
+            <div onClick={() => setBookMark((prev) => !prev)} className="">
+              {bookMark ? (
+                <RxBookmark size={25} />
+              ) : (
+                <FaBookmark size={21} />
+              )}
+            </div>
+          </div>
         </div>
         <h2
           className="font-semibold text-xl"
-
-          onClick={() => currentUser ? navigate(`../properties/${card.id}`) : navigate(`/login`)}
+          onClick={() =>
+            currentUser
+              ? navigate(`../properties/${card.id}`)
+              : navigate(`/login`)
+          }
         >
           {truncate(card.title, { length: 30 })}
         </h2>

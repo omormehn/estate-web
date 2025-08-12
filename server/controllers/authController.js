@@ -89,6 +89,33 @@ export const logout = async (req, res) => {
   res.status(200).json({ success: true, message: "Logged out successfully" });
 };
 
+export const validateUser = async (req, res) => {
+  const { id } = req.user;
+  if (!id) {
+    return res.status(401).json({ message: "Not Authenticated" });
+  }
+  try {
+    const user = await prisma.user.findUnique({
+      where: {
+        id,
+      },
+      select: {
+        id: true,
+        email: true,
+        username: true,
+        image: true,
+        role: true,
+      },
+    });
+    res.status(200).json({ user });
+  } catch (error) {
+    res.status(401).json({
+      message: "Failed to validate user",
+      error: error.message,
+    });
+  }
+};
+
 export const socialLogin = async (req, res) => {
   const { id, email, username, image } = req.body;
 
@@ -111,9 +138,8 @@ export const socialLogin = async (req, res) => {
       res
         .status(200)
         .json({ message: "User logged in successfully!", newUser });
-        console.log(newUser);
+      console.log(newUser);
     }
-
   } catch (error) {
     res.status(500).json({ message: "Error logging in user", error });
     console.error(error);

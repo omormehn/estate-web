@@ -6,18 +6,14 @@ import { FaShower } from "react-icons/fa";
 import { TbRulerMeasure } from "react-icons/tb";
 import { LuHeart } from "react-icons/lu";
 import { useNavigate } from "react-router-dom";
-import { useContext} from "react";
+import { useContext } from "react";
 import AuthContext from "../../context/AuthContext";
 import useFavorites from "../../hooks/useFavorites";
-
 
 export const PropertyCard = ({ card }) => {
   const navigate = useNavigate();
   const { currentUser } = useContext(AuthContext);
-  const {fav, addToFav} = useFavorites(card.id);
-
-
-
+  const { fav, addToFav } = useFavorites(card.id);
 
   return (
     <div className="slider-card mx-4 cursor-pointer">
@@ -39,20 +35,22 @@ export const PropertyCard = ({ card }) => {
           <p className="text-xl lg:text-2xl">₦ {card.price}</p>
 
           {currentUser && (
-            <div
-              className={`flex items-center justify-center rounded-full ${
-                fav ? "text-red-500" : "bg-transparent"
-              } p-1 cursor-pointer`}
-              onClick={addToFav}
-            >
-              <LuHeart size={23} />
+            <div className="">
+              <div
+                className={`flex items-center justify-center rounded-full ${
+                  fav ? "text-red-500" : "bg-transparent"
+                } p-1 cursor-pointer`}
+                onClick={addToFav}
+              >
+                <LuHeart size={23} />
+              </div>
             </div>
           )}
         </div>
         <h2
           onClick={() => {
             if (currentUser === null) {
-              navigate('/login', { state: { from: `/properties/${card.id}` } });   
+              navigate("/login", { state: { from: `/properties/${card.id}` } });
               return;
             }
             navigate(`../properties/${card.id}`);
