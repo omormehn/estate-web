@@ -10,13 +10,7 @@ import { api } from "../utils/api";
 import AuthContext from "../context/AuthContext";
 import { MdLogout } from "react-icons/md";
 
-import {
-  getAuth,
-  GoogleAuthProvider,
-  getRedirectResult,
-  signInWithRedirect,
-} from "firebase/auth";
-import { auth } from "./../utils/firebaseConfig";
+import { GoogleLogin } from "@react-oauth/google";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -26,36 +20,26 @@ const Login = () => {
   const { updateUser, currentUser } = useContext(AuthContext);
   const location = useLocation();
 
-  const auth = getAuth();
   const from = location.state?.from || "/";
 
-  const googleProvider = new GoogleAuthProvider();
-
-  const handleGoogleLogin = async () => {
+  const googleLogin = async (credential) => {
+    setLoading(true);
     try {
-      // await signInWithRedirect(auth, googleProvider);
-      const user = result.user;
-      // After redirection
-      const result = await getRedirectResult(auth);
-      if (result) {
-        const user = result.user;
-        console.log(user);
-      }
-
-      console.log(result);
-      const response = await api.post("/auth/social-login", {
-        id: user.uid,
-        email: user.email,
-        username: user.displayName,
-        image: user.photoURL,
+      const res = await api.post("auth/google", {
+        token: credential.credential,
       });
-      console.log(response);
-      updateUser(response.data);
-      console.log(user.photoURL);
-      navigate("/");
+      updateUser(res.data);
+      toast.success("Logged in Successfully.");
+      navigate(from, { replace: true });
     } catch (error) {
-      console.error("Error during login:", error.message);
+      console.error("Google login error:", error);
+      toast.error("Google login failed. Please try again.");
+    } finally {
+      setLoading(false);
     }
+  };
+  const handleLoginError = () => {
+    console.log("Login Failed");
   };
 
   // useEffect(() => {
@@ -126,7 +110,9 @@ const Login = () => {
               </Typography>
             </div>
 
-            <Button
+            <GoogleLogin onSuccess={googleLogin} onError={handleLoginError} />
+
+            {/* <Button
               variant="outlined"
               size="lg"
               className="flex h-12 mt-8 border-blue-gray-200 items-center justify-center gap-2"
@@ -139,7 +125,7 @@ const Login = () => {
                 className="h-6 w-6"
               />{" "}
               SIGN IN WITH GOOGLE
-            </Button>
+            </Button> */}
             <form
               onSubmit={handleSubmit}
               className="mt-8 mb-2  max-w-screen-lg "
