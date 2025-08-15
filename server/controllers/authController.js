@@ -93,14 +93,14 @@ export const logout = async (req, res) => {
 };
 
 export const validateUser = async (req, res) => {
-  const { id } = req.user;
-  if (!id) {
+  const { userId } = req.user;
+  if (!userId) {
     return res.status(401).json({ message: "Not Authenticated" });
   }
   try {
     const user = await prisma.user.findUnique({
       where: {
-        id,
+        id: userId,
       },
       select: {
         id: true,

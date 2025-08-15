@@ -12,7 +12,7 @@ import Register from "./pages/Register";
 import Login from "./pages/Login";
 import ProtectedRoute from "./context/ProtectedRoute.jsx";
 import ProfilePage from "./components/Profile/ProfilePage.jsx";
-
+import BookMarks from "./pages/BookMarks.jsx";
 
 function App() {
   const queryClient = new QueryClient();
@@ -28,7 +28,7 @@ function App() {
                 <Route
                   path=":propertyId"
                   element={
-                    <ProtectedRoute >
+                    <ProtectedRoute>
                       <Property />
                     </ProtectedRoute>
                   }
@@ -39,8 +39,16 @@ function App() {
               <Route
                 path="/profile"
                 element={
-                  <ProtectedRoute >
+                  <ProtectedRoute>
                     <ProfilePage />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/bookmarks"
+                element={
+                  <ProtectedRoute>
+                    <BookMarks />
                   </ProtectedRoute>
                 }
               />

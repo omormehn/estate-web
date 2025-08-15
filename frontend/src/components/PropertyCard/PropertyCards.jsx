@@ -22,7 +22,6 @@ const PropertyCards = ({ card }) => {
   const { fav, addToFav } = useFavorites(card.id);
   const { toggleBookmark, bookmarked } = useBookMark(card.id);
 
-  const [bookMark, setBookMark] = useState(false);
 
   return (
     <div className="slider-card mx-4 cursor-pointer">

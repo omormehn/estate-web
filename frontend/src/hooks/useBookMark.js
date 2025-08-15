@@ -18,7 +18,7 @@ export const useBookMark = (resId) => {
         const res = await api.post("get-bookmark", {
           email: currentUser.user.email,
         });
-        const bookMarks = res.data || [];
+        const bookMarks = res.data.ids || [];
         setBookmarked(bookMarks.includes(resId));
       } catch (error) {
         console.error("Error fetching bookmarks:", error);
@@ -37,11 +37,10 @@ export const useBookMark = (resId) => {
     console.log("clicked bookmark", resId);
     setBookmarked((prev) => !prev);
     try {
-      const res = await api.post("/toggle-bookmark", {
+      await api.post("/toggle-bookmark", {
         email: currentUser.user.email,
         residencyId: resId,
       });
-      console.log(res.data);
     } catch (error) {
       console.error("Error toggling bookmark:", error);
       setBookmarked((prev) => !prev);

@@ -27,7 +27,6 @@ export const AuthContextProvider = ({ children }) => {
     };
     validateSession();
   }, []);
-  console.log("Current User:", currentUser);
 
   const updateUser = (data) => {
     setCurrentUser(data);

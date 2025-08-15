@@ -223,7 +223,9 @@ export const toggleBookmark = asyncHandler(async (req, res) => {
   const { email, residencyId } = req.body;
   try {
     if (!email || !residencyId) {
-      return res.status(400).json({ message: "Email and Residency ID are required" });
+      return res
+        .status(400)
+        .json({ message: "Email and Residency ID are required" });
     }
 
     const user = await prisma.user.findUnique({
@@ -275,12 +277,25 @@ export const getBookMarks = asyncHandler(async (req, res) => {
     if (!user) {
       return res.status(404).json({ message: "User not found" });
     }
-    res.status(200).json(user.bookMarkedResidences);
+    const residencies = await prisma.residency.findMany({
+      where: {
+        id: {
+          in: user.bookMarkedResidences,
+        },
+      },
+    });
+    res.status(200).json({ ids: user.bookMarkedResidences, residencies });
   } catch (error) {
     console.error("Error fetching saved residencies:", error);
     res.status(500).json({ message: "Failed to fetch saved residencies" });
   }
-}); 
+});
+
+export const getBookMark = asyncHandler(async (req, res) => {
+  const { email } = req.body;
+  try {
+  } catch (error) {}
+});
 
 export { getUsers };
 export { getUser };
