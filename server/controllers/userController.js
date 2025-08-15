@@ -39,7 +39,7 @@ const updateUser = asyncHandler(async (req, res) => {
   const { password, image, ...inputs } = req.body;
   try {
     let updatedPassword = null;
-    if (password) { 
+    if (password) {
       updatedPassword = await bcrypt.hash(password, 10);
     }
 
@@ -198,7 +198,7 @@ const addResidencyToFavourite = asyncHandler(async (req, res) => {
       });
     }
   } catch (err) {
-    console.log(err)
+    console.log(err);
     throw new Error(err.message);
   }
 });
@@ -214,10 +214,73 @@ const allFavourites = asyncHandler(async (req, res) => {
     });
     res.status(200).send(favourites);
   } catch (err) {
-    console.log("ww",err)
+    console.log("ww", err);
     throw new Error(err.message);
   }
 });
+
+export const toggleBookmark = asyncHandler(async (req, res) => {
+  const { email, residencyId } = req.body;
+  try {
+    if (!email || !residencyId) {
+      return res.status(400).json({ message: "Email and Residency ID are required" });
+    }
+
+    const user = await prisma.user.findUnique({
+      where: { email },
+    });
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+    if (user.bookMarkedResidences.includes(residencyId)) {
+      const updateUser = await prisma.user.update({
+        where: { email },
+        data: {
+          bookMarkedResidences: {
+            set: user.bookMarkedResidences.filter((id) => id !== residencyId),
+          },
+        },
+      });
+      return res.status(200).json({
+        message: "Residency removed from bookmarks",
+        user: updateUser,
+      });
+    } else {
+      const updateUser = await prisma.user.update({
+        where: { email },
+        data: {
+          bookMarkedResidences: {
+            push: residencyId,
+          },
+        },
+      });
+      res.status(200).json({
+        message: "Residency added to bookmarks",
+        user: updateUser,
+      });
+    }
+  } catch (error) {
+    console.error("Error saving residency:", error);
+    res.status(500).json({ message: "Failed to save residency" });
+  }
+});
+
+export const getBookMarks = asyncHandler(async (req, res) => {
+  const { email } = req.body;
+  try {
+    const user = await prisma.user.findUnique({
+      where: { email },
+      select: { bookMarkedResidences: true },
+    });
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+    res.status(200).json(user.bookMarkedResidences);
+  } catch (error) {
+    console.error("Error fetching saved residencies:", error);
+    res.status(500).json({ message: "Failed to fetch saved residencies" });
+  }
+}); 
 
 export { getUsers };
 export { getUser };
