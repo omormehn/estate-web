@@ -2,7 +2,7 @@ import { Button } from "@material-tailwind/react";
 import "./profile.scss";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import AuthContext from "../../context/AuthContext";
 import { createPortal } from "react-dom";
 import CreateModal from "../Modal/CreateModal";
@@ -12,9 +12,27 @@ import { api } from "../../utils/api";
 function ProfilePage() {
   const [isOpen, setIsOpen] = useState(false);
   const [opened, setOpen] = useState(false);
+  const [bookMarks, setBookMarks] = useState([]);
   const navigate = useNavigate();
   const { updateUser, currentUser } = useContext(AuthContext);
   const isAdmin = currentUser && currentUser.user.role === "ADMIN";
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+    const fetchBookmarks = async () => {
+      try {
+        const response = await api.post("get-bookmark", {
+          email: currentUser.user.email,
+        });
+        setBookMarks(response.data.residencies || []);
+      } catch (error) {
+        console.error("Error fetching bookmarks:", error);
+      }
+    };
+    if (currentUser && currentUser.user) {
+      fetchBookmarks();
+    }
+  }, [currentUser]);
 
   const handleLogout = async () => {
     await api.post("/auth/logout");
@@ -22,6 +40,7 @@ function ProfilePage() {
     toast.success("Logged out Successfully.");
     navigate("/login");
   };
+
   return (
     <div className="min-h-screen bg-gray-50 pt-32">
       <div className="max-w-4xl mx-auto px-4 py-8">
@@ -92,9 +111,20 @@ function ProfilePage() {
             <h3 className="text-lg font-semibold text-gray-900 mb-4">
               Saved Items
             </h3>
-            <div className="text-gray-600">
-              <p>Your bookmarked content will appear here</p>
-            </div>
+            {bookMarks.length > 0 ? (
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                <button
+                  onClick={() => navigate("/bookmarks")}
+                  className="text-blue hover:underline"
+                >
+                  <p className="text-start">- View All</p>
+                </button>
+              </div>
+            ) : (
+              <div className="text-gray-600">
+                <p>Your bookmarked content will appear here</p>
+              </div>
+            )}
           </div>
         </div>
 

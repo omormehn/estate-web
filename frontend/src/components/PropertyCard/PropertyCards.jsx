@@ -14,12 +14,14 @@ import useFavorites from "../../hooks/useFavorites";
 import { FaBookmark } from "react-icons/fa6";
 import { FaRegBookmark } from "react-icons/fa6";
 import { RxBookmark } from "react-icons/rx";
+import { useBookMark } from "../../hooks/useBookMark";
 
 const PropertyCards = ({ card }) => {
   const navigate = useNavigate();
   const { currentUser } = useContext(AuthContext);
   const { fav, addToFav } = useFavorites(card.id);
-  const [bookMark, setBookMark] = useState(false);
+  const { toggleBookmark, bookmarked } = useBookMark(card.id);
+
 
   return (
     <div className="slider-card mx-4 cursor-pointer">
@@ -42,12 +44,8 @@ const PropertyCards = ({ card }) => {
             >
               <LuHeart size={23} />
             </div>
-            <div onClick={() => setBookMark((prev) => !prev)} className="">
-              {bookMark ? (
-                <RxBookmark size={25} />
-              ) : (
-                <FaBookmark size={21} />
-              )}
+            <div onClick={toggleBookmark} className="">
+              {bookmarked ? <FaBookmark size={23} color="black" /> : <RxBookmark size={27} className="text-black" color="black" />}
             </div>
           </div>
         </div>
@@ -56,7 +54,9 @@ const PropertyCards = ({ card }) => {
           onClick={() =>
             currentUser
               ? navigate(`../properties/${card.id}`)
-              : navigate(`/login`)
+              : navigate(`/login`, {
+                  state: { from: `/properties/${card.id}` },
+                })
           }
         >
           {truncate(card.title, { length: 30 })}

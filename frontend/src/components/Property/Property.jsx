@@ -90,7 +90,7 @@ const Property = () => {
               <a
                 onClick={() => {
                   if (!currentUser) {
-                    navigate("/login", { state: { from: "/properties"} });
+                    navigate("/login", { state: { from: "/properties" } });
                   } else {
                     navigate("/properties");
                   }

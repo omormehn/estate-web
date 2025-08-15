@@ -9,11 +9,15 @@ import { useNavigate } from "react-router-dom";
 import { useContext } from "react";
 import AuthContext from "../../context/AuthContext";
 import useFavorites from "../../hooks/useFavorites";
+import { useBookMark } from "../../hooks/useBookMark";
+import { FaBookmark } from "react-icons/fa6";
+import { RxBookmark } from "react-icons/rx";
 
 export const PropertyCard = ({ card }) => {
   const navigate = useNavigate();
   const { currentUser } = useContext(AuthContext);
   const { fav, addToFav } = useFavorites(card.id);
+  const { toggleBookmark, bookmarked } = useBookMark(card.id);
 
   return (
     <div className="slider-card mx-4 cursor-pointer">
@@ -35,14 +39,21 @@ export const PropertyCard = ({ card }) => {
           <p className="text-xl lg:text-2xl">₦ {card.price}</p>
 
           {currentUser && (
-            <div className="">
+            <div className="flex gap-2 items-center">
               <div
                 className={`flex items-center justify-center rounded-full ${
                   fav ? "text-red-500" : "bg-transparent"
                 } p-1 cursor-pointer`}
                 onClick={addToFav}
               >
-                <LuHeart size={23} />
+                <LuHeart size={20} />
+              </div>
+              <div onClick={toggleBookmark} className="flex items-center">
+                {bookmarked ? (
+                  <FaBookmark size={18} color="black" />
+                ) : (
+                  <RxBookmark size={20} className="text-black" color="black" />
+                )}
               </div>
             </div>
           )}
