@@ -234,7 +234,7 @@ export const toggleBookmark = asyncHandler(async (req, res) => {
     if (!user) {
       return res.status(404).json({ message: "User not found" });
     }
-    if (user.bookMarkedResidences.includes(residencyId)) {
+    if (user.bookMarkedResidences?.includes(residencyId)) {
       const updateUser = await prisma.user.update({
         where: { email },
         data: {
@@ -263,7 +263,7 @@ export const toggleBookmark = asyncHandler(async (req, res) => {
     }
   } catch (error) {
     console.error("Error saving residency:", error);
-    res.status(500).json({ message: "Failed to save residency" });
+    res.status(500).json({ message: "Failed to save residency", error });
   }
 });
 
@@ -291,11 +291,7 @@ export const getBookMarks = asyncHandler(async (req, res) => {
   }
 });
 
-export const getBookMark = asyncHandler(async (req, res) => {
-  const { email } = req.body;
-  try {
-  } catch (error) {}
-});
+
 
 export { getUsers };
 export { getUser };
