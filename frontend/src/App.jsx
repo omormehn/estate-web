@@ -1,6 +1,6 @@
 import Website from "./pages/Website";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { Suspense, useContext } from "react";
+import { Suspense } from "react";
 import Layout from "./components/layout/Layout";
 import Properties from "./pages/Properties";
 import { QueryClient, QueryClientProvider } from "react-query";
@@ -12,11 +12,10 @@ import Register from "./pages/Register";
 import Login from "./pages/Login";
 import ProtectedRoute from "./context/ProtectedRoute.jsx";
 import ProfilePage from "./components/Profile/ProfilePage.jsx";
-import AuthContext from "./context/AuthContext.jsx";
+
 
 function App() {
   const queryClient = new QueryClient();
-  const { currentUser } = useContext(AuthContext);
   return (
     <QueryClientProvider client={queryClient}>
       <BrowserRouter>
@@ -29,7 +28,7 @@ function App() {
                 <Route
                   path=":propertyId"
                   element={
-                    <ProtectedRoute currentUser={currentUser}>
+                    <ProtectedRoute >
                       <Property />
                     </ProtectedRoute>
                   }
@@ -40,7 +39,7 @@ function App() {
               <Route
                 path="/profile"
                 element={
-                  <ProtectedRoute currentUser={currentUser}>
+                  <ProtectedRoute >
                     <ProfilePage />
                   </ProtectedRoute>
                 }

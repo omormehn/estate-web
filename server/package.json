@@ -18,10 +18,10 @@
         "dotenv": "^16.4.5",
         "express": "^4.21.1",
         "express-async-handler": "^1.2.0",
+        "google-auth-library": "^10.2.1",
         "jsonwebtoken": "^9.0.2",
         "mongodb": "^6.8.0",
         "nodemon": "^3.1.4",
-        "npm": "file:",
         "prisma": "^5.19.0",
         "socket.io": "^4.8.1"
     }

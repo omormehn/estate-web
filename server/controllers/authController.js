@@ -1,6 +1,9 @@
 import bcrypt from "bcrypt";
 import { generateTokenAndSetCookie } from "../utils/generateTokenAndSetCookie.js";
 import prisma from "../config/prismaConfig.js";
+import { OAuth2Client } from "google-auth-library";
+const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
+// console.log(client);
 
 export const register = async (req, res) => {
   const { email, password, username } = req.body;
@@ -89,31 +92,70 @@ export const logout = async (req, res) => {
   res.status(200).json({ success: true, message: "Logged out successfully" });
 };
 
-export const socialLogin = async (req, res) => {
-  const { id, email, username, image } = req.body;
-
+export const validateUser = async (req, res) => {
+  const { id } = req.user;
+  if (!id) {
+    return res.status(401).json({ message: "Not Authenticated" });
+  }
   try {
-    let user = await prisma.user.findFirst({
+    const user = await prisma.user.findUnique({
       where: {
-        email,
+        id,
+      },
+      select: {
+        id: true,
+        email: true,
+        username: true,
+        image: true,
+        role: true,
+      },
+    });
+    res.status(200).json({ user });
+  } catch (error) {
+    res.status(401).json({
+      message: "Failed to validate user",
+      error: error.message,
+    });
+  }
+};
+
+export const googleLogin = async (req, res) => {
+  const { token } = req.body;
+  try {
+    const ticket = await client.verifyIdToken({
+      idToken: token,
+      audience: process.env.GOOGLE_CLIENT_ID,
+    });
+
+    const payload = ticket.getPayload();
+
+    const user = await prisma.user.upsert({
+      where: { email: payload.email },
+      update: {
+        username: payload.name,
+        image: payload.picture || undefined,
+      },
+      create: {
+        email: payload.email,
+        username: payload.name,
+        image: payload.picture || "",
       },
     });
 
-    if (!user) {
-      const newUser = await prisma.user.create({
-        data: {
-          id,
-          email,
-          username,
-          image,
-        },
-      });
-      res
-        .status(200)
-        .json({ message: "User logged in successfully!", newUser });
-        console.log(newUser);
-    }
+    const appToken = generateTokenAndSetCookie(res, user.id);
+    const newUser = {
+      id: user.id,
+      email: user.email,
+      username: user.username,
+      image: user.image,
+      role: user.role,
+    };
 
+    res.status(200).json({
+      message: "User logged in successfully!",
+      user: newUser,
+      token: appToken,
+    });
   } catch (error) {
     res.status(500).json({ message: "Error logging in user", error });
     console.error(error);

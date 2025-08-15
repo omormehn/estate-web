@@ -34,8 +34,8 @@ app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
 });
 
-app.use("/api/user", userRoute);
-app.use("/api/user/residency", residencyRoute);
-app.use("/api/user/auth", authRoute);
-app.use("/api/user/test", testRoute);
+app.use("/user", userRoute);
+app.use("/user/residency", residencyRoute);
+app.use("/user/auth", authRoute);
+app.use("/user/test", testRoute);
 

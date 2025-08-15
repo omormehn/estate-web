@@ -11,6 +11,7 @@ import { toast } from "react-toastify";
 import { Menu, MenuHandler, MenuList } from "@material-tailwind/react";
 import { IoLogOutOutline } from "react-icons/io5";
 import { FaRegUser } from "react-icons/fa";
+import { FaHouseChimneyWindow } from "react-icons/fa6";
 
 const NavbarMenu = [
   {
@@ -201,7 +202,7 @@ const Navbar = () => {
                         </p>
                       </div>
                     </MenuHandler>
-                    <div className="absolute w-12">
+                    <div className="absolute w-20">
                       <MenuList className="z-50 flex flex-col border-0 px-3 py-6 gap-2">
                         <div
                           className="flex gap-2 items-center"
@@ -211,6 +212,15 @@ const Navbar = () => {
                         >
                           <FaRegUser />
                           <Link to="/profile">Profile</Link>
+                        </div>
+                        <div
+                          className="flex gap-2 items-center"
+                          onClick={() => {
+                            setShowMenu(false);
+                          }}
+                        >
+                          <FaHouseChimneyWindow />
+                          <Link to="/properties">Properties</Link>
                         </div>
                         <div className="flex gap-2 items-center">
                           <IoLogOutOutline />

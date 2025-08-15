@@ -1,22 +1,22 @@
 import axios from "axios";
 
 export const api = axios.create({
-  // eslint-disable-next-line no-undef
-  baseURL: `${process.env.SERVER_SIDE}/api/user`,
+  baseURL: import.meta.env.VITE_API_BASE_URL,
   withCredentials: true,
 });
 
-api.interceptors.response.use(
-    res => res,
-    error => {
-        if (error.response.status === 401) {
-            console.error("Unauthorized access - redirecting to login");
-            localStorage.removeItem("user");
-            window.location.href = "/login";
-        }
-        return Promise.reject(error);
-    }
-)
+// api.interceptors.response.use(
+//     res => res, 
+//     error => {
+//         console.error("API Error:", error);
+//         if (error?.response?.status === 401 && window.location.pathname !== "/login") {
+//             console.error("Unauthorized access - redirecting to login");
+//             localStorage.removeItem("user");
+//             window.location.href = "/login";
+//         }
+//         return Promise.reject(error);
+//     }
+// )
 
 const getAllProperties = async() => {
     try {

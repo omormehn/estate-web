@@ -30,6 +30,7 @@ const getUser = asyncHandler(async (req, res) => {
     res.status(401).json({ message: "Failed to get user" });
   }
 });
+
 const updateUser = asyncHandler(async (req, res) => {
   const { id } = req.params;
   const tokenUserId = id;
